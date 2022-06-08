@@ -127,8 +127,8 @@ const FarmaceuticoController=Router();
       resp.send('Essa categoria ja existe')
     }
   }
-      })
-     FarmaceuticoController.post('/Atualizarcategoria',async(req:Request, resp: Response)=>{
+})
+FarmaceuticoController.post('/Atualizarcategoria',async(req:Request, resp: Response)=>{
       const {nomeCategoria,desCategoria,idCategoria}= req.body;
     if(nomeCategoria===''|| desCategoria===''){
   
@@ -137,9 +137,8 @@ const FarmaceuticoController=Router();
        const ids = await knex('categoria').where('idCategoria',idCategoria).update({nomeCategoria,desCategoria}).catch(err =>{console.log(err); req.flash("errado","Ocorreu um problema!");resp.redirect("")})
         
     }
-      
-       })
-       FarmaceuticoController.post('/NovoProduto',upload.single('image'),async (req:Request, resp: Response)=>{
+ })
+FarmaceuticoController.post('/NovoProduto',upload.single('image'),async (req:Request, resp: Response)=>{
         try {
           const imgProduto= (req.file) ? req.file.filename : 'user.png';       
           const {nomeProduto, descProduto, stockProduto,precoProduto,estadoProduto, idCategoria}= req.body;         
@@ -156,7 +155,8 @@ const FarmaceuticoController=Router();
                     }else{ 
           const verify = await knex('produto').where('nomeProduto',nomeProduto)
           if(verify.length===0){
-       const produto = await knex('produto').insert({nomeProduto, descProduto, stockProduto,precoProduto,estadoProduto,idCategoria})
+           const produto = await knex('produto').insert({nomeProduto,imgProduto, descProduto, stockProduto,precoProduto,estadoProduto,idCategoria})
+
           }else{
             resp.send('Esse produto ja existe')
           }
@@ -166,7 +166,53 @@ const FarmaceuticoController=Router();
       }catch (error) {
         resp.send(error + " - falha ao registar")
       }  
-    } )
+})
+FarmaceuticoController.post('/AtualizarProduto',async (req:Request, resp: Response)=>{
+  try {
+        
+    const {nomeProduto, descProduto,idProduto,stockProduto,precoProduto,estadoProduto, idCategoria}= req.body;         
+    if(nomeProduto=='' || descProduto==''){
+      req.flash('errado', 'Valores incorretos');
+      console.log('mmm')
+    }else{
+      let number = /[0-9]/.test(precoProduto);
+     
+    if(number == false) {
+             req.flash('errado', "Preço incorreto");
+               console.log('mmm')
+  
+              }else{ 
+
+         const produto = await knex('produto').where('idProduto',idProduto).update({nomeProduto, descProduto, stockProduto,precoProduto,estadoProduto,idCategoria})
+
+   
+            }
+   
+  }
+}catch (error) {
+  resp.send(error + " - falha ao registar")
+}  
+})
+
+//clientes---------------------------------------------------------------------
+FarmaceuticoController.get('/Clientes',async(req:Request, resp: Response)=>{
+  const clientes = await knex('cliente').select('*')
+})
+FarmaceuticoController.get('/Cliente/:id',async(req:Request, resp: Response)=>{
+  const {id}=req.params;
+  const clientes = await knex('cliente').where('idCliente',id).select('*')
+  if(clientes){
+   
+  }else{
+resp.redirect("/404")
+  }
+})
+FarmaceuticoController.get('/Clientedeletar/:id',async(req:Request, resp: Response)=>{
+  const {id}=req.params;
+  const cliente = await knex('cliente').where('idCliente',id).delete()
+ resp.send('Deletado...')
+ 
+})
        
 export default FarmaceuticoController;
 
