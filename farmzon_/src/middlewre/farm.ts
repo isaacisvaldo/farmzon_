@@ -5,7 +5,7 @@ const adminAuth= (req:Request, resp:Response, next:NextFunction)=>{
         if(req.session.user.role==1){
             next();
         }else{
-            resp.redirect('/login')
+            resp.redirect('/loginGeral')
         }
     }else{
         resp.redirect('/loginGeral')

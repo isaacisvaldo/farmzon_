@@ -11,7 +11,7 @@ const upload = multer(multerConfig);
 const FarmaceuticoController=Router();
 //Papel do Admin
 
-FarmaceuticoController.get('/Farmaceutico',async(req:Request, resp: Response)=>{
+FarmaceuticoController.get('/Farmaceutico',farmAuth,async(req:Request, resp: Response)=>{
   resp.render('DashBoard/index')
 })
   FarmaceuticoController.post('/NovoFarmaceutico',upload.single('image'),async (req:Request, resp: Response)=>{
@@ -199,10 +199,11 @@ FarmaceuticoController.post('/AtualizarProduto',async (req:Request, resp: Respon
 })
 
 //clientes---------------------------------------------------------------------
-FarmaceuticoController.get('/Clientes',async(req:Request, resp: Response)=>{
-  const clientes = await knex('cliente').select('*')
+FarmaceuticoController.get('/Clientes',farmAuth,async(req:Request, resp: Response)=>{
+  const clientes = await knex('cliente').select('*');
+  resp.render('DashBoard/clientes',{clientes})
 })
-FarmaceuticoController.get('/Cliente/:id',async(req:Request, resp: Response)=>{
+FarmaceuticoController.get('/Cliente/:id',farmAuth,async(req:Request, resp: Response)=>{
   const {id}=req.params;
   const clientes = await knex('cliente').where('idCliente',id).select('*')
   if(clientes){
@@ -211,7 +212,7 @@ FarmaceuticoController.get('/Cliente/:id',async(req:Request, resp: Response)=>{
 resp.redirect("/404")
   }
 })
-FarmaceuticoController.get('/Clientedeletar/:id',async(req:Request, resp: Response)=>{
+FarmaceuticoController.get('/Clientedeletar/:id',farmAuth,async(req:Request, resp: Response)=>{
   const {id}=req.params;
   const cliente = await knex('cliente').where('idCliente',id).delete()
  resp.send('Deletado...')
