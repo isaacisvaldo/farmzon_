@@ -37,7 +37,7 @@ Route.get('/loginGeral', (req:Request, resp: Response)=>{
 
 // Home page do Sistema
 Route.get('/',async (req:Request, resp: Response)=>{
- resp.send("Rodando")
+ resp.render('Site/index')
 })
 
 Route.get('/logout', (req:Request, resp: Response)=>{

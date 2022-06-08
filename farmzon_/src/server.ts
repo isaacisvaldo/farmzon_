@@ -43,5 +43,5 @@ app.use(async(req,res, next)=>{
 
 
 app.listen(1002, () => {
-    console.log('Rodando,Port 1002');
+    console.log('Rodando,Port: 1002');
 })

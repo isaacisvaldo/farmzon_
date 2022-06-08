@@ -138,6 +138,7 @@ ClienteController.post('/Atualizarcliente',async(req:Request, resp: Response)=>{
   //Fim Cliente autenticado
 
   //Cliente Não autenticado
+  
  
 
 export default ClienteController;
