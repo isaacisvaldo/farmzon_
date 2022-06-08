@@ -36,8 +36,7 @@ app.use(FarmaceuticoController);
 app.use(CompraController);
 
 
-app.use(async(req,res, next)=>{ 
-    
+app.use(async(req,res, next)=>{  
     res.render("error/404")
 }) 
 
