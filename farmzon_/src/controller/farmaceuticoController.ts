@@ -139,6 +139,34 @@ const FarmaceuticoController=Router();
     }
       
        })
+       FarmaceuticoController.post('/NovoProduto',upload.single('image'),async (req:Request, resp: Response)=>{
+        try {
+          const imgProduto= (req.file) ? req.file.filename : 'user.png';       
+          const {nomeProduto, descProduto, stockProduto,precoProduto,estadoProduto, idCategoria}= req.body;         
+          if(nomeProduto=='' || descProduto==''){
+            req.flash('errado', 'Valores incorretos');
+            console.log('mmm')
+          }else{
+            let number = /[0-9]/.test(precoProduto);
+           
+          if(number == false) {
+                   req.flash('errado', "Preço incorreto");
+                     console.log('mmm')
+        
+                    }else{ 
+          const verify = await knex('produto').where('nomeProduto',nomeProduto)
+          if(verify.length===0){
+       const produto = await knex('produto').insert({nomeProduto, descProduto, stockProduto,precoProduto,estadoProduto,idCategoria})
+          }else{
+            resp.send('Esse produto ja existe')
+          }
+                  }
+         
+        }
+      }catch (error) {
+        resp.send(error + " - falha ao registar")
+      }  
+    } )
        
 export default FarmaceuticoController;
 
