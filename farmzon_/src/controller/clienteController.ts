@@ -81,6 +81,16 @@ ClienteController.post('/Novocliente',async(req:Request, resp: Response)=>{
                    
 })
 //Cliente Autenticado
+ClienteController.get("/Clientelogado", async(req:Request, resp:Response) =>{
+  const id=req.session?.user.id;
+  const cliente= await knex('cliente').where('idCliente', id).first();
+  if(cliente){
+    console.log(cliente)
+    resp.render('Cliente/index',{cliente,certo:req.flash('certo'),errado:req.flash('errado')})
+  }else{
+    resp.redirect("/404")
+  }
+})
 ClienteController.post('/Atualizarcliente',async(req:Request, resp: Response)=>{
 
   const {nomeCliente,id, userCliente, emailCliente,tellCliente,generoCliente}=req.body; 
@@ -125,20 +135,13 @@ ClienteController.post('/Atualizarcliente',async(req:Request, resp: Response)=>{
  }
                    
 })
-  ClienteController.get("/perficliente", async(req:Request, resp:Response) =>{
-    const id=req.session?.user.id;
-    const cliente= await knex('cliente').where('idCliente', id).first();
-    if(cliente){
-      console.log(cliente)
-      resp.render('Cliente/perfil',{cliente,certo:req.flash('certo'),errado:req.flash('errado')})
-    }else{
-      resp.redirect("/rota descon...")
-    }
-  })
+
   //Fim Cliente autenticado
+  
+ 
 
   //Cliente Não autenticado
-  
+
  
 
 export default ClienteController;

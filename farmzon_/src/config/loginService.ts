@@ -5,21 +5,16 @@ import knex from '../database/conection';
 async function authenticate(user:string, pass:string) {
     try {
        
-        const pDados =await knex('paciente').where('userPaciente', user).where('senhaPaciente', pass)
+        const pDados =await knex('cliente').where('userCliente', user).where('senhaCliente', pass)
         if(pDados.length!==0){
             const pc = pDados[0]
-            return {pc, p:'paciente'}
+            return {pc, p:'cliente'}
         }else if(pDados.length===0){
-            const admin= await knex('medico').where('userMedico', user).where('passMedico',pass)
+            const admin= await knex('farmaceutico').where('userFarmaceutico', user).where('senhaFarmaceutico',pass)
             if(admin.length!==0){
-                const admn= admin[0];
-                if (admn.role==1) {
-                    const ADMINadmn = {admn, p:'admin'}
-                    return ADMINadmn
-                }else{
-                    const ADMINadmn = {admn, p:'medico_normal'}
-                    return ADMINadmn  
-                }
+                const farm= admin[0];
+                const Farm= {farm, p:'farm'}
+                return Farm
             }else{ 
                 return '-1'  
             }

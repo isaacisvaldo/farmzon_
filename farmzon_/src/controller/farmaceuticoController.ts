@@ -10,6 +10,10 @@ const upload = multer(multerConfig);
 
 const FarmaceuticoController=Router();
 //Papel do Admin
+
+FarmaceuticoController.get('/Farmaceutico',async(req:Request, resp: Response)=>{
+  resp.render('DashBoard/index')
+})
   FarmaceuticoController.post('/NovoFarmaceutico',upload.single('image'),async (req:Request, resp: Response)=>{
       try {
         const imagemFarmaceutico= (req.file) ? req.file.filename : 'user.png';       

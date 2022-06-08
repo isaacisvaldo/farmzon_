@@ -31,7 +31,7 @@ Route.get('/503', (req:Request, resp: Response)=>{
 })
 
 Route.get('/loginGeral', (req:Request, resp: Response)=>{
-    resp.render('',{certo:req.flash('certo'),errado:req.flash('errado')})
+    resp.render('form/login',{errado:req.flash('errado')})
 })
 
 
@@ -57,26 +57,23 @@ Route.post('/loginGeral',async (req:Request, resp: Response)=>{
             }else{
                 const dados=r;
                 if(dados){
-                     if(dados.p === 'paciente'){ 
+                     if(dados.p === 'cliente'){ 
                         const pc:any = dados
                         if(req.session){
-                          req.session.user={role:2, id:pc.pc.idPaciente};
-                          resp.redirect('/pacientePainel')
+                          req.session.user={role:2, id:pc.pc.idCliente};
+                          resp.redirect('/Clientelogado')
                         }      
-                     }else if(dados.p === 'admin'){
+                     }else if(dados.p === 'farm'){
                         const adminDados:any = dados
                         if(req.session){
-                          req.session.user={role:adminDados.admn.role, id:adminDados.admn.idMedico};
+                          req.session.user={role:adminDados.farm.role, id:adminDados.farm.idFarmaceutico};
                           console.log(req.session.user);
-                          resp.redirect('/adminPainel')
+                          resp.redirect('/Farmaceutico')
                         } 
-                     }else if(dados.p==='medico_normal'){
-                        const medico:any= dados
-                        if(req.session){
-                            req.session.user={role:medico.admn.role, id:medico.admn.idMedico};
-                            resp.redirect('/medicoPainel')
-                          
-                        } 
+                     }else{
+                        req.flash("errado","Erro ao autenticar!")
+                        resp.redirect('/loginGeral')
+                       
                     }
                 }
             }
