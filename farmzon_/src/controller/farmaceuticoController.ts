@@ -220,12 +220,34 @@ FarmaceuticoController.get('/Clientedeletar/:id',farmAuth,async(req:Request, res
 })
 //produtos-------------------------------------------------------------------
 FarmaceuticoController.get('/Produtos',farmAuth,async(req:Request, resp: Response)=>{
-  const produtos = await knex('produto').select('*');
-  resp.render('DashBoard/clientes',{produtos})
+  const produtos = await knex('produto').join('categoria', 'produto.idCategoria', 'categoria.idCategoria').select('*');
+  console.log(produtos)
+  resp.render('DashBoard/produtos',{produtos})
 })
 FarmaceuticoController.get('/Produto/:id',farmAuth,async(req:Request, resp: Response)=>{
   const {id}=req.params;
-  const produto = await knex('produto').where('idProduto',id).select('*')
+  const produto = await knex('produto').where('idProduto',id).join('categoria', 'produto.idCategoria', 'categoria.idCategoria').select('*')
+  if(produto){
+   
+  }else{
+resp.redirect("/404")
+  }
+})
+FarmaceuticoController.get('/produtodeletar/:id',farmAuth,async(req:Request, resp: Response)=>{
+  const {id}=req.params;
+  const produto= await knex('produto').where('idProduto',id).delete()
+   resp.send('Deletado...')
+ 
+})
+//Categoria-------------------------------------------------------------------
+FarmaceuticoController.get('/Categoria',farmAuth,async(req:Request, resp: Response)=>{
+  const categorias = await knex('categoria').select('*');
+  console.log(categorias)
+  resp.render('DashBoard/categoria',{categorias})
+})
+FarmaceuticoController.get('/Produto/:id',farmAuth,async(req:Request, resp: Response)=>{
+  const {id}=req.params;
+  const produto = await knex('produto').where('idProduto',id).join('categoria', 'produto.idCategoria', 'categoria.idCategoria').select('*')
   if(produto){
    
   }else{
