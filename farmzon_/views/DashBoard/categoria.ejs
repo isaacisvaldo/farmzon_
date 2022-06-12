@@ -33,30 +33,28 @@
                 <section class="section">
                     <div class="card">
                         <div class="card-header">
-                            Simple Datatable
+                            <button type="button" class="btn btn-outline-primary block" data-bs-toggle="modal"
+                            data-bs-target="#default">
+                            +Categoria
+                        </button>
                         </div>
                         <div class="card-body">
                             <table class="table table-striped" id="table1">
                                 <thead>
                                     <tr>
-                                        <th>Produto</th>                                       
-                                        <th>Quantidade</th>
-                                        <th>Preço</th>
-                                        <th>Estado</th>
+                                        <th>#</th>                                       
+                                        <th>Nome Categoria</th>
+                                        
                                         <th>Acção</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     
-                                        <% produtos.map(produto =>{ %> 
+                                        <% categorias.map(categoria =>{ %> 
                                             <tr>
-                                             <td> <%=produto.nomeProduto %> </td>
-                                        <td><%= produto.stockProduto %></td>
-                                        <td><%= produto.precoProduto %></td>
+                                             <td> <%=categoria.idCategoria %> </td>
+                                        <td><%= categoria.nomeCategoria %></td>
                                         
-                                        <td>
-                                            <span class="badge bg-success">Active</span>
-                                        </td>
                                         <td>
                                             <div class="dropdown">
                                                 <button type="button"
@@ -83,6 +81,75 @@
                             </table>
                         </div>
                     </div>
+                    <div class="modal fade text-left" id="default" tabindex="-1" role="dialog"
+                                        aria-labelledby="myModalLabel1" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="myModalLabel1">Basic Modal</h5>
+                                                    <button type="button" class="close rounded-pill"
+                                                        data-bs-dismiss="modal" aria-label="Close">
+                                                        <i data-feather="x"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="oo" method="post">
+                                                    <section id="input-style">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="card">
+                                                                    <div class="card-header">
+                                                                        <h4 class="card-title">Input Styles</h4>
+                                                                    </div>
+                                    
+                                                                    <div class="card-body">
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <p>To set rounded border to input box, use <code>.round</code> class and
+                                                                                    to set square border to input box, use <code>.sqaure</code> class
+                                                                                    alongwith
+                                                                                    <code>.form-control</code> class.
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="form-group">
+                                                                                    <label for="roundText">Rounded Input</label>
+                                                                                    <input type="text" id="roundText" class="form-control round"
+                                                                                        placeholder="Rounded Input">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-6">
+                                                                                <div class="form-group">
+                                                                                    <label for="squareText">Square Input</label>
+                                                                                    <input type="text" id="squareText" class="form-control square"
+                                                                                        placeholder="Square Input">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-12">
+                                                                                <div class="form-group">
+                                                                                   
+                                                                                    <input type="submit" id="squareText" class="form-control square"
+                                                                                      value="Cadastrar">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </section>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn" data-bs-dismiss="modal">
+                                                        <i class="bx bx-x d-block d-sm-none"></i>
+                                                        <span class="d-none d-sm-block">Fechar</span>
+                                                    </button>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                 </section>
             </div>
