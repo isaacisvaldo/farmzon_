@@ -1,7 +1,7 @@
 import { Knex } from "knex";
 export async function up(knex: Knex) {
     return knex.schema.createTable('compra', (table)=>{
-        table.increments('idMarcacao').primary();
+        table.increments('idCompra').primary();
         table.timestamp('datacompra').defaultTo(knex.fn.now());
         table.string('estadocompra').notNullable();
         table.string('mes').notNullable();

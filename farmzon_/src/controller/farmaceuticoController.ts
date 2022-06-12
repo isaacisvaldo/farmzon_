@@ -72,7 +72,7 @@ FarmaceuticoController.get('/Farmaceutico',farmAuth,async(req:Request, resp: Res
         resp.send(error + " - falha ao registar")
       }
     }    
-  )
+)
   FarmaceuticoController.post('/AtualizarFarmaceutico',async (req:Request, resp: Response)=>{
     try {
           
@@ -198,7 +198,7 @@ FarmaceuticoController.post('/AtualizarProduto',async (req:Request, resp: Respon
 }  
 })
 
-//clientes---------------------------------------------------------------------
+//cliente---------------------------------------------------------------------
 FarmaceuticoController.get('/Clientes',farmAuth,async(req:Request, resp: Response)=>{
   const clientes = await knex('cliente').select('*');
   resp.render('DashBoard/clientes',{clientes})
@@ -218,7 +218,28 @@ FarmaceuticoController.get('/Clientedeletar/:id',farmAuth,async(req:Request, res
  resp.send('Deletado...')
  
 })
-       
+//produtos-------------------------------------------------------------------
+FarmaceuticoController.get('/Produtos',farmAuth,async(req:Request, resp: Response)=>{
+  const produtos = await knex('produto').select('*');
+  resp.render('DashBoard/clientes',{produtos})
+})
+FarmaceuticoController.get('/Produto/:id',farmAuth,async(req:Request, resp: Response)=>{
+  const {id}=req.params;
+  const produto = await knex('produto').where('idProduto',id).select('*')
+  if(produto){
+   
+  }else{
+resp.redirect("/404")
+  }
+})
+FarmaceuticoController.get('/produtodeletar/:id',farmAuth,async(req:Request, resp: Response)=>{
+  const {id}=req.params;
+  const produto= await knex('produto').where('idProduto',id).delete()
+   resp.send('Deletado...')
+ 
+})
+
+
 export default FarmaceuticoController;
 
 //image, name, email, whatsaap, nomeuser senha
