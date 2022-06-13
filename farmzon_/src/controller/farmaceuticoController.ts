@@ -12,7 +12,7 @@ const FarmaceuticoController=Router();
 //Papel do Admin
 
 FarmaceuticoController.get('/Farmaceutico',farmAuth,async(req:Request, resp: Response)=>{
-  resp.render('DashBoard/index')
+  resp.render('Farmaceutico/index')
 })
   FarmaceuticoController.post('/NovoFarmaceutico',upload.single('image'),async (req:Request, resp: Response)=>{
       try {

@@ -1,22 +1,22 @@
 <!doctype html>
 <html lang="en">
   <%- include ('Partials/headerHtml') %> 
-  <body class="light ">
+  <body class="container-fluid ">
     <div class="wrapper vh-100">
       <div class="row align-items-center h-100">
-        <form class="col-lg-3 col-md-4 col-10 mx-auto text-center">
+        <form action="/loginGeral" method="post" class="col-lg-3 col-md-4 col-10 mx-auto text-center">
           <h1  onclick="window.location='/'" style="cursor: pointer; color:#569775;">
             FORMAZONE
           </h1>
 
           <p class="mb-3">Faça seu login</p>
           <div class="form-group">
-            <label for="inputEmail" class="sr-only">Usename</label>
-            <input type="text" id="inputEmail" class="form-control form-control-lg" placeholder="Usermane" required="" autofocus="">
+            <label for="inputEmail" class="sr-only">Username</label>
+            <input type="text" name="user" id="inputEmail" class="form-control form-control-lg" placeholder="Username" required="" autofocus="">
           </div>
           <div class="form-group">
             <label for="inputPassword" class="sr-only">Senha</label>
-            <input type="password" id="inputPassword" class="form-control form-control-lg" placeholder="Senha" required="">
+            <input name="pass" type="password" id="inputPassword" class="form-control form-control-lg" placeholder="Senha" required="">
           </div>
           <div class="checkbox mb-3">
             <label>
@@ -28,6 +28,8 @@
       </div>
     </div>
     <%- include ('Partials/footerJS') %>
+    
+
   </body>
 </html>
 </body>

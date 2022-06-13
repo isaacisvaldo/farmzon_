@@ -1,23 +1,63 @@
-
-    <script src="DashBoard/js/jquery.min.js"></script>
-    <script src="DashBoard/js/popper.min.js"></script>
-    <script src="DashBoard/js/moment.min.js"></script>
-    <script src="DashBoard/js/bootstrap.min.js"></script>
-    <script src="DashBoard/js/simplebar.min.js"></script>
-    <script src='DashBoard/js/daterangepicker.js'></script>
-    <script src='DashBoard/js/jquery.stickOnScroll.js'></script>
-    <script src="DashBoard/js/tinycolor-min.js"></script>
-    <script src="DashBoard/js/config.js"></script>
-    <script src="DashBoard/js/apps.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-
-      function gtag()
-      {
-        dataLayer.push(arguments);
+<script src="DashBoard/js/jquery.min.js"></script>
+<script src="DashBoard/js/popper.min.js"></script>
+<script src="DashBoard/js/moment.min.js"></script>
+<script src="DashBoard/js/bootstrap.min.js"></script>
+<script src="DashBoard/js/simplebar.min.js"></script>
+<script src='DashBoard/js/daterangepicker.js'></script>
+<script src='DashBoard/js/jquery.stickOnScroll.js'></script>
+<script src="DashBoard/js/tinycolor-min.js"></script>
+<script src="DashBoard/js/config.js"></script>
+<script src="DashBoard/js/apps.js"></script>
+<script src="sweetalert/sweetalert2.all.min.js"></script>
+<% if(errado.length>0) {%>
+  <script>
+    var Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 4000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
       }
-      gtag('js', new Date());
-      gtag('config', 'UA-56159088-1');
+    })
+    Toast.fire({
+      icon: 'error',
+      title: '<%=errado %>'
+    })
+  </script>
+
+  <% }else if(certo.length>0) {%>
+    <script>
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+
+      Toast.fire({
+        icon: 'success',
+        title: 'Conta criado com sucesso'
+      })
+
     </script>
+    <% }%>
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-56159088-1');
+      </script>

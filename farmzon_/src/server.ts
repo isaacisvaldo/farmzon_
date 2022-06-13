@@ -37,7 +37,7 @@ app.use(CompraController);
 
 
 app.use(async(req,res, next)=>{  
-    res.render("error/404")
+    res.render("error/page-404")
 }) 
 
 

@@ -24,35 +24,35 @@ ClienteController.post('/Novocliente',async(req:Request, resp: Response)=>{
   const number = /^[9]{1}[0-9]{8}$/.test(tellCliente)
  if (hasUpper === true) {
           req.flash('errado', "nao cadastrado 1");
-          console.log('Error1')
+          resp.redirect('/cadastarCliente')
         // resp.redirect("/cadastrarCliente")
  
  
        } else if (verificaEspaco === true) {
           req.flash('errado', "nao cadastrado 2");
-          console.log('Error2')
+          resp.redirect('/cadastarCliente')
         
         // resp.redirect("/cadastrarCliente")
  
        } else
           if (!Mailer) {
              req.flash('errado', "nao cadastrado 3");
-             console.log('Error3')
+             resp.redirect('/cadastarCliente')
         // resp.redirect("/cadastrarCliente")
           } else
              if (senhaCliente.length < 5) {
                 req.flash('errado', "Senha muito fraca");
-                console.log('Error23')
+                resp.redirect('/cadastarCliente3')
         // resp.redirect("/cadastrarCliente")
              } else
                 if (senhaCliente != senhaCliente2) {
                    req.flash('errado', "Senha Diferentes");
-                   console.log('Error2')
+                   resp.redirect('/cadastarCliente')
         // resp.redirect("/cadastrarCliente")
  
                 } else if(number == false) {
                    req.flash('errado', "Numero de Telefone incorreto");
-                   console.log('Error2')
+                   resp.redirect('/cadastarCliente')
         // resp.redirect("/cadastrarCliente")
     
                 }else{ 
@@ -62,11 +62,11 @@ ClienteController.post('/Novocliente',async(req:Request, resp: Response)=>{
                    
                   
                     req.flash("certo","Criado com sucesso !")
-                    resp.json("Cadastrou")
+                    resp.redirect("/loginGeral")
                    // resp.redirect("/loginGeral")
                   }else{
-                    req.flash("info","Este usuario ja esta cadastrado!")
-                    resp.json("Nao cadastrou")
+                    req.flash("errado","Este usuario ja esta cadastrado!")
+                    resp.json("/cadastarCliente")
                     //resp.redirect("/cadastrarCliente")
                   
                    }
@@ -74,7 +74,7 @@ ClienteController.post('/Novocliente',async(req:Request, resp: Response)=>{
  
  }else{
   req.flash("errado","Ocorreu um problema!")
-   console.log('Error2')
+   resp.redirect('/cadastarCliente')
         // resp.redirect("/cadastrarCliente")
 
  }
@@ -103,23 +103,23 @@ ClienteController.post('/Atualizarcliente',async(req:Request, resp: Response)=>{
   const number = /^[9]{1}[0-9]{8}$/.test(tellCliente)
  if (hasUpper === true) {
           req.flash('errado', "nao cadastrado 1");
-          console.log('Error1')
+          resp.redirect('/cadastarCliente')
         // resp.redirect("/cadastrarCliente")
  
        } else if (verificaEspaco === true) {
           req.flash('errado', "nao cadastrado 2");
-          console.log('Error2')
+          resp.redirect('/cadastarCliente')
         // resp.redirect("/cadastrarCliente")
  
        } else
           if (!Mailer) {
              req.flash('errado', "nao cadastrado 3");
-             console.log('Error3')
+             resp.redirect('/cadastarCliente')
         // resp.redirect("/cadastrarCliente")
           } else
               if(number == false) {
                    req.flash('errado', "Numero de Telefone incorreto");
-                   console.log('Error2')
+                   resp.redirect('/cadastarCliente')
         // resp.redirect("/cadastrarCliente")
     
                 }else{ 
@@ -129,7 +129,7 @@ ClienteController.post('/Atualizarcliente',async(req:Request, resp: Response)=>{
  
  }else{
   req.flash("errado","Ocorreu um problema!")
-   console.log('Error2')
+   resp.redirect('/cadastarCliente')
         // resp.redirect("/cadastrarCliente")
 
  }
