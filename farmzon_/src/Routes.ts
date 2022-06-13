@@ -31,7 +31,10 @@ Route.get('/503', (req:Request, resp: Response)=>{
 })
 
 Route.get('/loginGeral', (req:Request, resp: Response)=>{
-    resp.render('form/login',{errado:req.flash('errado')})
+    resp.render('Site/login',{errado:req.flash('errado')})
+})
+Route.get('/cadastarCliente', (req:Request, resp: Response)=>{
+    resp.render('Site/cadastrar',{errado:req.flash('errado')})
 })
 
 

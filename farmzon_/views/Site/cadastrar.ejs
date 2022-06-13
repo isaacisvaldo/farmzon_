@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <%- include ('Partials/headerHtml') %> 
+  <body class="light ">
+    <div class="wrapper vh-100">
+      <div class="row align-items-center h-100">
+        <form class="col-lg-6 col-md-8 col-10 mx-auto">
+          <div class="mx-auto text-center my-4">
+            <h1 onclick="window.location='/'" style="cursor: pointer; color:#569775;" class="my-3">FARMAZONE</h1>
+            <p>Faça seu cadastro</p>
+          </div>
+          <div class="form-group">
+            <label for="inputEmail4">Nome Completo</label>
+            <input type="text" class="form-control" id="inputEmail4">
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="firstname">Username</label>
+              <input type="text" id="firstname" class="form-control">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="lastname">Email</label>
+              <input type="email" id="lastname" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputEmail4">Numero Telefone</label>
+            <input type="number" class="form-control" id="inputEmail4">
+          </div>
+          <hr class="my-4">
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="inputPassword5">Nova Senha*</label>
+                <input type="password" class="form-control" id="inputPassword5">
+              </div>
+              <div class="form-group">
+                <label for="inputPassword6">Confirmar Senha*</label>
+                <input type="password" class="form-control" id="inputPassword6">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <p class="mb-2"> Requisitos de senha</p>
+              <p class="small text-muted mb-2"> 
+               
+                
+                Para criar uma nova senha, você deve atender a todos os seguintes requisitos:</p>
+              <ul class="small text-muted pl-4 mb-0">
+                                
+                <li> Mínimo de 8 caracteres </li>
+                <li>Pelo menos um caractere especial</li>
+                <li>Pelo menos um número</li>
+                <li>Não pode ser igual a uma senha anterior </li>
+              </ul>
+            </div>
+          </div>
+          <button style="cursor: pointer; background-color:#569775; color: #fff" class="btn btn-lg btn-block" type="submit">Cadastrar</button>
+          <p class="mt-5 mb-3 text-muted text-center">© 2022</p>
+        </form>
+      </div>
+    </div>
+    <%- include ('Partials/footerJS') %>
+  </body>
+</html>
+</body>
+</html>
