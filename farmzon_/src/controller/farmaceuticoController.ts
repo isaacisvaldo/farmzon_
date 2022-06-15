@@ -255,6 +255,28 @@ FarmaceuticoController.get('/estoque',farmAuth, async (req:Request, resp: Respon
 }
 })
 
+//Adicionar Estoque
+FarmaceuticoController.get('/estoque_/:idProduto',farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    const {idProduto}=req.params
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser)
+    const medicamentos= await knex('produto').join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+    .where('produto.idProduto', idProduto)
+    if(medicamentos){
+      // console.log(categoria)
+      resp.render('Farmaceutico/adicionarEstoque',{farmaceutico,medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+    }else{
+      resp.redirect("/404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+})
+
+//
+
 //cliente---------------------------------------------------------------------
 FarmaceuticoController.get('/Clientes',farmAuth,async(req:Request, resp: Response)=>{
   const clientes = await knex('cliente').select('*');

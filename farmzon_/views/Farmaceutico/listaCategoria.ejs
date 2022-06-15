@@ -52,7 +52,7 @@
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
-                                                    <form method="post" action="/Novocategoria">
+                                                    <form method="post" action="/Novocategoria" enctype="multipart/form-data">
                                                     <div class="modal-body">
                                                        
                                                             <div class="form-group">
@@ -360,7 +360,7 @@
       
             Toast.fire({
               icon: 'success',
-              title: certo
+              title: '<%=certo %>'
             })
       
           </script>
