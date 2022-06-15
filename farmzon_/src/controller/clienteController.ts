@@ -2,6 +2,7 @@ import knex from '../database/conection';
 import multer from 'multer'
 import multerConfig from '../config/multer';
 import clienteAuth from '../middlewre/cliente'
+import farmAuth from '../middlewre/farm'
 
 import { Response, Request, Router, request } from  "express";
 // import bCryptjs from 'bcryptjs'
@@ -134,6 +135,24 @@ ClienteController.post('/Atualizarcliente',async(req:Request, resp: Response)=>{
 
  }
                    
+})
+
+ClienteController.get("/listaClientes",farmAuth, async(req:Request, resp:Response) =>{
+  try {
+      const idUser=req.session?.user.id;
+      const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser)
+      const cliente= await knex('cliente').select('*')
+      if(cliente){
+        console.log(cliente)
+        resp.render('Farmaceutico/clienteLista',{farmaceutico,cliente,certo:req.flash('certo'),errado:req.flash('errado')})
+      }else{
+        resp.redirect("/404")
+    }    
+  } catch (error) {
+    console.log(error);
+    resp.render("error/page-404")
+  }
+
 })
 
   //Fim Cliente autenticado

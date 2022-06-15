@@ -8,6 +8,7 @@ import session from 'express-session'
 import CompraController from './controller/compraController';
 import ClienteController from './controller/clienteController';
 import FarmaceuticoController from './controller/farmaceuticoController';
+import CategoriaController from './controller/categoriaController';
 
 import knex from './database/conection';
 
@@ -34,6 +35,8 @@ app.use(route);
 app.use(ClienteController);
 app.use(FarmaceuticoController);
 app.use(CompraController);
+app.use(CategoriaController);
+
 
 
 app.use(async(req,res, next)=>{  
