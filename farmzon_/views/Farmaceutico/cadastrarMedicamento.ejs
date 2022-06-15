@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+    <title>FarmaZone</title>
+    <!-- Simple bar CSS -->
+    <link rel="stylesheet" href="DashBoard/css/simplebar.css">
+    <!-- Fonts CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Icons CSS -->
+    <link rel="stylesheet" href="DashBoard/css/feather.css">
+    <!-- Date Range Picker CSS -->
+    <link rel="stylesheet" href="DashBoard/css/daterangepicker.css">
+    <!-- App CSS -->
+    <link rel="stylesheet" href="DashBoard/css/app-light.css" id="lightTheme">
+    <link rel="stylesheet" href="DashBoard/css/app-dark.css" id="darkTheme" disabled>
+  </head>
+  <body class="vertical  light  ">
+    <div class="wrapper">
+        <%- include ('Partials/nav') %>
+        <%- include ('Partials/sideBar') %>
+      <main role="main" class="main-content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <h2 class="page-title">Cadastrar Medicamentos</h2>
+              <p class="text-muted">Adicione productos farmaceuticos e sua quantidade armazenada no seu estoque.</p>
+              <div class="card shadow mb-4">
+                <div class="card-header">
+                  <strong class="card-title">Novo Producto</strong>
+                </div>
+                <form action="/NovoProduto" method="post" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group mb-3"  >
+                              <label for="simpleinput">Nome Medicamento</label>
+                              <input placeholder="Nome Medicamento" name="nomeProduto" type="text" id="simpleinput" class="form-control">
+                            </div>
+                            <div class="form-group mb-3">
+                              <label for="example-email">Preço</label>
+                              <input name="precoProduto" placeholder="Digite o Preço" type="number" min="50" max="1000000" id="example-email"  class="form-control" >
+                            </div>
+                            <div class="form-group mb-3">
+                              <label for="example-password">Quantidade</label>
+                              <input placeholder="Digite a Quantidade" name="stockProduto" min="1" max="1000" type="number" id="example-password" class="form-control" value="password">
+                            </div>
+                            <div class="form-group mb-3">
+                              <label for="example-palaceholder">Categoria</label>
+                              <select class="form-control" name="idCategoria" id="">
+                                  <% categoria.map(c=> {%> 
+                                      <option  value="<%=c.idCategoria%>"><%= c.nomeCategoria%></option>
+                                  <%}) %> 
+                              </select>
+                            </div>
+                          </div> <!-- /.col -->
+                          <div class="col-md-6">
+                              <div class="mb-3">
+                                  <label for="formFileMultiple" class="form-label">Imagem Medicamento</label>
+                                  <input accept="image/png, image/jpeg" type="file" class="form-control " type="file" id="formFileMultiple"  name="image">
+                                </div>
+                            <div class="form-group mb-3">
+                              <label for="example-helping">Descrição Produto</label>
+                              <input name="descProduto" type="text" id="example-helping" class="form-control" placeholder="Descrição do Produto">
+                            </div>
+                            <div class="form-group mb-3">
+                              <label for="example-readonly">Farmaceutico</label>
+                              <input type="hidden" name="idFarmaceutico" value="<%=farmaceutico.idFarmaceutico %> ">
+                              <input  type="text" id="example-readonly" class="form-control" readonly value="<%=farmaceutico.nomeFarmaceutico %>">
+                            </div>
+                          </div>
+                          <button type="submit" class="btn btn-primary m-3">Cadastrar Medicamento</button>
+                        </div>
+                      </div>
+                </form>
+
+              </div> <!-- / .card -->
+               <!-- end section -->
+            </div> <!-- .col-12 -->
+          </div> <!-- .row -->
+        </div> <!-- .container-fluid -->
+
+      </main> <!-- main -->
+    </div> <!-- .wrapper -->
+    <script src="DashBoard/js/jquery.min.js"></script>
+    <script src="DashBoard/js/popper.min.js"></script>
+    <script src="DashBoard/js/moment.min.js"></script>
+    <script src="DashBoard/js/bootstrap.min.js"></script>
+    <script src="DashBoard/js/simplebar.min.js"></script>
+    <script src='DashBoard/js/daterangepicker.js'></script>
+    <script src='DashBoard/js/jquery.stickOnScroll.js'></script>
+    <script src="DashBoard/js/tinycolor-min.js"></script>
+    <script src="DashBoard/js/config.js"></script>
+    <script src="DashBoard/js/apps.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag()
+      {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'UA-56159088-1');
+    </script>
+        <script src="sweetalert/sweetalert2.all.min.js"></script>
+        <% if(errado.length>0) {%>
+            <script>
+              var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              Toast.fire({
+                icon: 'error',
+                title: '<%=errado %>'
+              })
+            </script>
+          
+            <% }else if(certo.length>0) {%>
+              <script>
+          
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 3000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+          
+                Toast.fire({
+                  icon: 'success',
+                  title: '<%=certo %>'
+                })
+          
+              </script>
+              <% }%>
+  </body>
+</html>

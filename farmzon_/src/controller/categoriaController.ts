@@ -11,63 +11,33 @@ const CategoriaController=Router();
 
 import { date } from '@hapi/joi';
 // import bCryptjs from 'bcryptjs
-CategoriaController.post('/Novocategoria',async(req:Request, resp: Response)=>{
+CategoriaController.post('/Novocategoria',upload.single('image'), async(req:Request, resp: Response)=>{
 
-  const {nomecategoria, usercategoria, emailcategoria,tellcategoria,senhacategoria,senhacategoria2,generocategoria}=req.body; 
- const estadocategoria = 1;
- const role= 2;
- if(!(nomecategoria===''|| usercategoria===''|| emailcategoria===''||tellcategoria===''||senhacategoria===''||senhacategoria2===''||generocategoria==='')){
-  const imgcategoria= (req.file) ? req.file.filename : 'user.png';
-  let re = /[A-Z]/;
-  const hasUpper = re.test(usercategoria);
-  const verificaEspaco = /\s/g.test(usercategoria);
-  const Mailer = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/.test(emailcategoria);
-  const number = /^[9]{1}[0-9]{8}$/.test(tellcategoria)
- if (hasUpper === true) {
+  const {nomeCategoria, desCategoria}=req.body; 
+  console.log(nomeCategoria, desCategoria);
+  
+ if(!(nomeCategoria===''|| desCategoria==='')){
+  const imagemCategoria= (req.file) ? req.file.filename : 'categoria.jpg';
+
+ if (!(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u.test(nomeCategoria))) {
           req.flash('errado', "nao cadastrado 1");
-          resp.redirect('/cadastarcategoria')
+          resp.redirect('/listarCategoria')
         // resp.redirect("/cadastrarcategoria")
  
  
-       } else if (verificaEspaco === true) {
-          req.flash('errado', "nao cadastrado 2");
-          resp.redirect('/cadastarcategoria')
-        
-        // resp.redirect("/cadastrarcategoria")
- 
-       } else
-          if (!Mailer) {
-             req.flash('errado', "nao cadastrado 3");
-             resp.redirect('/cadastarcategoria')
-        // resp.redirect("/cadastrarcategoria")
-          } else
-             if (senhacategoria.length < 5) {
-                req.flash('errado', "Senha muito fraca");
-                resp.redirect('/cadastarcategoria3')
-        // resp.redirect("/cadastrarcategoria")
-             } else
-                if (senhacategoria != senhacategoria2) {
-                   req.flash('errado', "Senha Diferentes");
-                   resp.redirect('/cadastarcategoria')
-        // resp.redirect("/cadastrarcategoria")
- 
-                } else if(number == false) {
-                   req.flash('errado', "Numero de Telefone incorreto");
-                   resp.redirect('/cadastarcategoria')
-        // resp.redirect("/cadastrarcategoria")
-    
-                }else{ 
-                  const verify= await knex('categoria').where('emailcategoria', emailcategoria).orWhere('usercategoria', usercategoria)
+       }
+       else{ 
+                  const verify= await knex('categoria').where('nomeCategoria', nomeCategoria).orWhere('desCategoria', desCategoria)
                   if(verify.length===0){
-                    const ids = await knex('categoria').insert({imgcategoria, nomecategoria, usercategoria, emailcategoria,tellcategoria,senhacategoria,estadocategoria,generocategoria,role}).catch(err =>{console.log(err); req.flash("errado","Ocorreu um problema!");resp.redirect("/cadastrarcategoria")})
+                    const ids = await knex('categoria').insert({imagemCategoria, nomeCategoria, desCategoria}).catch(err =>{console.log(err); req.flash("errado","Ocorreu um problema!");resp.redirect("/cadastrarcategoria")})
                    
                   
                     req.flash("certo","Criado com sucesso !")
-                    resp.redirect("/loginGeral")
+                    resp.redirect('/listarCategoria')
                    // resp.redirect("/loginGeral")
                   }else{
                     req.flash("errado","Este usuario ja esta cadastrado!")
-                    resp.json("/cadastarcategoria")
+                    resp.json("/listarCategoria")
                     //resp.redirect("/cadastrarcategoria")
                   
                    }
@@ -75,7 +45,7 @@ CategoriaController.post('/Novocategoria',async(req:Request, resp: Response)=>{
  
  }else{
   req.flash("errado","Ocorreu um problema!")
-   resp.redirect('/cadastarcategoria')
+   resp.redirect('/listarCategoria')
         // resp.redirect("/cadastrarcategoria")
 
  }
@@ -104,23 +74,23 @@ CategoriaController.post('/Atualizarcategoria',async(req:Request, resp: Response
   const number = /^[9]{1}[0-9]{8}$/.test(tellcategoria)
  if (hasUpper === true) {
           req.flash('errado', "nao cadastrado 1");
-          resp.redirect('/cadastarcategoria')
+          resp.redirect('/listarCategoria')
         // resp.redirect("/cadastrarcategoria")
  
        } else if (verificaEspaco === true) {
           req.flash('errado', "nao cadastrado 2");
-          resp.redirect('/cadastarcategoria')
+          resp.redirect('/listarCategoria')
         // resp.redirect("/cadastrarcategoria")
  
        } else
           if (!Mailer) {
              req.flash('errado', "nao cadastrado 3");
-             resp.redirect('/cadastarcategoria')
+             resp.redirect('/listarCategoria')
         // resp.redirect("/cadastrarcategoria")
           } else
               if(number == false) {
                    req.flash('errado', "Numero de Telefone incorreto");
-                   resp.redirect('/cadastarcategoria')
+                   resp.redirect('/listarCategoria')
         // resp.redirect("/cadastrarcategoria")
     
                 }else{ 
@@ -130,7 +100,7 @@ CategoriaController.post('/Atualizarcategoria',async(req:Request, resp: Response
  
  }else{
   req.flash("errado","Ocorreu um problema!")
-   resp.redirect('/cadastarcategoria')
+   resp.redirect('/listarCategoria')
         // resp.redirect("/cadastrarcategoria")
 
  }

@@ -20,7 +20,7 @@ FarmaceuticoController.get('/Farmaceutico',farmAuth,async(req:Request, resp: Res
         const {nomeFarmaceutico, userFarmaceutico, emailFarmaceutico, tellFarmaceutico,senhaFarmaceutico2, senhaFarmaceutico,generoFarmaceutico,descFarmaceutico}= req.body;         
         if(nomeFarmaceutico=='' || userFarmaceutico=='' || emailFarmaceutico=='' || tellFarmaceutico=='' || senhaFarmaceutico==''|| generoFarmaceutico==''){
           req.flash('errado', 'Valores incorretos');
-          console.log('mmm')
+          resp.redirect('/cadastrarMedicamentos')
         }else{
           let re = /[A-Z]/;
           const hasUpper = re.test(userFarmaceutico);
@@ -29,36 +29,36 @@ FarmaceuticoController.get('/Farmaceutico',farmAuth,async(req:Request, resp: Res
           const number = /^[9]{1}[0-9]{8}$/.test(tellFarmaceutico)
           if (hasUpper === true) {
             req.flash('errado', "Ocorreu um problema");
-          console.log('mmm')
+          resp.redirect('/cadastrarMedicamentos')
        
    
          } else if (verificaEspaco === true) {
             req.flash('errado', "nao cadastrado 2");
-          console.log('mmm')
+          resp.redirect('/cadastrarMedicamentos')
    
          } else
             if (!Mailer) {
                req.flash('errado', "nao cadastrado 3");
-             console.log('mmm')
+             resp.redirect('/cadastrarMedicamentos')
             } else
                if (senhaFarmaceutico.length < 5) {
                   req.flash('errado', "Senha muito fraca");
-                console.log('mmm')
+                resp.redirect('/cadastrarMedicamentos')
                } else
                   if (senhaFarmaceutico != senhaFarmaceutico2) {
                      req.flash('errado', "Senha Diferentes");
-                   console.log('mmm')
+                   resp.redirect('/cadastrarMedicamentos')
    
                   } else if(number == false) {
                      req.flash('errado', "Numero de Telefone incorreto");
-                   console.log('mmm')
+                   resp.redirect('/cadastrarMedicamentos')
       
                   }else{ 
           const farmac= await knex('farmaceutico').where('userFarmaceutico',userFarmaceutico).orWhere('tellFarmaceutico',tellFarmaceutico).orWhere('senhaFarmaceutico',emailFarmaceutico)
           if(farmac.length>0){
             
             req.flash('errado', 'Esses dados Ja encontra-se presente ');
-            console.log('mmm')
+            resp.redirect('/cadastrarMedicamentos')
           }else{
             const farmac= await knex('farmaceutico').insert({role:1, nomeFarmaceutico, userFarmaceutico, emailFarmaceutico, tellFarmaceutico, senhaFarmaceutico,generoFarmaceutico,imagemFarmaceutico, descFarmaceutico})
             req.flash('certo', 'Farmaceutico Cadastrato com Sucesso');
@@ -79,7 +79,7 @@ FarmaceuticoController.get('/Farmaceutico',farmAuth,async(req:Request, resp: Res
       const {nomeFarmaceutico, userFarmaceutico, emailFarmaceutico, tellFarmaceutico,generoFarmaceutico,idFarmaceutico,descFarmaceutico}= req.body;         
       if(nomeFarmaceutico=='' || userFarmaceutico=='' || emailFarmaceutico=='' || tellFarmaceutico=='' || generoFarmaceutico==''){
         req.flash('errado', 'Valores incorretos');
-        console.log('mmm')
+        resp.redirect('/cadastrarMedicamentos')
       }else{
         let re = /[A-Z]/;
         const hasUpper = re.test(userFarmaceutico);
@@ -88,21 +88,21 @@ FarmaceuticoController.get('/Farmaceutico',farmAuth,async(req:Request, resp: Res
         const number = /^[9]{1}[0-9]{8}$/.test(tellFarmaceutico)
         if (hasUpper === true) {
           req.flash('errado', "Ocorreu um problema");
-        console.log('mmm')
+        resp.redirect('/cadastrarMedicamentos')
      
  
        } else if (verificaEspaco === true) {
           req.flash('errado', "nao cadastrado 2");
-        console.log('mmm')
+        resp.redirect('/cadastrarMedicamentos')
  
        } else
           if (!Mailer) {
              req.flash('errado', "nao cadastrado 3");
-           console.log('mmm')
+           resp.redirect('/cadastrarMedicamentos')
           } else
             if(number == false) {
                    req.flash('errado', "Numero de Telefone incorreto");
-                 console.log('mmm')
+                 resp.redirect('/cadastrarMedicamentos')
     
                 }else{ 
      
@@ -142,34 +142,59 @@ FarmaceuticoController.post('/Atualizarcategoria',async(req:Request, resp: Respo
         
     }
  })
-FarmaceuticoController.post('/NovoProduto',upload.single('image'),async (req:Request, resp: Response)=>{
-        try {
-          const imgProduto= (req.file) ? req.file.filename : 'user.png';       
-          const {nomeProduto, descProduto, stockProduto,precoProduto,estadoProduto, idCategoria}= req.body;         
-          if(nomeProduto=='' || descProduto==''){
-            req.flash('errado', 'Valores incorretos');
-            console.log('mmm')
-          }else{
-            let number = /[0-9]/.test(precoProduto);
-           
-          if(number == false) {
-                   req.flash('errado', "Preço incorreto");
-                     console.log('mmm')
-        
-                    }else{ 
-          const verify = await knex('produto').where('nomeProduto',nomeProduto)
-          if(verify.length===0){
-           const produto = await knex('produto').insert({nomeProduto,imgProduto, descProduto, stockProduto,precoProduto,estadoProduto,idCategoria})
+ FarmaceuticoController.get('/cadastrarMedicamentos',farmAuth, async(req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first();
+    const categoria= await knex('categoria').select('*')
+    if(categoria){
+      // console.log(categoria)
+      resp.render('Farmaceutico/cadastrarMedicamento',{farmaceutico,categoria,certo:req.flash('certo'),errado:req.flash('errado')})
+    }else{
+      resp.redirect("/404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+})
 
-          }else{
-            resp.send('Esse produto ja existe')
+FarmaceuticoController.post('/NovoProduto',upload.single('image'), async (req:Request, resp: Response)=>{
+        
+          let imgProduto=''; 
+          if(req.file) {
+            imgProduto=req.file.filename;
+            const {nomeProduto, descProduto, stockProduto,precoProduto, idCategoria, idFarmaceutico}= req.body; 
+            const estadoProduto=1;        
+            if(nomeProduto=='' || descProduto==''){
+              req.flash('errado', 'Valores incorretos');
+              resp.redirect('/cadastrarMedicamentos')
+            }else{
+              let number = /[0-9]/.test(precoProduto);
+             
+            if(number == false) {
+                     req.flash('errado', "Preço incorreto");
+                       resp.redirect('/cadastrarMedicamentos')
+          
+                      }else{ 
+            const verify = await knex('produto').where('nomeProduto',nomeProduto)
+            if(verify.length===0){
+             const produto = await knex('produto').insert({nomeProduto,imgProduto,idFarmaceutico, descProduto, stockProduto,precoProduto,estadoProduto,idCategoria})
+             req.flash('certo','Produto cadastrado')
+             resp.redirect('/listarMedicamentos')
+            }else{
+              req.flash('errado','Esse produto ja existe')
+              resp.redirect('/cadastrarMedicamentos')
+            }
+            }
+           
           }
-                  }
-         
-        }
-      }catch (error) {
-        resp.send(error + " - falha ao registar")
-      }  
+          } else if(!req.file){
+            req.flash('errado', 'Adicione uma Imagem');
+            resp.redirect('/cadastrarMedicamentos')
+          }   
+
+     
 })
 FarmaceuticoController.post('/AtualizarProduto',async (req:Request, resp: Response)=>{
   try {
@@ -177,13 +202,13 @@ FarmaceuticoController.post('/AtualizarProduto',async (req:Request, resp: Respon
     const {nomeProduto, descProduto,idProduto,stockProduto,precoProduto,estadoProduto, idCategoria}= req.body;         
     if(nomeProduto=='' || descProduto==''){
       req.flash('errado', 'Valores incorretos');
-      console.log('mmm')
+      resp.redirect('/cadastrarMedicamentos')
     }else{
       let number = /[0-9]/.test(precoProduto);
      
     if(number == false) {
              req.flash('errado', "Preço incorreto");
-               console.log('mmm')
+               resp.redirect('/cadastrarMedicamentos')
   
               }else{ 
 
@@ -196,6 +221,38 @@ FarmaceuticoController.post('/AtualizarProduto',async (req:Request, resp: Respon
 }catch (error) {
   resp.send(error + " - falha ao registar")
 }  
+})
+FarmaceuticoController.get('/listarMedicamentos',farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser)
+    const medicamentos= await knex('produto').join('categoria', 'produto.idCategoria', 'categoria.idCategoria').select('*')
+    if(medicamentos){
+      // console.log(categoria)
+      resp.render('Farmaceutico/listarProduto',{farmaceutico,medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+    }else{
+      resp.redirect("/404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+})
+FarmaceuticoController.get('/estoque',farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser)
+    const medicamentos= await knex('produto').join('categoria', 'produto.idCategoria', 'categoria.idCategoria').select('*')
+    if(medicamentos){
+      // console.log(categoria)
+      resp.render('Farmaceutico/estoque',{farmaceutico,medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+    }else{
+      resp.redirect("/404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
 })
 
 //cliente---------------------------------------------------------------------
