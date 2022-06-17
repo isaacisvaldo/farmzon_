@@ -157,24 +157,29 @@ ClienteController.get("/listaClientes",farmAuth, async(req:Request, resp:Respons
 
 
 //cliente---------------------------------------------------------------------
-ClienteController.get('/Clientes',farmAuth,async(req:Request, resp: Response)=>{
-  const clientes = await knex('cliente').select('*');
-  resp.render('DashBoard/clientes',{clientes})
-})
-ClienteController.get('/Cliente/:id',farmAuth,async(req:Request, resp: Response)=>{
-  const {id}=req.params;
-  const clientes = await knex('cliente').where('idCliente',id).select('*')
-  if(clientes){
-   
-  }else{
-    resp.render("error/page-404")
-  }
-})
-ClienteController.get('/Clientedeletar/:id',farmAuth,async(req:Request, resp: Response)=>{
-  const {id}=req.params;
-  const cliente = await knex('cliente').where('idCliente',id).delete()
- resp.send('Deletado...')
- 
+ClienteController.get('/detalhesMed/:idCliente',farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    let {idProduto, stockProduto}=req.params
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first()
+    const medicamentos= await knex('produto')
+    .where('produto.idProduto', idProduto)
+    .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+    .join('farmaceutico', 'produto.idFarmaceutico', 'farmaceutico.idFarmaceutico')
+    .first();
+
+    const compras= await knex('compra')
+    .join('produto', 'compra.idProduto', 'produto.idProduto')
+    .join('cliente', 'compra.idCliente', 'cliente.idCliente')
+    if(medicamentos){
+      resp.render('Farmaceutico/detalhesMed',{farmaceutico,compras, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+    }else{
+      resp.render("error/page-404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
 })
 
   //Fim Cliente autenticado

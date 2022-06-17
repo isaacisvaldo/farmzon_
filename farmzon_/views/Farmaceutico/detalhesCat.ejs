@@ -44,8 +44,58 @@
                   <div class="row mb-4">
                     <div class="col-md-7">
                       <p class="text-muted"> <%=categoria.desCategoria%> </p>
-                      <button onclick="window.location='/editarCategoria/<%=categoria.idCategoria%>' " class="btn btn-primary">Editar Categoria</button>
+                      <button type="button" class="btn m-2 btn-primary" data-toggle="modal"
+                                        data-target="#varyModal" data-whatever="@mdo">Editar Categoria</button>
                     </div>
+                    <div >
+                      <div>
+                          <div class="modal fade" id="varyModal" tabindex="-1" role="dialog"
+                              aria-labelledby="varyModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h5 class="modal-title" id="varyModalLabel">Editar Categoria</h5>
+                                          <button type="button" class="close" data-dismiss="modal"
+                                              aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                          </button>
+                                      </div>
+                                      <form method="post" action="/editarCategoria_" enctype="multipart/form-data">
+                                      <div class="modal-body">
+                                        <input type="hidden" name="idCategoria" value="<%=categoria.idCategoria %> ">
+                                         
+                                              <div class="form-group">
+                                                  <label><strong>Imagem Categoria</strong></label>
+                                                  <div class="custom-file">
+                                                    <input  accept="image/png, image/jpeg" type="file" name="image" multiple class="custom-file-input form-control" id="customFile">
+                                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                                  </div>
+                                              </div>
+                                              <div class="form-group">
+                                                  <label for="recipient-name"
+                                                      class="col-form-label">Nome:</label>
+                                                  <input value="<%=categoria.nomeCategoria %> " name="nomeCategoria" type="text" class="form-control"
+                                                      id="recipient-name">
+                                              </div>
+                                              <div class="form-group">
+                                                  <label for="message-text"
+                                                      class="col-form-label">Descrição:</label>
+                                                  <textarea name="desCategoria" class="form-control"
+                                                      id="message-text"><%=categoria.desCategoria %> </textarea>
+                                              </div>
+                                         
+                                      </div>
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn mb-2 btn-secondary"
+                                              data-dismiss="modal">Fechar</button>
+                                          <button type="submit" class="btn mb-2 btn-primary">Editar Dados</button>
+                                      </div>
+                                  </form>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
                     <div class="col">
                       <p class="small mb-0 text-muted"><%=categoria.nomeFarmaceutico %></p>
                       <p class="small mb-0 text-muted"><%=categoria.emailFarmaceutico %></p>
@@ -59,93 +109,57 @@
               <table class="table table-borderless table-striped">
                 <thead>
                   <tr role="row">
-                    <th>ID</th>
-                    <th>Nome Cliente</th>
-                    <th>telefone</th>
-                    <th>Email</th>
-                    <th>Quantidade</th>
-                    <th>Estado</th>
-                    <th>Action</th>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                      <th>Quantidade</th>
+                            <th>Telefone</th>
+                            
+                            <th>Estado</th>
+        
+                            <th>Accão</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="col">1331</th>
-                    <td>2020-12-26 01:32:21</td>
-                    <td>$16.9</td>
-                    <td>Paypal</td>
-                    <td><span class="dot dot-lg bg-warning mr-2"></span>Due</td>
-                    <td>
-                      <div class="dropdown">
-                        <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="text-muted sr-only">Action</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                          <a class="dropdown-item" href="#">Edit</a>
-                          <a class="dropdown-item" href="#">Remove</a>
-                          <a class="dropdown-item" href="#">Assign</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="col">1156</th>
-                    <td>2020-04-21 00:38:38</td>
-                    <td>$9.9</td>
-                    <td>Paypal</td>
-                    <td><span class="dot dot-lg bg-danger mr-2"></span>False</td>
-                    <td>
-                      <div class="dropdown">
-                        <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="text-muted sr-only">Action</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                          <a class="dropdown-item" href="#">Edit</a>
-                          <a class="dropdown-item" href="#">Remove</a>
-                          <a class="dropdown-item" href="#">Assign</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="col">1038</th>
-                    <td>2019-06-25 19:13:36</td>
-                    <td>$9.9</td>
-                    <td>Credit Card </td>
-                    <td><span class="dot dot-lg bg-success mr-2"></span>Paid</td>
-                    <td>
-                      <div class="dropdown">
-                        <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="text-muted sr-only">Action</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                          <a class="dropdown-item" href="#">Edit</a>
-                          <a class="dropdown-item" href="#">Remove</a>
-                          <a class="dropdown-item" href="#">Assign</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="col">1227</th>
-                    <td>2021-01-22 13:28:00</td>
-                    <td>$9.9</td>
-                    <td>Paypal</td>
-                    <td><span class="dot dot-lg bg-success mr-2"></span>Paid</td>
-                    <td>
-                      <div class="dropdown">
-                        <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="text-muted sr-only">Action</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                          <a class="dropdown-item" href="#">Edit</a>
-                          <a class="dropdown-item" href="#">Remove</a>
-                          <a class="dropdown-item" href="#">Assign</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
+                  <% medicamentos.reverse().map(c=>{%> 
+                      <tr>
+                          <td>
+                            <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input">
+                              <label class="custom-control-label"></label>
+                            </div>
+                          </td>
+                          <td>Produto nº<%=c.idProduto %> </td>
+                          <td><%=c.nomeProduto %> </td>
+                          <td><%=c.nomeCategoria %> </td>
+                          <td><%=c.precoProduto %>Kz </td>
+                          <td><%=c.stockProduto %> Unidades </td>
+                          
+                          <td>
+                           <% if(c.estadoProduto==1){%>
+                              Disponivel
+                          <%}else{%>
+                              Não Disponivel
+                          <% } %> 
+                          </td>
+                          
+                          <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <span class="text-muted sr-only">Action</span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                              <a class="dropdown-item" href="/DetalhesMed/<%=c.idProduto %> ">Ver</a>
+                              <a class="dropdown-item" href="/editarMedicamento/<%=c.idProduto %> ">Editar</a>
+                              <span class="dropdown-item" onclick="confirmar( `<%= c.idProduto %>`)">Remover</span>
+                            </div>
+                          </td>
+                        </tr>
+
+                  <%  }) %> 
+
+                
+                               
+
+              </tbody>
               </table>
               
             </div> <!-- /.col-12 -->
@@ -177,7 +191,7 @@
       gtag('js', new Date());
       gtag('config', 'UA-56159088-1');
     </script>
-                <script src="sweetalert/sweetalert2.all.min.js"></script>
+                <script src="/sweetalert/sweetalert2.all.min.js"></script>
                 <% if(errado.length>0) {%>
                     <script>
                       var Toast = Swal.mixin({

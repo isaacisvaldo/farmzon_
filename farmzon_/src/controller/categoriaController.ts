@@ -89,6 +89,51 @@ CategoriaController.get('/detalhesCat/:idCategoria',farmAuth, async (req:Request
   resp.render("error/page-404")
 }
 })
+CategoriaController.post('/editarCategoria_',upload.single('image'),farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    const {nomeCategoria, desCategoria, idCategoria}=req.body;
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first();
+    const med= await knex('categoria').where('idCategoria', idCategoria).first();
+    const imagemCategoria= (req.file)?req.file.filename : med.imagemCategoria;
+    const categoria= await knex('categoria').select('*')
+    const medicamentos= await knex('categoria').where('idCategoria', idCategoria).update({nomeCategoria, imagemCategoria,desCategoria })
+    if(medicamentos){
+      // console.log(categoria)
+      req.flash('certo', 'Dados da Categoria Editado')
+      resp.redirect('/detalhesCat/'+med.idCategoria)
+    }else{
+      resp.render("error/page-404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+}
+)
+
+CategoriaController.get('/removerCategoria/:idCategoria',farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    const {idCategoria}=req.params
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first();
+
+    const categoria= await knex('categoria').select('*');
+    const compras = await knex('produto').where('idCategoria', idCategoria).del();
+    const medicamentos= await knex('categoria').where('idCategoria', idCategoria).del();
+    if(medicamentos){
+      // console.log(categoria)
+      req.flash('certo', 'Categoria Eliminada')
+      resp.redirect('/listarCategoria')
+    }else{
+      resp.render("error/page-404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+}
+)
 
 
  
