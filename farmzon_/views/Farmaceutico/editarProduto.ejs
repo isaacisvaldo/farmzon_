@@ -34,44 +34,70 @@
           <div class="row justify-content-center">
             <div class="col-12 col-xl-10">
  
-              <form method="post" action="/adicionarEstoque">
+              <form method="post" action="/editarProduto_" enctype="multipart/form-data">
                 <hr class="my-4">
-                <h5 class="mb-2 mt-4">Adicionar Unidades</h5>
-                <p class="mb-4">Quantidade do Produto <%= medicamentos.nomeProduto %>  em Stock</p>
+                <h5 class="mb-2 mt-4">Editar Dados do Produto</h5>
+                <p class="mb-4">Editar dados Produto <%= medicamentos.nomeProduto %>  em Stock</p>
+                <div class="form-group">
+                    <label for="formFileMultiple" class="form-label">Imagem Medicamento</label>
+                    <div class="custom-file">
+                      <input accept="image/png, image/jpeg" type="file" name="image" multiple class="custom-file-input form-control" id="customFile">
+                      <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                </div>
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="firstname">Nome Medicamento</label>
-                    <input value="<%= medicamentos.nomeProduto%> " readonly type="text" id="firstname" class="form-control">
+                    <input name="nomeProduto" value="<%= medicamentos.nomeProduto%> "  type="text" id="firstname" class="form-control">
                   </div>
                   <div class="form-group col-md-6">
                     <label for="lastname">Quantidade</label>
-                    <input value="<%= medicamentos.stockProduto%> " readonly type="text" id="lastname" class="form-control">
+                    <input name="stockProduto" readonly value="<%= medicamentos.stockProduto%> "  type="text" id="lastname" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputAddress5">Descrição</label>
-                  <input value="<%= medicamentos.descProduto%> " readonly type="text" class="form-control" id="inputAddress5">
+                  <input name="descProduto" value="<%= medicamentos.descProduto%> "  type="text" class="form-control" id="inputAddress5">
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-4">
                     <label for="custom-zip">Preço</label>
-                    <input value="<%= medicamentos.precoProduto%> " readonly type="text" class="form-control" id="inputAddress5">
+                    <input name="precoProduto" value="<%= medicamentos.precoProduto%> " min="200" max="1000000" type="text" class="form-control" id="inputAddress5">
                   </div>
                   <div class="form-group col-md-4">
                     <label for="inputState5">Categoria</label>
-                    <input value="<%= medicamentos.nomeCategoria%> " readonly type="text" class="form-control" id="inputAddress5">
+                    <select class="form-control" name="idCategoria" id="">
+                        <option value="<%=medicamentos.idCategoria%>"><%=medicamentos.nomeCategoria %> </option>
+                        <% categoria.map(c=>{%> 
+                            <option value="<%=c.idCategoria%>"><%=c.nomeCategoria %> </option>
+                        <% }) %> 
+                        
+                    </select>
                     <input type="hidden" name="idProduto" value="<%=medicamentos.idProduto %> ">
                   </div>
                   <div class="form-group col-md-4">
-                    <label for="inputState5">Adicionar Quantidade</label>
-                    <input name="stockProduto" value="2"  type="number" min="1" max="200" class="form-control" id="inputAddress5">
+                    <% if(medicamentos.estadoProduto==1){%>
+                      
+                            <label for="custom-zip">Estado</label>
+                            <input value="Disponivel" readonly  type="text"  class="form-control" id="inputAddress5">
+                   
+                    
+                    <%}else{%>
+                   
+                            <label for="custom-zip">Estado</label>
+                            <input value=" Não Disponivel" readonly  type="text"  class="form-control" id="inputAddress5">
+                     
+                       
+                        
+                    <% } %>
+                    
                   </div>
                 </div>
                 <hr class="my-4">
                 <div class="form-row">
                   <div class="col-md-6">
                     <div class="custom-control custom-switch">
-                      <input type="checkbox" class="custom-control-input" id="customPass" checked>
+                      <input name="estadoProduto" type="checkbox" class="custom-control-input" id="customPass" checked>
                       <label class="custom-control-label" for="customPass">Activar ou desactivar o estado do Produto</label>
                     </div>
                   </div>

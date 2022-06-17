@@ -155,6 +155,28 @@ ClienteController.get("/listaClientes",farmAuth, async(req:Request, resp:Respons
 
 })
 
+
+//cliente---------------------------------------------------------------------
+ClienteController.get('/Clientes',farmAuth,async(req:Request, resp: Response)=>{
+  const clientes = await knex('cliente').select('*');
+  resp.render('DashBoard/clientes',{clientes})
+})
+ClienteController.get('/Cliente/:id',farmAuth,async(req:Request, resp: Response)=>{
+  const {id}=req.params;
+  const clientes = await knex('cliente').where('idCliente',id).select('*')
+  if(clientes){
+   
+  }else{
+    resp.render("error/page-404")
+  }
+})
+ClienteController.get('/Clientedeletar/:id',farmAuth,async(req:Request, resp: Response)=>{
+  const {id}=req.params;
+  const cliente = await knex('cliente').where('idCliente',id).delete()
+ resp.send('Deletado...')
+ 
+})
+
   //Fim Cliente autenticado
   
  

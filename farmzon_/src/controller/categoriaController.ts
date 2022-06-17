@@ -51,61 +51,6 @@ CategoriaController.post('/Novocategoria',upload.single('image'), async(req:Requ
  }
                    
 })
-//categoria Autenticado
-CategoriaController.get("/categorialogado", async(req:Request, resp:Response) =>{
-  const id=req.session?.user.id;
-  const categoria= await knex('categoria').where('idcategoria', id).first();
-  if(categoria){
-    console.log(categoria)
-    resp.render('categoria/index',{categoria,certo:req.flash('certo'),errado:req.flash('errado')})
-  }else{
-    resp.redirect("/404")
-  }
-})
-CategoriaController.post('/Atualizarcategoria',async(req:Request, resp: Response)=>{
-
-  const {nomecategoria,id, usercategoria, emailcategoria,tellcategoria,generocategoria}=req.body; 
-
- if(!(nomecategoria===''|| usercategoria===''|| emailcategoria===''||tellcategoria===''||generocategoria==='')){
-  let re = /[A-Z]/;
-  const hasUpper = re.test(usercategoria);
-  const verificaEspaco = /\s/g.test(usercategoria);
-  const Mailer = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/.test(emailcategoria);
-  const number = /^[9]{1}[0-9]{8}$/.test(tellcategoria)
- if (hasUpper === true) {
-          req.flash('errado', "nao cadastrado 1");
-          resp.redirect('/listarCategoria')
-        // resp.redirect("/cadastrarcategoria")
- 
-       } else if (verificaEspaco === true) {
-          req.flash('errado', "nao cadastrado 2");
-          resp.redirect('/listarCategoria')
-        // resp.redirect("/cadastrarcategoria")
- 
-       } else
-          if (!Mailer) {
-             req.flash('errado', "nao cadastrado 3");
-             resp.redirect('/listarCategoria')
-        // resp.redirect("/cadastrarcategoria")
-          } else
-              if(number == false) {
-                   req.flash('errado', "Numero de Telefone incorreto");
-                   resp.redirect('/listarCategoria')
-        // resp.redirect("/cadastrarcategoria")
-    
-                }else{ 
-                  const ids = await knex('categoria').where('idcategoria',id).update({nomecategoria, usercategoria, emailcategoria,tellcategoria,generocategoria,}).catch(err =>{console.log(err); req.flash("errado","Ocorreu um problema!");})
-                  resp.json('Atualizou...')
-                }
- 
- }else{
-  req.flash("errado","Ocorreu um problema!")
-   resp.redirect('/listarCategoria')
-        // resp.redirect("/cadastrarcategoria")
-
- }
-                   
-})
 
 CategoriaController.get("/listarCategoria",farmAuth, async(req:Request, resp:Response) =>{
   try {
@@ -125,11 +70,26 @@ CategoriaController.get("/listarCategoria",farmAuth, async(req:Request, resp:Res
 
 })
 
-  //Fim categoria autenticado
-  
- 
+CategoriaController.get('/detalhesCat/:idCategoria',farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    let {idCategoria}=req.params
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first()
+    const categoria= await knex('categoria')
+    .where('idCategoria', idCategoria).first();
 
-  //categoria Não autenticado
+    const medicamentos= await knex('produto').where('idCategoria', idCategoria)
+    if(categoria){
+      resp.render('Farmaceutico/detalhesCat',{farmaceutico,categoria,medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+    }else{
+      resp.render("error/page-404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+})
+
 
  
 

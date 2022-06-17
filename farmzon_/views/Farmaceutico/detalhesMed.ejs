@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+    <title>FarmaZone</title>
+    <!-- Simple bar CSS -->
+    <link rel="stylesheet" href="/DashBoard/css/simplebar.css">
+    <!-- Fonts CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Icons CSS -->
+    <link rel="stylesheet" href="/DashBoard/css/feather.css">
+    <!-- Date Range Picker CSS -->
+    <link rel="stylesheet" href="/DashBoard/css/daterangepicker.css">
+    <!-- App CSS -->
+    <link rel="stylesheet" href="/DashBoard/css/app-light.css" id="lightTheme">
+    <link rel="stylesheet" href="/DashBoard/css/app-dark.css" id="darkTheme" disabled>
+  </head>
+  <body class="vertical  light  ">
+    <div class="wrapper">
+        <%- include ('Partials/nav') %>
+        <%- include ('Partials/sideBar') %>
+      <main role="main" class="main-content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <h2 class="h3 mb-4 page-title">Detalhes do Produto</h2>
+              <div class="row mt-5 align-items-center">
+                <div class="col-md-3 text-center mb-5">
+                  <div class="avatar avatar-xl">
+                    <img src="http://localhost:1002/upload/<%=medicamentos.imgProduto %> " alt="..." class="avatar-img rounded-circle">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="row align-items-center">
+                    <div class="col-md-7">
+                      <h4 class="mb-1"><%=medicamentos.nomeProduto %></h4>
+                      <p class="small mb-3"><span class="badge badge-dark"><%=medicamentos.nomeFarmaceutico %></span> </span></p>
+                    </div>
+                  </div>
+                  <div class="row mb-4">
+                    <div class="col-md-7">
+                      <p class="text-muted"> <%=medicamentos.descProduto %> </p>
+                      <button onclick="window.location='/editarMedicamento/<%=medicamentos.idProduto %>' " class="btn btn-primary">Editar Produto</button>
+                    </div>
+                    <div class="col">
+                      <p class="small mb-0 text-muted"><%=medicamentos.nomeFarmaceutico %></p>
+                      <p class="small mb-0 text-muted"><%=medicamentos.emailFarmaceutico %></p>
+                      <p class="small mb-0 text-muted"><%=medicamentos.tellFarmaceutico  %></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row my-4">
+                <div class="col-md-4">
+                  <div class="card mb-4 shadow">
+                    <div class="card-body my-n3">
+                      <div class="row align-items-center">
+                        <div class="col-3 text-center">
+                          <span class="circle circle-lg bg-light">
+                            <i class="fe fe-user fe-24 text-primary"></i>
+                          </span>
+                        </div> <!-- .col -->
+                        <div class="col">
+                          <a href="#">
+                            <h3 class="h5 mt-4 mb-1">Stock</h3>
+                          </a>
+                          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit nisl ullamcorper, rutrum metus in, congue lectus.</p>
+                        </div> <!-- .col -->
+                      </div> <!-- .row -->
+                    </div> <!-- .card-body -->
+                    <div class="card-footer">
+                      <a href="" class="d-flex justify-content-between text-muted"><span>Account Settings</span><i class="fe fe-chevron-right"></i></a>
+                    </div> <!-- .card-footer -->
+                  </div> <!-- .card -->
+                </div> <!-- .col-md-->
+                <div class="col-md-4">
+                  <div class="card mb-4 shadow">
+                    <div class="card-body my-n3">
+                      <div class="row align-items-center">
+                        <div class="col-3 text-center">
+                          <span class="circle circle-lg bg-light">
+                            <i class="fe fe-shield fe-24 text-primary"></i>
+                          </span>
+                        </div> <!-- .col -->
+                        <div class="col">
+                          <a href="#">
+                            <h3 class="h5 mt-4 mb-1">Informações</h3>
+                          </a>
+                          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit nisl ullamcorper, rutrum metus in, congue lectus.</p>
+                        </div> <!-- .col -->
+                      </div> <!-- .row -->
+                    </div> <!-- .card-body -->
+                    <div class="card-footer">
+                      <a href="" class="d-flex justify-content-between text-muted"><span>Security Settings</span><i class="fe fe-chevron-right"></i></a>
+                    </div> <!-- .card-footer -->
+                  </div> <!-- .card -->
+                </div> <!-- .col-md-->
+                <div class="col-md-4">
+                  <div class="card mb-4 shadow">
+                    <div class="card-body my-n3">
+                      <div class="row align-items-center">
+                        <div class="col-3 text-center">
+                          <span class="circle circle-lg bg-light">
+                            <i class="fe fe-bell fe-24 text-primary"></i>
+                          </span>
+                        </div> <!-- .col -->
+                        <div class="col">
+                          <a href="#">
+                            <h3 class="h5 mt-4 mb-1">Compras Efectuadas</h3>
+                          </a>
+                          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit nisl ullamcorper, rutrum metus in, congue lectus.</p>
+                        </div> <!-- .col -->
+                      </div> <!-- .row -->
+                    </div> <!-- .card-body -->
+                    <div class="card-footer">
+                      <a href="" class="d-flex justify-content-between text-muted"><span>Notification Settings</span><i class="fe fe-chevron-right"></i></a>
+                    </div> <!-- .card-footer -->
+                  </div> <!-- .card -->
+                </div> <!-- .col-md-->
+              </div> <!-- .row-->
+              <h3>Dados de Transacionais</h3>
+              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit nisl ullamcorper, rutrum metus in, congue lectus.</p>
+              <div class="card-deck my-4">
+                <div class="card mb-4 shadow">
+                  <div class="card-body text-center my-4">
+                    <a href="#">
+                      <h3 class="h5 mt-4 mb-0">Preço do Produto</h3>
+                    </a>
+                    <p class="text-muted"><%=medicamentos.nomeCategoria %> </p>
+                    <span class="h1 mb-0"><%= medicamentos.precoProduto %> </span>
+                    <p class="text-muted">Kwanzas</p>
+                    <ul class="list-unstyled">
+                      <li>Lorem ipsum dolor sit amet</li>
+                      <li>Consectetur adipiscing elit</li>
+                      <li>Integer molestie lorem at massa</li>
+                      <li>Eget porttitor lorem</li>
+                    </ul>
+                    <span class="dot dot-lg bg-success"></span>
+                    <span class="text-muted ml-3">Activo</span>
+                  </div> <!-- .card-body -->
+                </div> <!-- .card -->
+                <div class="card mb-4">
+                  <div class="card-body text-center my-4">
+                    <a href="#">
+                      <h3 class="h5 mt-4 mb-0">Quantidade em Stock</h3>
+                    </a>
+                    <p class="text-muted"><%=medicamentos.nomeCategoria %></p>
+                    <span class="h1 mb-0"><%=medicamentos.stockProduto %></span>
+                    <p class="text-muted">Unidades</p>
+                    <ul class="list-unstyled">
+                      <li>Lorem ipsum dolor sit amet</li>
+                      <li>Consectetur adipiscing elit</li>
+                      <li>Integer molestie lorem at massa</li>
+                      <li>Eget porttitor lorem</li>
+                    </ul>
+                    <button onclick="window.location='/estoque_/<%=medicamentos.idProduto %>'" type="button" class="btn mb-2 btn-primary btn-lg">Adicionar</button>
+                  </div> <!-- .card-body -->
+                </div> <!-- .card -->
+              </div> <!-- .card-group -->
+              <h6 class="mb-3">Ultimas Compras Efectuadas</h6>
+              <table class="table table-borderless table-striped">
+                <thead>
+                  <tr role="row">
+                    <th>ID</th>
+                    <th>Nome Cliente</th>
+                    <th>telefone</th>
+                    <th>Email</th>
+                    <th>Quantidade</th>
+                    <th>Estado</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="col">1331</th>
+                    <td>2020-12-26 01:32:21</td>
+                    <td>$16.9</td>
+                    <td>Paypal</td>
+                    <td><span class="dot dot-lg bg-warning mr-2"></span>Due</td>
+                    <td>
+                      <div class="dropdown">
+                        <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="text-muted sr-only">Action</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a class="dropdown-item" href="#">Edit</a>
+                          <a class="dropdown-item" href="#">Remove</a>
+                          <a class="dropdown-item" href="#">Assign</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="col">1156</th>
+                    <td>2020-04-21 00:38:38</td>
+                    <td>$9.9</td>
+                    <td>Paypal</td>
+                    <td><span class="dot dot-lg bg-danger mr-2"></span>False</td>
+                    <td>
+                      <div class="dropdown">
+                        <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="text-muted sr-only">Action</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a class="dropdown-item" href="#">Edit</a>
+                          <a class="dropdown-item" href="#">Remove</a>
+                          <a class="dropdown-item" href="#">Assign</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="col">1038</th>
+                    <td>2019-06-25 19:13:36</td>
+                    <td>$9.9</td>
+                    <td>Credit Card </td>
+                    <td><span class="dot dot-lg bg-success mr-2"></span>Paid</td>
+                    <td>
+                      <div class="dropdown">
+                        <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="text-muted sr-only">Action</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a class="dropdown-item" href="#">Edit</a>
+                          <a class="dropdown-item" href="#">Remove</a>
+                          <a class="dropdown-item" href="#">Assign</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="col">1227</th>
+                    <td>2021-01-22 13:28:00</td>
+                    <td>$9.9</td>
+                    <td>Paypal</td>
+                    <td><span class="dot dot-lg bg-success mr-2"></span>Paid</td>
+                    <td>
+                      <div class="dropdown">
+                        <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="text-muted sr-only">Action</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a class="dropdown-item" href="#">Edit</a>
+                          <a class="dropdown-item" href="#">Remove</a>
+                          <a class="dropdown-item" href="#">Assign</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div> <!-- /.col-12 -->
+          </div> <!-- .row -->
+        </div> <!-- .container-fluid -->
+        <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="list-group list-group-flush my-n3">
+                  <div class="list-group-item bg-transparent">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <span class="fe fe-box fe-24"></span>
+                      </div>
+                      <div class="col">
+                        <small><strong>Package has uploaded successfull</strong></small>
+                        <div class="my-0 text-muted small">Package is zipped and uploaded</div>
+                        <small class="badge badge-pill badge-light text-muted">1m ago</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list-group-item bg-transparent">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <span class="fe fe-download fe-24"></span>
+                      </div>
+                      <div class="col">
+                        <small><strong>Widgets are updated successfull</strong></small>
+                        <div class="my-0 text-muted small">Just create new layout Index, form, table</div>
+                        <small class="badge badge-pill badge-light text-muted">2m ago</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list-group-item bg-transparent">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <span class="fe fe-inbox fe-24"></span>
+                      </div>
+                      <div class="col">
+                        <small><strong>Notifications have been sent</strong></small>
+                        <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
+                        <small class="badge badge-pill badge-light text-muted">30m ago</small>
+                      </div>
+                    </div> <!-- / .row -->
+                  </div>
+                  <div class="list-group-item bg-transparent">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <span class="fe fe-link fe-24"></span>
+                      </div>
+                      <div class="col">
+                        <small><strong>Link was attached to menu</strong></small>
+                        <div class="my-0 text-muted small">New layout has been attached to the menu</div>
+                        <small class="badge badge-pill badge-light text-muted">1h ago</small>
+                      </div>
+                    </div>
+                  </div> <!-- / .row -->
+                </div> <!-- / .list-group -->
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body px-5">
+                <div class="row align-items-center">
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-success justify-content-center">
+                      <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Control area</p>
+                  </div>
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-primary justify-content-center">
+                      <i class="fe fe-activity fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Activity</p>
+                  </div>
+                </div>
+                <div class="row align-items-center">
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-primary justify-content-center">
+                      <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Droplet</p>
+                  </div>
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-primary justify-content-center">
+                      <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Upload</p>
+                  </div>
+                </div>
+                <div class="row align-items-center">
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-primary justify-content-center">
+                      <i class="fe fe-users fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Users</p>
+                  </div>
+                  <div class="col-6 text-center">
+                    <div class="squircle bg-primary justify-content-center">
+                      <i class="fe fe-settings fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Settings</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main> <!-- main -->
+    </div> <!-- .wrapper -->
+    <script src="/DashBoard/js/jquery.min.js"></script>
+    <script src="/DashBoard/js/popper.min.js"></script>
+    <script src="/DashBoard/js/moment.min.js"></script>
+    <script src="/DashBoard/js/bootstrap.min.js"></script>
+    <script src="/DashBoard/js/simplebar.min.js"></script>
+    <script src='/DashBoard/js/daterangepicker.js'></script>
+    <script src='/DashBoard/js/jquery.stickOnScroll.js'></script>
+    <script src="/DashBoard/js/tinycolor-min.js"></script>
+    <script src="/DashBoard/js/config.js"></script>
+    <script src="/DashBoard/js/apps.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag()
+      {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'UA-56159088-1');
+    </script>
+                <script src="sweetalert/sweetalert2.all.min.js"></script>
+                <% if(errado.length>0) {%>
+                    <script>
+                      var Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                          toast.addEventListener('mouseenter', Swal.stopTimer)
+                          toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                      })
+                      Toast.fire({
+                        icon: 'error',
+                        title: '<%=errado %>'
+                      })
+                    </script>
+                  
+                    <% }else if(certo.length>0) {%>
+                      <script>
+                  
+                        const Toast = Swal.mixin({
+                          toast: true,
+                          position: 'top-end',
+                          showConfirmButton: false,
+                          timer: 3000,
+                          timerProgressBar: true,
+                          didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                          }
+                        })
+                  
+                        Toast.fire({
+                          icon: 'success',
+                          title: '<%=certo %>'
+                        })
+                  
+                      </script>
+                      <% }%>
+  </body>
+</html>

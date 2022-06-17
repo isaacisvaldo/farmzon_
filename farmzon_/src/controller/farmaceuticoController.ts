@@ -12,7 +12,9 @@ const FarmaceuticoController=Router();
 //Papel do Admin
 
 FarmaceuticoController.get('/Farmaceutico',farmAuth,async(req:Request, resp: Response)=>{
-  resp.render('Farmaceutico/index')
+  const idUser=req.session?.user.id;
+  const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first()
+  resp.render('Farmaceutico/index', {farmaceutico})
 })
   FarmaceuticoController.post('/NovoFarmaceutico',upload.single('image'),async (req:Request, resp: Response)=>{
       try {
@@ -151,50 +153,12 @@ FarmaceuticoController.post('/Atualizarcategoria',async(req:Request, resp: Respo
       // console.log(categoria)
       resp.render('Farmaceutico/cadastrarMedicamento',{farmaceutico,categoria,certo:req.flash('certo'),errado:req.flash('errado')})
     }else{
-      resp.redirect("/404")
+      resp.render("error/page-404")
   }    
 } catch (error) {
   console.log(error);
   resp.render("error/page-404")
 }
-})
-
-FarmaceuticoController.post('/NovoProduto',upload.single('image'), async (req:Request, resp: Response)=>{
-        
-          let imgProduto=''; 
-          if(req.file) {
-            imgProduto=req.file.filename;
-            const {nomeProduto, descProduto, stockProduto,precoProduto, idCategoria, idFarmaceutico}= req.body; 
-            const estadoProduto=1;        
-            if(nomeProduto=='' || descProduto==''){
-              req.flash('errado', 'Valores incorretos');
-              resp.redirect('/cadastrarMedicamentos')
-            }else{
-              let number = /[0-9]/.test(precoProduto);
-             
-            if(number == false) {
-                     req.flash('errado', "Preço incorreto");
-                       resp.redirect('/cadastrarMedicamentos')
-          
-                      }else{ 
-            const verify = await knex('produto').where('nomeProduto',nomeProduto)
-            if(verify.length===0){
-             const produto = await knex('produto').insert({nomeProduto,imgProduto,idFarmaceutico, descProduto, stockProduto,precoProduto,estadoProduto,idCategoria})
-             req.flash('certo','Produto cadastrado')
-             resp.redirect('/listarMedicamentos')
-            }else{
-              req.flash('errado','Esse produto ja existe')
-              resp.redirect('/cadastrarMedicamentos')
-            }
-            }
-           
-          }
-          } else if(!req.file){
-            req.flash('errado', 'Adicione uma Imagem');
-            resp.redirect('/cadastrarMedicamentos')
-          }   
-
-     
 })
 FarmaceuticoController.post('/AtualizarProduto',async (req:Request, resp: Response)=>{
   try {
@@ -222,16 +186,45 @@ FarmaceuticoController.post('/AtualizarProduto',async (req:Request, resp: Respon
   resp.send(error + " - falha ao registar")
 }  
 })
-FarmaceuticoController.get('/listarMedicamentos',farmAuth, async (req:Request, resp: Response)=>{
+
+
+//Adicionar Estoque
+FarmaceuticoController.get('/estoque_/:idProduto',farmAuth, async (req:Request, resp: Response)=>{
   try {
     const idUser=req.session?.user.id;
-    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser)
-    const medicamentos= await knex('produto').join('categoria', 'produto.idCategoria', 'categoria.idCategoria').select('*')
+    const {idProduto}=req.params
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first()
+    const medicamentos= await knex('produto').join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+    .where('produto.idProduto', idProduto).first()
     if(medicamentos){
       // console.log(categoria)
-      resp.render('Farmaceutico/listarProduto',{farmaceutico,medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+      resp.render('Farmaceutico/adicionarEstoque',{farmaceutico,medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
     }else{
-      resp.redirect("/404")
+      resp.render("error/page-404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+}
+)
+FarmaceuticoController.post('/adicionarEstoque',farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    let {idProduto, stockProduto}=req.body
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first()
+    const medicamentos= await knex('produto')
+    .where('produto.idProduto', idProduto).first();
+  
+    const final=parseInt(stockProduto)+parseInt(medicamentos.stockProduto)
+    if(medicamentos){
+      // console.log(categoria)
+      const medicamentos= await knex('produto')
+    .where('produto.idProduto', idProduto).update({stockProduto:final})
+      req.flash('certo', 'Stock Adicionado com Sucesso')
+      resp.redirect('/estoque')
+    }else{
+      resp.render("error/page-404")
   }    
 } catch (error) {
   console.log(error);
@@ -241,104 +234,174 @@ FarmaceuticoController.get('/listarMedicamentos',farmAuth, async (req:Request, r
 FarmaceuticoController.get('/estoque',farmAuth, async (req:Request, resp: Response)=>{
   try {
     const idUser=req.session?.user.id;
-    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser)
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first()
     const medicamentos= await knex('produto').join('categoria', 'produto.idCategoria', 'categoria.idCategoria').select('*')
     if(medicamentos){
       // console.log(categoria)
       resp.render('Farmaceutico/estoque',{farmaceutico,medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
     }else{
-      resp.redirect("/404")
+      resp.render("error/page-404")
   }    
 } catch (error) {
   console.log(error);
   resp.render("error/page-404")
 }
 })
+//FIM Estoquue
 
-//Adicionar Estoque
-FarmaceuticoController.get('/estoque_/:idProduto',farmAuth, async (req:Request, resp: Response)=>{
+
+//Medicamentos Crud Completo
+FarmaceuticoController.post('/NovoProduto',upload.single('image'), async (req:Request, resp: Response)=>{
+        
+  let imgProduto=''; 
+  if(req.file) {
+    imgProduto=req.file.filename;
+    const {nomeProduto, descProduto, stockProduto,precoProduto, idCategoria, idFarmaceutico}= req.body; 
+    const estadoProduto=1;        
+    if(nomeProduto=='' || descProduto==''){
+      req.flash('errado', 'Valores incorretos');
+      resp.redirect('/cadastrarMedicamentos')
+    }else{
+      let number = /[0-9]/.test(precoProduto);
+     
+    if(number == false) {
+             req.flash('errado', "Preço incorreto");
+               resp.redirect('/cadastrarMedicamentos')
+  
+              }else{ 
+    const verify = await knex('produto').where('nomeProduto',nomeProduto)
+    if(verify.length===0){
+     const produto = await knex('produto').insert({nomeProduto,imgProduto,idFarmaceutico, descProduto, stockProduto,precoProduto,estadoProduto,idCategoria})
+     req.flash('certo','Produto cadastrado')
+     resp.redirect('/listarMedicamentos')
+    }else{
+      req.flash('errado','Esse produto ja existe')
+      resp.redirect('/cadastrarMedicamentos')
+    }
+    }
+   
+  }
+  } else if(!req.file){
+    req.flash('errado', 'Adicione uma Imagem');
+    resp.redirect('/cadastrarMedicamentos')
+  }   
+
+
+})
+FarmaceuticoController.get('/editarMedicamento/:idProduto',farmAuth, async (req:Request, resp: Response)=>{
   try {
     const idUser=req.session?.user.id;
     const {idProduto}=req.params
-    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser)
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first();
+
+    const categoria= await knex('categoria').select('*')
     const medicamentos= await knex('produto').join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
-    .where('produto.idProduto', idProduto)
+    .where('produto.idProduto', idProduto).first()
     if(medicamentos){
       // console.log(categoria)
-      resp.render('Farmaceutico/adicionarEstoque',{farmaceutico,medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+      resp.render('Farmaceutico/editarProduto',{farmaceutico,categoria,medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
     }else{
-      resp.redirect("/404")
+      resp.render("error/page-404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+}
+)
+FarmaceuticoController.post('/editarProduto_',upload.single('image'),farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    const {idProduto, nomeProduto, descProduto, precoProduto, estadoProduto, idCategoria}=req.body;
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first();
+    const estado=(estadoProduto=="on")?1:0;
+    const med= await knex('produto').where('idProduto', idProduto).first();
+    const imgProduto= (req.file)?req.file.filename : med.imgProduto;
+    const categoria= await knex('categoria').select('*')
+    const medicamentos= await knex('produto').where('idProduto', idProduto).update({idProduto, nomeProduto, descProduto, precoProduto, estadoProduto:estado, idCategoria})
+    if(medicamentos){
+      // console.log(categoria)
+      req.flash('certo', 'Dados do Produto Editado')
+      resp.redirect('/listarMedicamentos')
+    }else{
+      resp.render("error/page-404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+}
+)
+FarmaceuticoController.get('/removerMedicamento/:idProduto',farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    const {idProduto}=req.params
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first();
+
+    const categoria= await knex('categoria').select('*');
+    const compras = await knex('compra').where('idProduto', idProduto).del();
+    const medicamentos= await knex('produto').where('idProduto', idProduto).del();
+    if(medicamentos){
+      // console.log(categoria)
+      req.flash('certo', 'Produto Eliminado')
+      resp.redirect('/listarMedicamentos')
+    }else{
+      resp.render("error/page-404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+}
+)
+FarmaceuticoController.get('/detalhesMed/:idProduto',farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    let {idProduto, stockProduto}=req.params
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first()
+    const medicamentos= await knex('produto')
+    .where('produto.idProduto', idProduto)
+    .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+    .join('farmaceutico', 'produto.idFarmaceutico', 'farmaceutico.idFarmaceutico')
+    .first();
+
+    const compras= await knex('compra')
+    .join('produto', 'compra.idProduto', 'produto.idProduto')
+    .join('cliente', 'compra.idCliente', 'cliente.idCliente')
+    if(medicamentos){
+      resp.render('Farmaceutico/detalhesMed',{farmaceutico,compras, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+    }else{
+      resp.render("error/page-404")
   }    
 } catch (error) {
   console.log(error);
   resp.render("error/page-404")
 }
 })
+FarmaceuticoController.get('/listarMedicamentos',farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first()
+    const medicamentos= await knex('produto').join('categoria', 'produto.idCategoria', 'categoria.idCategoria').select('*')
+    if(medicamentos){
+      // console.log(categoria)
+      resp.render('Farmaceutico/listarProduto',{farmaceutico,medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+    }else{
+      resp.render("error/page-404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+})
+//Crud Completo
 
-//
 
-//cliente---------------------------------------------------------------------
-FarmaceuticoController.get('/Clientes',farmAuth,async(req:Request, resp: Response)=>{
-  const clientes = await knex('cliente').select('*');
-  resp.render('DashBoard/clientes',{clientes})
-})
-FarmaceuticoController.get('/Cliente/:id',farmAuth,async(req:Request, resp: Response)=>{
-  const {id}=req.params;
-  const clientes = await knex('cliente').where('idCliente',id).select('*')
-  if(clientes){
-   
-  }else{
-resp.redirect("/404")
-  }
-})
-FarmaceuticoController.get('/Clientedeletar/:id',farmAuth,async(req:Request, resp: Response)=>{
-  const {id}=req.params;
-  const cliente = await knex('cliente').where('idCliente',id).delete()
- resp.send('Deletado...')
- 
-})
-//produtos-------------------------------------------------------------------
-FarmaceuticoController.get('/Produtos',farmAuth,async(req:Request, resp: Response)=>{
-  const produtos = await knex('produto').join('categoria', 'produto.idCategoria', 'categoria.idCategoria').select('*');
-  console.log(produtos)
-  resp.render('DashBoard/produtos',{produtos})
-})
-FarmaceuticoController.get('/Produto/:id',farmAuth,async(req:Request, resp: Response)=>{
-  const {id}=req.params;
-  const produto = await knex('produto').where('idProduto',id).join('categoria', 'produto.idCategoria', 'categoria.idCategoria').select('*')
-  if(produto){
-   
-  }else{
-resp.redirect("/404")
-  }
-})
-FarmaceuticoController.get('/produtodeletar/:id',farmAuth,async(req:Request, resp: Response)=>{
-  const {id}=req.params;
-  const produto= await knex('produto').where('idProduto',id).delete()
-   resp.send('Deletado...')
- 
-})
-//Categoria-------------------------------------------------------------------
-FarmaceuticoController.get('/Categoria',farmAuth,async(req:Request, resp: Response)=>{
-  const categorias = await knex('categoria').select('*');
-  console.log(categorias)
-  resp.render('DashBoard/categoria',{categorias})
-})
-FarmaceuticoController.get('/Produto/:id',farmAuth,async(req:Request, resp: Response)=>{
-  const {id}=req.params;
-  const produto = await knex('produto').where('idProduto',id).join('categoria', 'produto.idCategoria', 'categoria.idCategoria').select('*')
-  if(produto){
-   
-  }else{
-resp.redirect("/404")
-  }
-})
-FarmaceuticoController.get('/produtodeletar/:id',farmAuth,async(req:Request, resp: Response)=>{
-  const {id}=req.params;
-  const produto= await knex('produto').where('idProduto',id).delete()
-   resp.send('Deletado...')
- 
-})
+
+
+
+
+
 
 
 export default FarmaceuticoController;
