@@ -188,11 +188,11 @@ ClienteController.get('/editarCliente/:idCliente',farmAuth, async (req:Request, 
     const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first();
 
     const categoria= await knex('categoria').select('*')
-    const medicamentos= await knex('produto').join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
-    .where('produto.idProduto', idProduto).first()
-    if(medicamentos){
+    const cliente= await knex('cliente')
+    .where('idCliente', idCliente).first()
+    if(cliente){
       // console.log(categoria)
-      resp.render('Farmaceutico/editarProduto',{farmaceutico,categoria,medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+      resp.render('Farmaceutico/editarCliente',{farmaceutico,categoria,cliente,certo:req.flash('certo'),errado:req.flash('errado')})
     }else{
       resp.render("error/page-404")
   }    
