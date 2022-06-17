@@ -181,6 +181,28 @@ ClienteController.get('/detalhesCliente/:idCliente',farmAuth, async (req:Request
 }
 })
 
+ClienteController.get('/editarCliente/:idCliente',farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    const {idCliente}=req.params
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first();
+
+    const categoria= await knex('categoria').select('*')
+    const medicamentos= await knex('produto').join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+    .where('produto.idProduto', idProduto).first()
+    if(medicamentos){
+      // console.log(categoria)
+      resp.render('Farmaceutico/editarProduto',{farmaceutico,categoria,medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+    }else{
+      resp.render("error/page-404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+}
+)
+
   //Fim Cliente autenticado
   
  
