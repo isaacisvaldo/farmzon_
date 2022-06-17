@@ -6,6 +6,7 @@ import PacienteController from './controller/clienteController';
 import { authenticate } from './config/loginService';
 import MedicoController from './controller/farmaceuticoController';
 import CategoriaController from './controller/categoriaController';
+import ClienteController from './controller/clienteController';
 import multerConfig from './config/multer';
 import multer from 'multer';
 const upload = multer(multerConfig);

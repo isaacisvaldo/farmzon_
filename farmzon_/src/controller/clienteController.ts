@@ -157,22 +157,21 @@ ClienteController.get("/listaClientes",farmAuth, async(req:Request, resp:Respons
 
 
 //cliente---------------------------------------------------------------------
-ClienteController.get('/detalhesMed/:idCliente',farmAuth, async (req:Request, resp: Response)=>{
+ClienteController.get('/detalhesCliente/:idCliente',farmAuth, async (req:Request, resp: Response)=>{
   try {
     const idUser=req.session?.user.id;
-    let {idProduto, stockProduto}=req.params
+    let {idCliente, stockProduto}=req.params
     const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first()
-    const medicamentos= await knex('produto')
-    .where('produto.idProduto', idProduto)
-    .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
-    .join('farmaceutico', 'produto.idFarmaceutico', 'farmaceutico.idFarmaceutico')
+    const cliente= await knex('cliente')
+    .where('idCliente', idCliente)
     .first();
 
     const compras= await knex('compra')
     .join('produto', 'compra.idProduto', 'produto.idProduto')
     .join('cliente', 'compra.idCliente', 'cliente.idCliente')
-    if(medicamentos){
-      resp.render('Farmaceutico/detalhesMed',{farmaceutico,compras, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+    .where('compra.idCliente', idCliente)
+    if(cliente){
+      resp.render('Farmaceutico/detalhesCliente',{farmaceutico,compras, cliente,certo:req.flash('certo'),errado:req.flash('errado')})
     }else{
       resp.render("error/page-404")
   }    

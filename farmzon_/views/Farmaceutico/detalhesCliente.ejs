@@ -27,29 +27,32 @@
         <div class="container-fluid">
           <div class="row justify-content-center">
             <div class="col-12">
-              <h2 class="h3 mb-4 page-title">Detalhes do Produto</h2>
+              <h2 class="h3 mb-4 page-title">Detalhes do Cliente</h2>
               <div class="row mt-5 align-items-center">
                 <div class="col-md-3 text-center mb-5">
                   <div class="avatar avatar-xl">
-                    <img src="http://localhost:1002/upload/<%=medicamentos.imgProduto %> " alt="..." class="avatar-img rounded-circle">
+                    <img src="http://localhost:1002/upload/<%=cliente.imgCliente %> " alt="..." class="avatar-img rounded-circle">
                   </div>
                 </div>
                 <div class="col">
                   <div class="row align-items-center">
                     <div class="col-md-7">
-                      <h4 class="mb-1"><%=medicamentos.nomeProduto %></h4>
-                      <p class="small mb-3"><span class="badge badge-dark"><%=medicamentos.nomeFarmaceutico %></span> </span></p>
+                      <h4 class="mb-1"><%=cliente.nomeCliente %></h4>
+                      <p class="small mb-3"><span class="badge badge-dark"><%=cliente.nomeFarmaceutico %></span> </span></p>
                     </div>
                   </div>
                   <div class="row mb-4">
                     <div class="col-md-7">
-                      <p class="text-muted"> <%=medicamentos.descProduto %> </p>
-                      <button onclick="window.location='/editarMedicamento/<%=medicamentos.idProduto %>' " class="btn btn-primary">Editar Produto</button>
+                      <p class="text-muted">
+                        <%=cliente.emailCliente %> <br>
+                        <%=cliente.tellCliente %>  
+                      </p>
+                      <button onclick="window.location='/editarMedicamento/<%=cliente.idCliente %>' " class="btn btn-primary">Editar Cliente</button>
                     </div>
                     <div class="col">
-                      <p class="small mb-0 text-muted"><%=medicamentos.nomeFarmaceutico %></p>
-                      <p class="small mb-0 text-muted"><%=medicamentos.emailFarmaceutico %></p>
-                      <p class="small mb-0 text-muted"><%=medicamentos.tellFarmaceutico  %></p>
+                      <p class="small mb-0 text-muted"><%=cliente.nomeFarmaceutico %></p>
+                      <p class="small mb-0 text-muted"><%=cliente.emailFarmaceutico %></p>
+                      <p class="small mb-0 text-muted"><%=cliente.tellFarmaceutico  %></p>
                     </div>
                   </div>
                 </div>
@@ -66,12 +69,15 @@
                         </div> <!-- .col -->
                         <div class="col">
                           <a href="#">
-                            <h3 class="h5 mt-4 mb-1">Stock</h3>
+                            <h3 class="h5 mt-4 mb-1">Dados Pessoais</h3>
                           </a>
-                          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit nisl ullamcorper, rutrum metus in, congue lectus.</p>
+                          <p class="text-muted">
+                            <%=cliente.nomeCliente %> <br>
+                            <%=cliente.userCliente %>  
+                          </p>
                         </div> <!-- .col -->
                       </div> <!-- .row -->
-                    </div> <!-- .card-body -->
+                    </div> <!-- .card-body -->  
                     <div class="card-footer">
                       <a href="" class="d-flex justify-content-between text-muted"><span>Account Settings</span><i class="fe fe-chevron-right"></i></a>
                     </div> <!-- .card-footer -->
@@ -88,9 +94,12 @@
                         </div> <!-- .col -->
                         <div class="col">
                           <a href="#">
-                            <h3 class="h5 mt-4 mb-1">Informações</h3>
+                            <h3 class="h5 mt-4 mb-1">Contactos</h3>
                           </a>
-                          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit nisl ullamcorper, rutrum metus in, congue lectus.</p>
+                          <p class="text-muted">
+                            <%=cliente.emailCliente %>
+                            <%=cliente.tellCliente %>  
+                          </p>
                         </div> <!-- .col -->
                       </div> <!-- .row -->
                     </div> <!-- .card-body -->
@@ -112,7 +121,10 @@
                           <a href="#">
                             <h3 class="h5 mt-4 mb-1">Compras Efectuadas</h3>
                           </a>
-                          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit nisl ullamcorper, rutrum metus in, congue lectus.</p>
+                          <p class="text-muted">
+                            <%=compras.length %> <br>
+                            Produtos Comprados
+                          </p>
                         </div> <!-- .col -->
                       </div> <!-- .row -->
                     </div> <!-- .card-body -->
@@ -122,45 +134,6 @@
                   </div> <!-- .card -->
                 </div> <!-- .col-md-->
               </div> <!-- .row-->
-              <h3>Dados de Transacionais</h3>
-              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit nisl ullamcorper, rutrum metus in, congue lectus.</p>
-              <div class="card-deck my-4">
-                <div class="card mb-4 shadow">
-                  <div class="card-body text-center my-4">
-                    <a href="#">
-                      <h3 class="h5 mt-4 mb-0">Preço do Produto</h3>
-                    </a>
-                    <p class="text-muted"><%=medicamentos.nomeCategoria %> </p>
-                    <span class="h1 mb-0"><%= medicamentos.precoProduto %> </span>
-                    <p class="text-muted">Kwanzas</p>
-                    <ul class="list-unstyled">
-                      <li>Lorem ipsum dolor sit amet</li>
-                      <li>Consectetur adipiscing elit</li>
-                      <li>Integer molestie lorem at massa</li>
-                      <li>Eget porttitor lorem</li>
-                    </ul>
-                    <span class="dot dot-lg bg-success"></span>
-                    <span class="text-muted ml-3">Activo</span>
-                  </div> <!-- .card-body -->
-                </div> <!-- .card -->
-                <div class="card mb-4">
-                  <div class="card-body text-center my-4">
-                    <a href="#">
-                      <h3 class="h5 mt-4 mb-0">Quantidade em Stock</h3>
-                    </a>
-                    <p class="text-muted"><%=medicamentos.nomeCategoria %></p>
-                    <span class="h1 mb-0"><%=medicamentos.stockProduto %></span>
-                    <p class="text-muted">Unidades</p>
-                    <ul class="list-unstyled">
-                      <li>Lorem ipsum dolor sit amet</li>
-                      <li>Consectetur adipiscing elit</li>
-                      <li>Integer molestie lorem at massa</li>
-                      <li>Eget porttitor lorem</li>
-                    </ul>
-                    <button onclick="window.location='/estoque_/<%=medicamentos.idProduto %>'" type="button" class="btn mb-2 btn-primary btn-lg">Adicionar</button>
-                  </div> <!-- .card-body -->
-                </div> <!-- .card -->
-              </div> <!-- .card-group -->
               <h6 class="mb-3">Ultimas Compras Efectuadas</h6>
               <table class="table table-borderless table-striped">
                 <thead>
