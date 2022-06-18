@@ -63,10 +63,11 @@
 						<div class="col-md-6">
 							<div class="header-search">
 								<form>
-									<select class="input-select">
-										<option value="0">Categorias</option>
-										<option value="1">Category 01</option>
-										<option value="1">Category 02</option>
+									<select class="input-select w-50" style="width:20%">
+										<option value="0">Todos</option>
+										<% categoria.reverse().map(c=> {%>
+											<option value="<%=c.idCategoria%>"><%=c.nomeCategoria%></option>
+										<%}) %> 
 									</select>
 									<input class="input" placeholder="Pesquisa Aqui">
 									<button class="search-btn">Pesquisar</button>
@@ -180,46 +181,22 @@
 				<!-- row -->
 				<div class="row">
 					<!-- shop -->
-					<div class="col-md-4 col-xs-6">
-						<div class="shop">
-							<div class="shop-img">
-								<img src="img/shop01.png" alt="">
-							</div>
-							<div class="shop-body">
-								<h3>Nome Categoria</h3>
-								<a href="#" class="cta-btn">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
+
+					<% categoria.reverse().slice(0, 3).map(c=> {%>
+						<div class="col-md-4 col-xs-6">
+							<div class="shop">
+								<div class="shop-img">
+									<img src="http://localhost:1002/upload/<%=categoria.imagemCategoria %>" alt="">
+								</div>
+								<div class="shop-body">
+									<h3><%=c.nomeCategoria %> </h3>
+									<a href="#" class="cta-btn">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
+								</div>
 							</div>
 						</div>
-					</div>
+					<%}) %> 
 					<!-- /shop -->
 
-					<!-- shop -->
-					<div class="col-md-4 col-xs-6">
-						<div class="shop">
-							<div class="shop-img">
-								<img src="img/shop01.png" alt="">
-							</div>
-							<div class="shop-body">
-								<h3>Nome Categoria</h3>
-								<a href="#" class="cta-btn">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
-							</div>
-						</div>
-					</div>
-					<!-- /shop -->
-
-					<!-- shop -->
-					<div class="col-md-4 col-xs-6">
-						<div class="shop">
-							<div class="shop-img">
-								<img src="img/shop01.png" alt="">
-							</div>
-							<div class="shop-body">
-								<h3>Nome Categoria</h3>
-								<a href="#" class="cta-btn">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
-							</div>
-						</div>
-					</div>
-					<!-- /shop -->
 				</div>
 				<!-- /row -->
 			</div>

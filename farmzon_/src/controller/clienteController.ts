@@ -43,7 +43,7 @@ ClienteController.post('/Novocliente',async(req:Request, resp: Response)=>{
           } else
              if (senhaCliente.length < 5) {
                 req.flash('errado', "Senha muito fraca");
-                resp.redirect('/cadastarCliente3')
+                resp.redirect('/cadastarCliente')
         // resp.redirect("/cadastrarCliente")
              } else
                 if (senhaCliente != senhaCliente2) {

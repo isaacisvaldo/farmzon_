@@ -34,7 +34,6 @@ Route.get('/cadastarCliente', (req:Request, resp: Response)=>{
     resp.render('Site/cadastrar',{errado:req.flash('errado'), certo:req.flash('certo')})
 })
 
-
 // Home page do Sistema
 Route.get('/',async (req:Request, resp: Response)=>{
     const categoria= await knex('categoria').select('*');
@@ -43,15 +42,29 @@ Route.get('/',async (req:Request, resp: Response)=>{
     .select('*');
  resp.render('Site/index', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
 })
-// Route.get('/pesquisa',async (req:Request, resp: Response)=>{
-//     let {idCategoria, medicamento}= req.query;
-//     const categoria= await knex('categoria').select('*');
-//     const medicamentos= await knex('produto')
-//     .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
-//     .where('idCategoria',idCategoria)
-//     .select('*');
-//  resp.render('Site/index', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
-// })
+Route.get('/pesquisa/:idCategoria/:medicamento',async (req:Request, resp: Response)=>{
+    let {idCategoria, medicamento}= req.params;
+    const d=parseInt(idCategoria)
+    const categoria= await knex('categoria').select('*');
+    if(d==0){
+        const medicamentos= await knex('produto')
+        .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+        .where('idCategoria',d)
+        .andWhere('nomeProduto','like', medicamento)
+        .select('*');
+        
+         resp.render('Site/index', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+    }else{
+        const medicamentos= await knex('produto')
+        .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+        .where('idCategoria',d)
+        .andWhere('nomeProduto','like', medicamento)
+        .select('*');
+        
+        resp.render('Site/index', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+    }
+
+})
 
 Route.get('/logout', (req:Request, resp: Response)=>{
     req.session = undefined;
