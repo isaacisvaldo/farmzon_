@@ -202,12 +202,57 @@ ClienteController.get('/editarCliente/:idCliente',farmAuth, async (req:Request, 
 }
 }
 )
+ClienteController.post('/editarCliente',farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    const {idCliente, nomeCliente, tellCliente, emailCliente, userCliente}=req.body;
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first();
+    const verificaEspaco = /\s/g.test(userCliente);
+    const Mailer = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/.test(emailCliente);
+    const number = /^[9]{1}[0-9]{8}$/.test(tellCliente)
+    if(nomeCliente==""){
+      req.flash('errado', 'Dados Incorretos')
+      resp.redirect('/editarCliente/'+idCliente)
+    }else{
+      const medicamentos= await knex('cliente').where('idCliente', idCliente).update({nomeCliente, tellCliente, emailCliente,userCliente})
+      if(medicamentos){
+        // console.log(categoria)
+        req.flash('certo', 'Dados do Cliente Editado')
+        resp.redirect('/detalhesCliente/'+idCliente)
+      }else{
+        resp.render("error/page-404")
+    }
 
-  //Fim Cliente autenticado
-  
- 
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+}
+)
 
-  //Cliente Não autenticado
+ClienteController.get('/removerCliente/:idCliente',farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    const {idCliente}=req.params
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first();
+
+    const categoria= await knex('categoria').select('*');
+    const compras = await knex('compra').where('idCliente', idCliente).del();
+    const medicamentos= await knex('cliente').where('idCliente', idCliente).del();
+    if(medicamentos){
+      // console.log(categoria)
+      req.flash('certo', 'Cliente Eliminado')
+      resp.redirect('/listaClientes')
+    }else{
+      resp.render("error/page-404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+}
+)
 
  
 
