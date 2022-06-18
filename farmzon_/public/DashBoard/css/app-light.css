@@ -9,7 +9,7 @@
 /* tabs */
 /* progress */
 /*!
- * Bootstrap v4.5.0 (https://getbootstrap.com/)
+ * Bootstrap v4.5.0 (https://getbootstrap.com/) 
  * Copyright 2011-2020 The Bootstrap Authors
  * Copyright 2011-2020 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
@@ -310,7 +310,7 @@ h1, h2, h3, h4, h5, h6,
   margin-bottom: 0.5rem;
   font-weight: 500;
   line-height: 1.2;
-  color: #001a4e; }
+  color: #008c8c; }
 
 h1, .h1 {
   font-size: 2.1875rem; }
@@ -4449,7 +4449,7 @@ a.close.disabled {
   padding: 0.5rem 0.75rem;
   margin-bottom: 0;
   font-size: 0.875rem;
-  color: #001a4e;
+  color: #008c8c;
   background-color: #f7f7f7;
   border-bottom: 1px solid #ebebeb;
   border-top-left-radius: calc(0.3rem - 1px);
@@ -8048,7 +8048,7 @@ select {
 
 .h1, .h2, .h3, .h4, .h5, .h6,
 h1, h2, h3, h4, h5, h6, strong {
-  color: #001a4e; }
+  color: #008c8c; }
 
 .text-muted {
   color: #adb5bd !important; }
@@ -8057,7 +8057,7 @@ svg.navbar-brand-img {
   fill: #1b68ff; }
 
 .navbar-light .navbar-nav .nav-link {
-  color: #001a4e; }
+  color: #008c8c; }
   .navbar-light .navbar-nav .nav-link:hover {
     background: #f8f9fa;
     color: #1b68ff; }
@@ -8117,7 +8117,7 @@ svg.navbar-brand-img {
   .table thead th {
     color: #ced4da; }
   .table tbody tr th {
-    color: #001a4e; }
+    color: #008c8c; }
   .table tr.collapse {
     border-top: 1px solid #e9ecef;
     border-bottom: 1px solid #e9ecef; }
@@ -8347,7 +8347,7 @@ form.was-validated select:valid ~ .select2-container--bootstrap4 .select2-select
 .select2-container--bootstrap4 .select2-results__group {
   padding: 6px;
   display: list-item;
-  color: #001a4e; }
+  color: #008c8c; }
 
 .select2-container--bootstrap4 .select2-selection__clear {
   width: 0.9em;
