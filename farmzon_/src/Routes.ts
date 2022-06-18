@@ -16,11 +16,6 @@ const upload = multer(multerConfig);
 import pacienteAuth from './middlewre/cliente' //cliente
 import adminAuth from './middlewre/farm'
 
-
-
-
-
-
 //Rotas de erro
 Route.get('/404', (req:Request, resp: Response)=>{
     resp.render('/error/404')
@@ -42,11 +37,24 @@ Route.get('/cadastarCliente', (req:Request, resp: Response)=>{
 
 // Home page do Sistema
 Route.get('/',async (req:Request, resp: Response)=>{
- resp.render('Site/index')
+    const categoria= await knex('categoria').select('*');
+    const medicamentos= await knex('produto')
+    .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+    .select('*');
+ resp.render('Site/index', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
 })
+// Route.get('/pesquisa',async (req:Request, resp: Response)=>{
+//     let {idCategoria, medicamento}= req.query;
+//     const categoria= await knex('categoria').select('*');
+//     const medicamentos= await knex('produto')
+//     .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+//     .where('idCategoria',idCategoria)
+//     .select('*');
+//  resp.render('Site/index', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+// })
 
 Route.get('/logout', (req:Request, resp: Response)=>{
-    req.session = undefined
+    req.session = undefined;
     resp.redirect('/')
 })
 
