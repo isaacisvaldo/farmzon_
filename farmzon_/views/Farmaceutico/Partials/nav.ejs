@@ -1,3 +1,12 @@
+<script>
+  function printContent(el){
+      var restorage = document.body.innerHTML;
+      var printcontent = document.getElementById(el).innerHTML;
+      document.body.innerHTML.printcontent;
+      window.print();
+      document.body.innerHTML = restorage;
+  }
+</script>
 <nav class="topnav navbar navbar-light">
     <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
       <i class="fe fe-menu navbar-toggler-icon"></i>
