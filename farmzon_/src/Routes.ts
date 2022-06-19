@@ -40,8 +40,11 @@ Route.get('/',async (req:Request, resp: Response)=>{
     const medicamentos= await knex('produto')
     .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
     .select('*');
- resp.render('Site/index', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+    resp.render('Site/index', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
 })
+
+
+
 Route.get('/pesquisa/:idCategoria/:medicamento',async (req:Request, resp: Response)=>{
     let {idCategoria, medicamento}= req.params;
     const d=parseInt(idCategoria)
