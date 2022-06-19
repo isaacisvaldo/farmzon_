@@ -789,9 +789,10 @@ textarea.input {
   padding: 60px 0px;
   margin: 30px 0px;
   background-color: #E4E7ED;
-  background-image: url('../img/hotdeal.png');
-  background-position: center;
+  background-image: url('../img/frasco-de-medicamentos-foto-freepik.jpeg');
   background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .hot-deal {
