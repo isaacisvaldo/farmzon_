@@ -67,7 +67,7 @@ ClienteController.post('/Novocliente',async(req:Request, resp: Response)=>{
                    // resp.redirect("/loginGeral")
                   }else{
                     req.flash("errado","Este usuario ja esta cadastrado!")
-                    resp.json("/cadastarCliente")
+                    resp.redirect("/cadastarCliente")
                     //resp.redirect("/cadastrarCliente")
                   
                    }
