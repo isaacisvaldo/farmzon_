@@ -1,0 +1,63 @@
+<header>
+
+
+    <!-- MAIN HEADER -->
+    <div id="header">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- LOGO -->
+                <div class="col-md-3">
+                    <div class="header-logo">
+                        <a  class="navbar-brand mx-auto mt-2 flex-fill 	008c8c text-center" href="/">
+                            <img style="width:75%" src="http://localhost:1002/upload/farmazon.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <!-- /LOGO -->
+
+                <!-- SEARCH BAR -->
+                <div class="col-md-6">
+                    <div class="header-search">
+                        <form>
+                            <select class="input-select w-50" style="width:20%">
+                                <option value="0">Todos</option>
+                                <% categoria.reverse().map(c=> {%>
+                                    <option value="<%=c.idCategoria%>"><%=c.nomeCategoria%></option>
+                                <%}) %> 
+                            </select>
+                            <input class="input" placeholder="Pesquisa Aqui">
+                            <button class="search-btn">Pesquisar</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- /SEARCH BAR -->
+
+                <!-- ACCOUNT -->
+                <div class="col-md-3 clearfix">
+                    <div class="header-ctn">
+                       
+
+                        <!-- Cart -->
+                        <div class="dropdown">
+                            <a class="dropdown-toggle"  href="/Carinho" aria-expanded="true">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Carrinho</span>
+                                <div style="background-color: #008c8c;" class="qty">2</div>
+                            </a>
+                            
+                        </div>
+                        <!-- /Cart -->
+
+                       
+                    </div>
+                </div>
+                <!-- /ACCOUNT -->
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </div>
+    <!-- /MAIN HEADER -->
+</header>

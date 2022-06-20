@@ -18,7 +18,7 @@ import adminAuth from './middlewre/farm'
 
 //Rotas de erro
 Route.get('/404', (req:Request, resp: Response)=>{
-    resp.render('/error/404')
+    resp.render('/error/page-404')
 })
 Route.get('/400', (req:Request, resp: Response)=>{
     resp.render('/error/400')
@@ -37,10 +37,21 @@ Route.get('/cadastarCliente', (req:Request, resp: Response)=>{
 // Home page do Sistema
 Route.get('/',async (req:Request, resp: Response)=>{
     const categoria= await knex('categoria').select('*');
+
     const medicamentos= await knex('produto')
     .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
     .select('*');
-    resp.render('Site/index', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+    
+    const medicamentos3= await knex('produto').limit(3)
+    .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+    .select('*');
+    const medicamentos3desc= await knex('produto').orderBy('idProduto','desc').limit(3)
+    .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+    .select('*');
+   
+ resp.render('Site/index', {categoria,medicamentos3,medicamentos3desc, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+
+
 })
 
 
@@ -66,6 +77,7 @@ Route.get('/pesquisa/:idCategoria/:medicamento',async (req:Request, resp: Respon
         
         resp.render('Site/index', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
     }
+
 
 })
 

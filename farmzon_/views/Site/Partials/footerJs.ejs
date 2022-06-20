@@ -1,63 +1,75 @@
 <script src="DashBoard/js/jquery.min.js"></script>
-<script src="DashBoard/js/popper.min.js"></script>
-<script src="DashBoard/js/moment.min.js"></script>
-<script src="DashBoard/js/bootstrap.min.js"></script>
-<script src="DashBoard/js/simplebar.min.js"></script>
-<script src='DashBoard/js/daterangepicker.js'></script>
-<script src='DashBoard/js/jquery.stickOnScroll.js'></script>
-<script src="DashBoard/js/tinycolor-min.js"></script>
-<script src="DashBoard/js/config.js"></script>
-<script src="DashBoard/js/apps.js"></script>
-<script src="sweetalert/sweetalert2.all.min.js"></script>
-<% if(errado.length>0) {%>
-  <script>
-    var Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 4000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
-    Toast.fire({
-      icon: 'error',
-      title: '<%=errado %>'
-    })
-  </script>
-
-  <% }else if(certo.length>0) {%>
+    <script src="DashBoard/js/popper.min.js"></script>
+    <script src="DashBoard/js/moment.min.js"></script>
+    <script src="DashBoard/js/bootstrap.min.js"></script>
+    <script src="DashBoard/js/simplebar.min.js"></script>
+    <script src='DashBoard/js/daterangepicker.js'></script>
+    <script src='DashBoard/js/jquery.stickOnScroll.js'></script>
+    <script src="DashBoard/js/tinycolor-min.js"></script>
+    <script src="DashBoard/js/config.js"></script>
+    <script src="DashBoard/js/d3.min.js"></script>
+    <script src="DashBoard/js/topojson.min.js"></script>
+    <script src="DashBoard/js/datamaps.all.min.js"></script>
+    <script src="DashBoard/js/datamaps-zoomto.js"></script>
+    <script src="DashBoard/js/datamaps.custom.js"></script>
+    <script src="DashBoard/js/Chart.min.js"></script>
     <script>
-
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-      })
-
-      Toast.fire({
-        icon: 'success',
-        title: 'Conta criado com sucesso'
-      })
-
+      /* defind global options */
+      Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
+      Chart.defaults.global.defaultFontColor = colors.mutedColor;
     </script>
-    <% }%>
-      <!-- Global site tag (gtag.js) - Google Analytics -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-          dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', 'UA-56159088-1');
-      </script>
+    <script src="DashBoard/js/gauge.min.js"></script>
+    <script src="DashBoard/js/jquery.sparkline.min.js"></script>
+    <script src="DashBoard/js/apexcharts.min.js"></script>
+    <script src="DashBoard/js/apexcharts.custom.js"></script>
+    <script src='DashBoard/js/jquery.mask.min.js'></script>
+    <script src='DashBoard/js/select2.min.js'></script>
+    <script src='DashBoard/js/jquery.steps.min.js'></script>
+    <script src='DashBoard/js/jquery.validate.min.js'></script>
+    <script src='DashBoard/js/jquery.timepicker.js'></script>
+    <script src='DashBoard/js/dropzone.min.js'></script>
+    <script src='DashBoard/js/uppy.min.js'></script>
+    <script src='DashBoard/js/quill.min.js'></script>
+    <script src="/sweetalert/sweetalert2.all.min.js"></script>
+    <% if(errado.length>0) {%>
+        <script>
+          var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          Toast.fire({
+            icon: 'error',
+            title: '<%=errado %>'
+          })
+        </script>
+      
+        <% }else if(certo.length>0) {%>
+          <script>
+      
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+      
+            Toast.fire({
+              icon: 'success',
+              title: '<%=certo %>'
+            })
+      
+          </script>
+          <% }%>
+    </script>

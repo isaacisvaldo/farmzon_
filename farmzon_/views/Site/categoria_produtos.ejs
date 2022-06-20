@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+<!-- Mirrored from technext.github.io/electro/?fbclid=IwAR04AVhzDNlzbB3QOQAXwj9ID6XQe3NOsUHaIN5x4NhgS1s9eGR2IKXwPmo by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 07 Jun 2022 14:47:58 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<%- include('partials/head') %> 
+	<body>
+		<!-- HEADER -->
+		<%- include('partials/header') %> 
+	
+		<!-- /HEADER -->
+
+		<!-- NAVIGATION -->
+		<nav id="navigation">
+			<!-- container -->
+			<div class="container">
+				<!-- responsive-nav -->
+				<div id="responsive-nav">
+					<!-- NAV -->
+					<ul class="main-nav nav navbar-nav">
+						<li ><a href="/">Home</a></li>
+						<li class="active"><a href="/categoriasSite">Categorias</a></li>
+						<li><a href="/cadastarCliente">Registrar-se</a></li>
+						<li><a href="/loginGeral">Entrar</a></li>
+					</ul>
+					<!-- /NAV -->
+				</div>
+				<!-- /responsive-nav -->
+			</div>
+			<!-- /container -->
+		</nav>
+		<!-- /NAVIGATION -->
+
+		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+			
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+
+
+		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+
+					<!-- section title -->
+					<div class="col-md-12">
+						<div class="section-title">
+							<h3 class="title"> <%= categoria1.nomeCategoria%> </h3>
+							<div class="section-nav">
+								<ul class="section-tab-nav tab-nav">
+									<li class="active"><a data-toggle="tab" href="#tab2">Laptops</a></li>
+									<li><a data-toggle="tab" href="#tab2">Smartphones</a></li>
+									<li><a data-toggle="tab" href="#tab2">Cameras</a></li>
+									<li><a data-toggle="tab" href="#tab2">Accessories</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- /section title -->
+
+					<!-- Products tab & slick -->
+					<div class="col-md-12">
+						<div class="row">
+							<div class="products-tabs">
+								<!-- tab -->
+								<div id="tab1" class="tab-pane active">
+									<div class="products-slick" data-nav="#slick-nav-1">
+										<% if(medicamentos.length < 0){ %> 
+											Não tem Comprimido
+								        <%}%> 
+									
+										<% medicamentos.map(medicamentos =>{ %>
+                                              <div class="product">
+											<div class="product-img">
+												<img src="http://localhost:1002/upload/<%= medicamentos.imgProduto %>" alt="">
+												<div class="product-label">
+													<span class="sale"><%= medicamentos.stockProduto%></span>
+													<span class="new">Stock</span>
+												</div>
+											</div>
+											<div class="product-body">
+												<p class="product-category"><%= medicamentos.nomeCategoria%></p>
+												<h3 class="product-name"><a href="#"><%= medicamentos.nomeProduto%></a></h3>
+												<h4 class="product-price"><%= medicamentos.precoProduto%> Kz.</h4>
+												<div class="product-rating">
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</div>
+												<div class="product-btns">
+													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+												</div>
+											</div>
+											<% if(medicamentos.stockProduto > 0) { %> 
+                                            <div class="add-to-cart">
+												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</button>
+											</div>
+											<% } else{ %> 
+												<div class="add-to-cart">
+												<button disabled class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</button>
+											</div>
+											<% } %> 
+											
+										</div>
+										<% 	}) %> 
+										
+										<!-- /product -->
+
+									</div>
+									<div id="slick-nav-1" class="products-slick-nav"></div>
+								</div>
+								<!-- /tab -->
+							</div>
+						</div>
+					</div>
+					<!-- /Products tab & slick -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+
+		<!-- SECTION -->
+		
+		<!-- /SECTION -->
+
+		<!-- NEWSLETTER -->
+<%- include('partials/footer') %> 
+
+	</body>
+
+<!-- Mirrored from technext.github.io/electro/?fbclid=IwAR04AVhzDNlzbB3QOQAXwj9ID6XQe3NOsUHaIN5x4NhgS1s9eGR2IKXwPmo by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 07 Jun 2022 14:48:04 GMT -->
+</html>
