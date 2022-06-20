@@ -33,7 +33,7 @@ CompraController.post('/comprarVenda',async(req:Request, resp: Response)=>{
   }
 })
 
-<<<<<<< Updated upstream
+
 CompraController.get('/listarCompras',farmAuth, async (req:Request, resp: Response)=>{
   try {
     const idUser=req.session?.user.id;
@@ -63,13 +63,12 @@ CompraController.get('/detalhesCompra/:idCompra',farmAuth, async (req:Request, r
     .where('idCompra',idCompra )
     .first();
     const categoria=await knex('categoria').where('idCategoria',compra.idCategoria).first()
-=======
 //Clientes Autenticados
 CompraController.post('/Comprar',farmAuth,async(req:Request, resp: Response)=>{
   
  
 })
->>>>>>> Stashed changes
+
 
     if(compra){
       resp.render('Farmaceutico/detalhesCompra',{farmaceutico,compra,categoria,certo:req.flash('certo'),errado:req.flash('errado')})
