@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span id="Quantidade">
+
+    </span>
+    <button onclick="comprar(10)">Comprar</button>
+
+    <script>
+        let i=0;
+        let c=[]
+        if(localStorage.getItem('c')){
+            i=localStorage.getItem('c').split(',').map(c=>parseInt(c)).length;
+            c=localStorage.getItem('c').split(',').map(d=>parseInt(d));
+            document.getElementById('Quantidade').innerHTML = i;
+        }else{
+            let i=0;
+        }
+        function comprar(id) {
+            i+=1;
+            c.push(id);
+            localStorage.setItem('c', JSON.stringify(c));
+            
+            document.getElementById('Quantidade').innerHTML = i;
+        }
+
+    </script>
+</body>
+</html>
+<!-- if(i==undefined){
+    localStorage.setItem('c','0,0')
+    i=localStorage.getItem('c').split(',').map(c=>parseInt(c)).length-2;
+}else{
+    i=localStorage.getItem('c').split(',').map(c=>parseInt(c)).length;
+}
+let c=localStorage.getItem('c').split(',').map(d=>parseInt(d))
+document.getElementById("Quantidade").innerHTML=i; -->
