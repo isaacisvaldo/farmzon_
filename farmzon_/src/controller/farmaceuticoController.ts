@@ -186,6 +186,26 @@ FarmaceuticoController.post('/AtualizarProduto',async (req:Request, resp: Respon
   resp.send(error + " - falha ao registar")
 }  
 })
+FarmaceuticoController.get('/detalhesFarmaceutico',farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    let {idProduto, stockProduto}=req.params
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first()
+    const medicamentos= await knex('produto').where('idFarmaceutico', idUser).select('*')
+
+    const compras= await knex('compra')
+    .join('produto', 'compra.idProduto', 'produto.idProduto')
+    .join('cliente', 'compra.idCliente', 'cliente.idCliente')
+    if(farmaceutico){
+      resp.render('Farmaceutico/perfilFarmaceutico',{farmaceutico,medicamentos, certo:req.flash('certo'),errado:req.flash('errado')})
+    }else{
+      resp.render("error/page-404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+})
 
 
 //Adicionar Estoque

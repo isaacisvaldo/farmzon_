@@ -57,9 +57,10 @@ CategoriaController.get("/listarCategoria",farmAuth, async(req:Request, resp:Res
       const idUser=req.session?.user.id;
       const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser)
       const categoria= await knex('categoria').select('*')
+      const produto= await knex('produto').groupBy('idCategoria').count('idCategoria', {as:'quantidade'}).select('*');
       if(categoria){
         // console.log(categoria)
-        resp.render('Farmaceutico/listaCategoria',{farmaceutico,categoria,certo:req.flash('certo'),errado:req.flash('errado')})
+        resp.render('Farmaceutico/listaCategoria',{farmaceutico,categoria,produto,certo:req.flash('certo'),errado:req.flash('errado')})
       }else{
         resp.redirect("/404")
     }    

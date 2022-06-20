@@ -124,6 +124,13 @@
                                                                     <%=c.desCategoria.substring(0, 20) %>...
                                                                 </td>
                                                                 <td>
+                                                                    <% produto.filter(ccc=>ccc.idCategoria==c.idCategoria).map(cc=>{ %>
+                                                                        <% if(cc.idCategoria==c.idCategoria){%> 
+                                                                            <%=cc.quantidade  %>
+                                                                        <% }else{%> 
+                                                                            0
+                                                                        <%}%>  
+                                                                    <%}) %> 
                                                                     <%=c.emailCliente %>
                                                                 </td>
                                                                 <td><button
