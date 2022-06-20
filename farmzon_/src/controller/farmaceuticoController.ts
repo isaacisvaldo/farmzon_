@@ -231,6 +231,7 @@ FarmaceuticoController.post('/editarFarmaceutico', async (req:Request, resp: Res
     const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first();
     const med= await knex('Farmaceutico').where('idFarmaceutico', idFarmaceutico).first();
 
+    console.log({idFarmaceutico, nomeFarmaceutico, userFarmaceutico, emailFarmaceutico, tellFarmaceutico, enderecoFarmaceutico});
     
     const imgFarmaceutico= (req.file)?req.file.filename : med.imgFarmaceutico;
     const categoria= await knex('categoria').select('*')
@@ -247,7 +248,10 @@ FarmaceuticoController.post('/editarFarmaceutico', async (req:Request, resp: Res
       req.flash('errado', "Ocorreu um Problema");
       resp.redirect('/detalhesFarmaceutico')
    }else{
-      const medicamentos= await knex('farmaceutico').where('idFarmaceutico', idFarmaceutico).update({nomeFarmaceutico, userFarmaceutico, emailFarmaceutico, tellFarmaceutico, enderecoFarmaceutico})
+      const medicamentos= await knex('farmaceutico').where('idFarmaceutico', idFarmaceutico)
+      .update({nomeFarmaceutico, userFarmaceutico, emailFarmaceutico, tellFarmaceutico, enderecoFarmaceutico})
+      console.log(medicamentos);
+      
       if(medicamentos){
         req.flash('certo', 'Dados do Farmaceutico Editado')
         resp.redirect('/detalhesFarmaceutico')
