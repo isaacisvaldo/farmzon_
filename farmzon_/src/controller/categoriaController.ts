@@ -137,6 +137,7 @@ CategoriaController.get('/removerCategoria/:idCategoria',farmAuth, async (req:Re
 )
 
 
+
  
 
 export default CategoriaController;

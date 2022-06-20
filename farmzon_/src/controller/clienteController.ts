@@ -82,12 +82,58 @@ ClienteController.post('/Novocliente',async(req:Request, resp: Response)=>{
                    
 })
 //Cliente Autenticado
-ClienteController.get("/Clientelogado", async(req:Request, resp:Response) =>{
+ClienteController.get("/Clientelogado",clienteAuth, async(req:Request, resp:Response) =>{
+  const categoria= await knex('categoria').select('*');
+  const categoria3= await knex('categoria').limit(3);
+  const medicamentos= await knex('produto')
+  .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+  .select('*');
+  const medicamentos3= await knex('produto').limit(3)
+  .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+  .select('*');
+  const medicamentos3desc= await knex('produto').orderBy('idProduto','desc').limit(3)
+  .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+  .select('*');
   const id=req.session?.user.id;
   const cliente= await knex('cliente').where('idCliente', id).first();
   if(cliente){
     console.log(cliente)
-    resp.render('Cliente/index',{cliente,certo:req.flash('certo'),errado:req.flash('errado')})
+    resp.render('Cliente/index',{categoria,categoria3,medicamentos3,medicamentos3desc, medicamentos,cliente,certo:req.flash('certo'),errado:req.flash('errado')})
+  }else{
+    resp.redirect("/404")
+  }
+})
+ClienteController.get('/categoriascliente',clienteAuth,async (req:Request, resp: Response)=>{
+  const categoria= await knex('categoria').select('*');
+  const medicamentos= await knex('produto')
+  .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+  .select('*');
+resp.render('Cliente/categorias', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+})
+ClienteController.get('/categoriaprodutos/:id',async (req:Request, resp: Response)=>{
+  const {id}= req.params;
+ const categoria= await knex('categoria').select('*');
+ const categoria1= await knex('categoria').where('idCategoria',id).first();
+ const medicamentos= await knex('produto').where('idCategoria',id).select('*');
+resp.render('Cliente/categoria_produtos', {categoria,categoria1, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+})
+ClienteController.get("/perfil",clienteAuth, async(req:Request, resp:Response) =>{
+  const categoria= await knex('categoria').select('*');
+  const categoria3= await knex('categoria').limit(3);
+  const medicamentos= await knex('produto')
+  .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+  .select('*');
+  const medicamentos3= await knex('produto').limit(3)
+  .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+  .select('*');
+  const medicamentos3desc= await knex('produto').orderBy('idProduto','desc').limit(3)
+  .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+  .select('*');
+  const id=req.session?.user.id;
+  const cliente= await knex('cliente').where('idCliente', id).first();
+  if(cliente){
+    console.log(cliente)
+    resp.render('Cliente/perfil',{categoria,categoria3,medicamentos3,medicamentos3desc, medicamentos,cliente,certo:req.flash('certo'),errado:req.flash('errado')})
   }else{
     resp.redirect("/404")
   }
@@ -253,6 +299,31 @@ ClienteController.get('/removerCliente/:idCliente',farmAuth, async (req:Request,
 }
 }
 )
+//Rotas cliente Não autenticado
+ClienteController.get('/categoriasSite',async (req:Request, resp: Response)=>{
+  const categoria= await knex('categoria').select('*');
+  const medicamentos= await knex('produto')
+  .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+  .select('*');
+resp.render('Site/categorias', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+})
+ClienteController.get('/categoriaprodutos/:id',async (req:Request, resp: Response)=>{
+   const {id}= req.params;
+  const categoria= await knex('categoria').select('*');
+  const categoria1= await knex('categoria').where('idCategoria',id).first();
+  const medicamentos= await knex('produto').where('idCategoria',id).select('*');
+resp.render('Site/categoria_produtos', {categoria,categoria1, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+})
+ClienteController.get('/Carinho',async (req:Request, resp: Response)=>{
+  const {id}= req.params;
+ const categoria= await knex('categoria').select('*');
+
+ const medicamentos= await knex('produto')
+ .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+ .select('*');
+resp.render('Site/shop-cart', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+})
+
 
  
 
