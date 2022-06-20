@@ -206,6 +206,64 @@ FarmaceuticoController.get('/detalhesFarmaceutico',farmAuth, async (req:Request,
   resp.render("error/page-404")
 }
 })
+FarmaceuticoController.get('/editarFarmaceutico',farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    const {idFarmaceutico}=req.params
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first();
+    const Farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first();
+    if(farmaceutico){
+      // console.log(categoria)
+      resp.render('Farmaceutico/editarFarmaceutico',{farmaceutico,Farmaceutico,certo:req.flash('certo'),errado:req.flash('errado')})
+    }else{
+      resp.render("error/page-404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+}
+)
+FarmaceuticoController.post('/editarFarmaceutico', async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    const {idFarmaceutico, nomeFarmaceutico, userFarmaceutico, emailFarmaceutico, tellFarmaceutico, enderecoFarmaceutico}=req.body;
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first();
+    const med= await knex('Farmaceutico').where('idFarmaceutico', idFarmaceutico).first();
+
+    
+    const imgFarmaceutico= (req.file)?req.file.filename : med.imgFarmaceutico;
+    const categoria= await knex('categoria').select('*')
+    let re = /[A-Z]/;
+    const hasUpper = re.test(userFarmaceutico);
+    const verificaEspaco = /\s/g.test(userFarmaceutico);
+    const Mailer = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/.test(emailFarmaceutico);
+    const number = /^[9]{1}[0-9]{8}$/.test(tellFarmaceutico)
+    if (hasUpper === true) {
+    req.flash('errado', "Ocorreu um problema");
+    resp.redirect('/detalhesFarmaceutico')
+ 
+   } else if (verificaEspaco === true) {
+      req.flash('errado', "Ocorreu um Problema");
+      resp.redirect('/detalhesFarmaceutico')
+   }else{
+      const medicamentos= await knex('farmaceutico').where('idFarmaceutico', idFarmaceutico).update({nomeFarmaceutico, userFarmaceutico, emailFarmaceutico, tellFarmaceutico, enderecoFarmaceutico})
+      if(medicamentos){
+        req.flash('certo', 'Dados do Farmaceutico Editado')
+        resp.redirect('/detalhesFarmaceutico')
+      }else{
+        resp.render("error/page-404")
+      }    
+   }
+
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+}
+)
+
+
 
 
 //Adicionar Estoque

@@ -27,7 +27,7 @@
         <div class="container-fluid">
           <div class="row justify-content-center">
             <div class="col-12 col-lg-10 col-xl-8">
-              <h2 class="h3 mb-4 page-title">Dados Cliente</h2>
+              <h2 class="h3 mb-4 page-title">Dados Farmaceutico</h2>
               <div class="my-4">
                 <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
                   <li class="nav-item">
@@ -40,26 +40,30 @@
                     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Compras</a>
                   </li>
                 </ul>
-                <form action="/editarCliente" method="post">
+                <form action="/editarFarmaceutico" method="post">
                   <hr class="my-4">
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="firstname">Nome</label>
-                      <input type="text" id="nomeCliente" value="<%=cliente.nomeCliente %> " class="form-control" placeholder="Brown">
+                      <input type="text" id="nomeFarmaceutico" value="<%=Farmaceutico.nomeFarmaceutico %> " class="form-control" placeholder="Brown">
                     </div>
                     <div class="form-group col-md-6">
-                      <label for="lastname">Lastname</label>
-                      <input value="<%=cliente.userCliente %> " type="text" id="userCliente" class="form-control" placeholder="Asher">
+                      <label for="lastname">Username</label>
+                      <input value="<%=Farmaceutico.userFarmaceutico %> " type="text" id="userFarmaceutico" class="form-control" placeholder="Asher">
                     </div>
                   </div>
-                  <input type="hidden" name="idCliente" value="<%=cliente.idCliente %> ">
+                  <input type="hidden" name="idFarmaceutico" value="<%=Farmaceutico.idFarmaceutico %> ">
                   <div class="form-group">
                     <label for="inputEmail4">Email</label>
-                    <input value="<%=cliente.emailCliente %> " type="email" class="form-control" name="emailCliente" id="inputEmail4" placeholder="brown@asher.me">
+                    <input value="<%=Farmaceutico.emailFarmaceutico %> " type="email" class="form-control" name="emailFarmaceutico" id="inputEmail4" placeholder="brown@asher.me">
                   </div>
                   <div class="form-group">
                     <label for="inputAddress5">Contacto</label>
-                    <input name="tellCliente" value="<%=cliente.tellCliente %>"  type="number" class="form-control" id="inputAddress5" placeholder="P.O. Box 464, 5975 Eget Avenue">
+                    <input name="tellFarmaceutico" value="<%=Farmaceutico.tellFarmaceutico %>"  type="number" class="form-control" id="inputAddress5" placeholder="P.O. Box 464, 5975 Eget Avenue">
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail4">Endereço</label>
+                    <input value="<%=Farmaceutico.enderecoFarmaceutico %> "  class="form-control" name="enderecoFarmaceutico" id="inputEmail4" placeholder="brown@asher.me">
                   </div>
                 
 
