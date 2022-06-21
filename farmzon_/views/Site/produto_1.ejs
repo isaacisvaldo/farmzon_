@@ -81,8 +81,8 @@
 									<div class="products-slick" data-nav="#slick-nav-1">
 										
 									
-									
-                                              <div class="product">
+									<% medicamentos.map(medicamentos=>{%> 
+										<div class="product">
 											<div class="product-img">
 												<img src="http://localhost:1002/upload/<%= medicamentos.imgProduto %>" alt="">
 												<div class="product-label">
@@ -118,6 +118,8 @@
 											<% } %> 
 											
 										</div>
+										<%	}) %> 
+                                          
 										
 										
 										<!-- /product -->

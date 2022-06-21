@@ -140,23 +140,23 @@ ClienteController.get("/perfil",clienteAuth, async(req:Request, resp:Response) =
 })
 ClienteController.post('/Pesquisarm',async (req:Request, resp: Response)=>{
   let {idCategoria, medicamento}= req.body;
+  console.log(medicamento)
   const d=parseInt(idCategoria)
   const categoria= await knex('categoria').select('*');
   if(d==0){
-      const medicamentos= await knex('produto')
+      const m= await knex('produto')
       .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
-      .where('idCategoria',d)
-      .andWhere('nomeProduto','like', medicamento)
       .select('*');
+      const medicamentos= m.filter(x => x.nomeProduto.toUpperCase().includes(medicamento.toUpperCase()))
+      console.log(medicamentos)
       
       resp.render('Cliente/produto_1', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
   }else{
-      const medicamentos= await knex('produto')
+      const m= await knex('produto')
       .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
       .where('idCategoria',d)
-      .andWhere('nomeProduto','like', medicamento)
       .select('*');
-      
+      const medicamentos= m.filter(x => x.nomeProduto.toUpperCase().includes(medicamento.toUpperCase()))
       resp.render('Cliente/produto_1', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
   }
 
@@ -349,13 +349,14 @@ resp.render('Site/shop-cart', {categoria, medicamentos,certo:req.flash('certo'),
 })
 ClienteController.post('/Pesquisar',async (req:Request, resp: Response)=>{
   let {idCategoria, medicamento}= req.body;
+  console.log(medicamento)
   const d=parseInt(idCategoria)
   const categoria= await knex('categoria').select('*');
   if(d==0){
       const m= await knex('produto')
       .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
       .select('*');
-      const medicamentos= m.filter(x => x.name.toUpperCase().includes(medicamento.toUpperCase()))
+      const medicamentos= m.filter(x => x.nomeProduto.toUpperCase().includes(medicamento.toUpperCase()))
       console.log(medicamentos)
       
       resp.render('Site/produto_1', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
@@ -364,7 +365,7 @@ ClienteController.post('/Pesquisar',async (req:Request, resp: Response)=>{
       .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
       .where('idCategoria',d)
       .select('*');
-      const medicamentos= m.filter(x => x.name.toUpperCase().includes(medicamento.toUpperCase()))
+      const medicamentos= m.filter(x => x.nomeProduto.toUpperCase().includes(medicamento.toUpperCase()))
       resp.render('Site/produto_1', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
   }
 
