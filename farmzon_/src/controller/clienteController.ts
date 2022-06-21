@@ -110,7 +110,7 @@ ClienteController.get('/categoriascliente',clienteAuth,async (req:Request, resp:
   .select('*');
 resp.render('Cliente/categorias', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
 })
-ClienteController.get('/categoriaprodutos/:id',async (req:Request, resp: Response)=>{
+ClienteController.get('/categoriaprodutoslogado/:id',async (req:Request, resp: Response)=>{
   const {id}= req.params;
  const categoria= await knex('categoria').select('*');
  const categoria1= await knex('categoria').where('idCategoria',id).first();
@@ -137,6 +137,28 @@ ClienteController.get("/perfil",clienteAuth, async(req:Request, resp:Response) =
   }else{
     resp.redirect("/404")
   }
+})
+ClienteController.post('/Pesquisarm',async (req:Request, resp: Response)=>{
+  const {idCategoria,produto}= req.body;
+  const categoria= await knex('categoria').select('*');
+ 
+ if(idCategoria != 0){
+  const medicamentos= await knex('produto').where('nomeProduto',produto).andWhere('idCategoria',idCategoria).first();
+  if(medicamentos){
+    resp.render('Cliente/produto_1', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+   }else{
+  resp.redirect('/503')
+   }
+ }else{
+  const medicamentos= await knex('produto').where('nomeProduto',produto).first();
+  if(medicamentos){
+    resp.render('Cliente/produto_1', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+   }else{
+  resp.redirect('/503')
+   }
+ }
+ 
+
 })
 ClienteController.post('/Atualizarcliente',async(req:Request, resp: Response)=>{
 
@@ -322,6 +344,26 @@ ClienteController.get('/Carinho',async (req:Request, resp: Response)=>{
  .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
  .select('*');
 resp.render('Site/shop-cart', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+})
+ClienteController.post('/Pesquisar',async (req:Request, resp: Response)=>{
+  const {idCategoria,produto}= req.body;
+  const categoria= await knex('categoria').select('*');
+  if(idCategoria != 0){
+    const medicamentos= await knex('produto').where('nomeProduto',produto).andWhere('idCategoria',idCategoria).first();
+    if(medicamentos){
+      resp.render('Site/produto_1', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+     }else{
+    resp.redirect('/503')
+     }
+   }else{
+    const medicamentos= await knex('produto').where('nomeProduto',produto).first();
+    if(medicamentos){
+      resp.render('Site/produto_1', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+     }else{
+    resp.redirect('/503')
+     }
+    }
+
 })
 
 

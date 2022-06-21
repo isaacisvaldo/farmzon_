@@ -55,10 +55,9 @@
 							<h3 class="title"> <%= categoria1.nomeCategoria%> </h3>
 							<div class="section-nav">
 								<ul class="section-tab-nav tab-nav">
-									<li class="active"><a data-toggle="tab" href="#tab2">Laptops</a></li>
-									<li><a data-toggle="tab" href="#tab2">Smartphones</a></li>
-									<li><a data-toggle="tab" href="#tab2">Cameras</a></li>
-									<li><a data-toggle="tab" href="#tab2">Accessories</a></li>
+									<% medicamentos.reverse().slice(0,3).map(c=>{ %> 
+										<li><a data-toggle="tab" href="/medicamento_/:idProduto"><%=c.nomeProduto %> </a></li>
+									<%}) %> 
 								</ul>
 							</div>
 						</div>

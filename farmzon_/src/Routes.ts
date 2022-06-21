@@ -18,13 +18,11 @@ import adminAuth from './middlewre/farm'
 
 //Rotas de erro
 Route.get('/404', (req:Request, resp: Response)=>{
-    resp.render('/error/page-404')
+    resp.render('error/page-404')
 })
-Route.get('/400', (req:Request, resp: Response)=>{
-    resp.render('/error/400')
-})
+
 Route.get('/503', (req:Request, resp: Response)=>{
-    resp.render('/error/503')
+    resp.render('error/page-503')
 })
 
 Route.get('/loginGeral', (req:Request, resp: Response)=>{

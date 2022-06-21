@@ -53,12 +53,19 @@
 					<!-- section title -->
 					<div class="col-md-12">
 						<div class="section-title">
-							<h3 class="title"> <%= categoria1.nomeCategoria%> </h3>
+							<h3 class="title">
+								<% categoria.map(e=>{%>
+									<% if(medicamentos.idCategoria==e.idCategoria){ %> 
+										<%= e.nomeCategoria %> 
+
+									<%} %> 
+
+									<%}) %> 
+								 </h3>
 							<div class="section-nav">
 								<ul class="section-tab-nav tab-nav">
-									<% medicamentos.slice(0,3).map(c=>{ %> 
-										<li><a data-toggle="tab" href="/medicamento_/:idProduto"><%=c.nomeProduto %> </a></li>
-									<%}) %> 
+									<li class="active"><a data-toggle="tab" href="#tab2"><%= medicamentos.nomeProduto%></a></li>
+								
 								</ul>
 							</div>
 						</div>
@@ -72,11 +79,9 @@
 								<!-- tab -->
 								<div id="tab1" class="tab-pane active">
 									<div class="products-slick" data-nav="#slick-nav-1">
-										<% if(medicamentos.length < 0){ %> 
-											Não tem Comprimido
-								        <%}%> 
+										
 									
-										<% medicamentos.map(medicamentos =>{ %>
+									
                                               <div class="product">
 											<div class="product-img">
 												<img src="http://localhost:1002/upload/<%= medicamentos.imgProduto %>" alt="">
@@ -113,7 +118,7 @@
 											<% } %> 
 											
 										</div>
-										<% 	}) %> 
+										
 										
 										<!-- /product -->
 

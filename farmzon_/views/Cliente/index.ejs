@@ -29,7 +29,7 @@
 								</div>
 								<div class="shop-body">
 									<h3><%= categoria.nomeCategoria %> </h3>
-									<a href="/categoriaprodutos/<%= categoria.idCategoria %>" class="cta-btn">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
+									<a href="/categoriaprodutoslogado/<%= categoria.idCategoria %>" class="cta-btn">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
 								</div>
 							</div>
 						</div>
@@ -59,10 +59,9 @@
 							<h3 class="title">Medicamentos em Estoque</h3>
 							<div class="section-nav">
 								<ul class="section-tab-nav tab-nav">
-									<li class="active"><a data-toggle="tab" href="#tab1">Laptops</a></li>
-									<li><a data-toggle="tab" href="#tab1">Smartphones</a></li>
-									<li><a data-toggle="tab" href="#tab1">Cameras</a></li>
-									<li><a data-toggle="tab" href="#tab1">Accessories</a></li>
+									<% medicamentos.slice(0,3).map(c=>{ %> 
+										<li><a data-toggle="tab" href="/medicamento_/:idProduto"><%=c.nomeProduto %> </a></li>
+									<%}) %> 
 								</ul>
 							</div>
 						</div>
