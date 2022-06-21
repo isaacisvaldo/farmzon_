@@ -39,6 +39,8 @@ Route.get('/',async (req:Request, resp: Response)=>{
     const medicamentos= await knex('produto')
     .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
     .select('*');
+
+    const comprasEfectuada=await knex('compra').select('*')
     
     const medicamentos3= await knex('produto').limit(3)
     .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
@@ -47,7 +49,7 @@ Route.get('/',async (req:Request, resp: Response)=>{
     .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
     .select('*');
    
- resp.render('Site/index', {categoria,medicamentos3,medicamentos3desc, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+ resp.render('Site/index', {categoria,medicamentos3,comprasEfectuada,medicamentos3desc, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
 
 
 })
