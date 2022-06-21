@@ -54,30 +54,7 @@ Route.get('/',async (req:Request, resp: Response)=>{
 
 
 
-Route.get('/pesquisa',async (req:Request, resp: Response)=>{
-    let {idCategoria, medicamento}= req.body;
-    const d=parseInt(idCategoria)
-    const categoria= await knex('categoria').select('*');
-    if(d==0){
-        const medicamentos= await knex('produto')
-        .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
-        .where('idCategoria',d)
-        .andWhere('nomeProduto','like', medicamento)
-        .select('*');
-        
-        resp.render('Site/index', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
-    }else{
-        const medicamentos= await knex('produto')
-        .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
-        .where('idCategoria',d)
-        .andWhere('nomeProduto','like', medicamento)
-        .select('*');
-        
-        resp.render('Site/index', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
-    }
 
-
-})
 
 Route.get('/logout', (req:Request, resp: Response)=>{
     req.session = undefined;
