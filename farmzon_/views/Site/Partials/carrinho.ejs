@@ -1,0 +1,115 @@
+<script src="/sweetalert/sweetalert2.all.min.js"></script>
+<script>
+    let i = 0;
+    let c = []
+    if (localStorage.getItem('c')) {
+        console.log(localStorage.getItem('c'));
+        if (localStorage.getItem('c').length > 1) {
+            i = localStorage.getItem('c').split(',').map(c => parseInt(c)).length;
+            c = localStorage.getItem('c').split(',').map(d => parseInt(d));
+            document.getElementById('Quantidade').innerHTML = i;
+
+        } else if (localStorage.getItem('c').length == 1) {
+            i = localStorage.getItem('c').length;
+            c = localStorage.getItem('c').map(d => d);
+            document.getElementById('Quantidade').innerHTML = i;
+        } else {
+            i = localStorage.getItem('c').split(',').map(c => parseInt(c)).length;
+            document.getElementById('Quantidade').innerHTML = i;
+        }
+        i = localStorage.getItem('c').split(',').map(c => parseInt(c)).length;
+        document.getElementById('Quantidade').innerHTML = i;
+
+    } else {
+        let i = 0;
+        document.getElementById('Quantidade').innerHTML = i;
+    }
+    function comprar(id) {
+
+
+        if (c.indexOf(id) == -1) {
+            i += 1;
+
+            console.log(localStorage.getItem('c'));
+            if (localStorage.getItem('c')) {
+                c = JSON.parse(localStorage.getItem('c')).map(d => d);
+                if (c.indexOf(id) == -1) {
+                    c.push(id)
+                    localStorage.setItem('c', JSON.stringify(c));
+
+                    document.getElementById('Quantidade').innerHTML = i;
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Produto Adicionado'
+                    })
+                } else {
+                    var Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Produto já Adicionado'
+                    })
+                }
+            } else {
+                c.push(id)
+                localStorage.setItem('c', JSON.stringify(c));
+
+                document.getElementById('Quantidade').innerHTML = i;
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Produto Adicionado'
+                })
+            }
+        } else {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+            Toast.fire({
+                icon: 'error',
+                title: 'Produto já Adicionado'
+            })
+        }
+    }
+
+</script>
