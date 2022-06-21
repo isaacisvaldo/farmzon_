@@ -54,8 +54,8 @@ Route.get('/',async (req:Request, resp: Response)=>{
 
 
 
-Route.get('/pesquisa/:idCategoria/:medicamento',async (req:Request, resp: Response)=>{
-    let {idCategoria, medicamento}= req.params;
+Route.get('/pesquisa',async (req:Request, resp: Response)=>{
+    let {idCategoria, medicamento}= req.body;
     const d=parseInt(idCategoria)
     const categoria= await knex('categoria').select('*');
     if(d==0){
@@ -65,7 +65,7 @@ Route.get('/pesquisa/:idCategoria/:medicamento',async (req:Request, resp: Respon
         .andWhere('nomeProduto','like', medicamento)
         .select('*');
         
-         resp.render('Site/index', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+        resp.render('Site/index', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
     }else{
         const medicamentos= await knex('produto')
         .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
