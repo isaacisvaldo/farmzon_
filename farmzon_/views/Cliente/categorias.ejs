@@ -20,6 +20,7 @@
 					<ul class="main-nav nav navbar-nav">
 						<li ><a href="/Clientelogado">Home</a></li>
 						<li class="active"><a href="/categoriascliente">Categorias</a></li>
+						<li><a href="#">Produtos</a></li>
 						
 					</ul>
 					<!-- /NAV -->
@@ -122,7 +123,7 @@
 											</div>
 											<% if(medicamentos.stockProduto > 0) { %> 
                                             <div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</button>
+												<button onclick="comprar('<%= medicamentos.idProduto%>')" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</button>
 											</div>
 											<% } else{ %> 
 												<div class="add-to-cart">
@@ -155,6 +156,7 @@
 		<!-- /SECTION -->
 
 		<%- include('partials/footer') %> 
+		<%- include('partials/carrinho') %>
 	</body>
 
 <!-- Mirrored from technext.github.io/electro/?fbclid=IwAR04AVhzDNlzbB3QOQAXwj9ID6XQe3NOsUHaIN5x4NhgS1s9eGR2IKXwPmo by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 07 Jun 2022 14:48:04 GMT -->

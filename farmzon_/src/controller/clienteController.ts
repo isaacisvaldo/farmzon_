@@ -83,8 +83,11 @@ ClienteController.post('/Novocliente',async(req:Request, resp: Response)=>{
 })
 //Cliente Autenticado
 ClienteController.get("/Clientelogado",clienteAuth, async(req:Request, resp:Response) =>{
+  try{
+  const id=req.session?.user.id;
   const categoria= await knex('categoria').select('*');
   const categoria3= await knex('categoria').limit(3);
+  const comprasEfectuada=await knex('compra').where('idCliente',id).select('*')
   const medicamentos= await knex('produto')
   .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
   .select('*');
@@ -94,14 +97,17 @@ ClienteController.get("/Clientelogado",clienteAuth, async(req:Request, resp:Resp
   const medicamentos3desc= await knex('produto').orderBy('idProduto','desc').limit(3)
   .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
   .select('*');
-  const id=req.session?.user.id;
+ 
   const cliente= await knex('cliente').where('idCliente', id).first();
   if(cliente){
     console.log(cliente)
-    resp.render('Cliente/index',{categoria,categoria3,medicamentos3,medicamentos3desc, medicamentos,cliente,certo:req.flash('certo'),errado:req.flash('errado')})
+    resp.render('Cliente/index',{categoria,comprasEfectuada,categoria3,medicamentos3,medicamentos3desc, medicamentos,cliente,certo:req.flash('certo'),errado:req.flash('errado')})
   }else{
     resp.redirect("/404")
   }
+}catch{
+  resp.redirect("/404")
+}
 })
 ClienteController.get('/categoriascliente',clienteAuth,async (req:Request, resp: Response)=>{
   const categoria= await knex('categoria').select('*');
@@ -138,6 +144,14 @@ ClienteController.get("/perfil",clienteAuth, async(req:Request, resp:Response) =
     resp.redirect("/404")
   }
 })
+ClienteController.get("/Carrinho",clienteAuth, async(req:Request, resp:Response) =>{
+  const categoria= await knex('categoria').select('*');
+ 
+  const medicamentos= await knex('produto')
+  .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+  .select('*');
+ resp.render('Cliente/shop-cart',{categoria,medicamentos})
+})
 ClienteController.post('/Pesquisarm',async (req:Request, resp: Response)=>{
   let {idCategoria, medicamento}= req.body;
   console.log(medicamento)
@@ -150,14 +164,16 @@ ClienteController.post('/Pesquisarm',async (req:Request, resp: Response)=>{
       const medicamentos= m.filter(x => x.nomeProduto.toUpperCase().includes(medicamento.toUpperCase()))
       console.log(medicamentos)
       
-      resp.render('Cliente/produto_1', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+      resp.render('Cliente/produto_1', {categoria,n:'Todas Categorias', medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
   }else{
+    const n= await knex('categoria').where('idCategoria',d).first();
+    console.log(n)
       const m= await knex('produto')
       .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
       .where('idCategoria',d)
       .select('*');
       const medicamentos= m.filter(x => x.nomeProduto.toUpperCase().includes(medicamento.toUpperCase()))
-      resp.render('Cliente/produto_1', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+      resp.render('Cliente/produto_1', {categoria,n, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
   }
 
 
@@ -338,15 +354,7 @@ ClienteController.get('/categoriaprodutos/:id',async (req:Request, resp: Respons
   const medicamentos= await knex('produto').where('idCategoria',id).select('*');
 resp.render('Site/categoria_produtos', {categoria,categoria1, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
 })
-ClienteController.get('/Carinho',async (req:Request, resp: Response)=>{
-  const {id}= req.params;
- const categoria= await knex('categoria').select('*');
 
- const medicamentos= await knex('produto')
- .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
- .select('*');
-resp.render('Site/shop-cart', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
-})
 ClienteController.post('/Pesquisar',async (req:Request, resp: Response)=>{
   let {idCategoria, medicamento}= req.body;
   console.log(medicamento)
@@ -359,14 +367,16 @@ ClienteController.post('/Pesquisar',async (req:Request, resp: Response)=>{
       const medicamentos= m.filter(x => x.nomeProduto.toUpperCase().includes(medicamento.toUpperCase()))
       console.log(medicamentos)
       
-      resp.render('Site/produto_1', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+      resp.render('Site/produto_1', {categoria,n:'Todas Categorias', medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
   }else{
+    const n= await knex('categoria').where('idCategoria', d).first();
+    console.log(n)
       const m= await knex('produto')
       .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
-      .where('idCategoria',d)
+      .where('categoria.idCategoria',d)
       .select('*');
       const medicamentos= m.filter(x => x.nomeProduto.toUpperCase().includes(medicamento.toUpperCase()))
-      resp.render('Site/produto_1', {categoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+      resp.render('Site/produto_1', {categoria,n:n.nomeCategoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
   }
 
 

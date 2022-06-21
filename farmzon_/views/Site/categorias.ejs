@@ -77,10 +77,9 @@
 							<h3 class="title">Medicamentos Mas Requisitados</h3>
 							<div class="section-nav">
 								<ul class="section-tab-nav tab-nav">
-									<li class="active"><a data-toggle="tab" href="#tab2">Laptops</a></li>
-									<li><a data-toggle="tab" href="#tab2">Smartphones</a></li>
-									<li><a data-toggle="tab" href="#tab2">Cameras</a></li>
-									<li><a data-toggle="tab" href="#tab2">Accessories</a></li>
+									<% medicamentos.slice(0,3).map(c=>{ %> 
+										<li><a data-toggle="tab" href="/medicamento_/:idProduto"><%=c.nomeProduto %> </a></li>
+									<%}) %> 
 								</ul>
 							</div>
 						</div>
@@ -123,7 +122,7 @@
 											</div>
 											<% if(medicamentos.stockProduto > 0) { %> 
                                             <div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</button>
+												<button onclick="comprar('<%= medicamentos.idProduto%>')" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</button>
 											</div>
 											<% } else{ %> 
 												<div class="add-to-cart">
@@ -156,6 +155,7 @@
 		<!-- /SECTION -->
 
 		<%- include('partials/footer') %> 
+		<%- include('partials/carrinho') %>
 	</body>
 
 <!-- Mirrored from technext.github.io/electro/?fbclid=IwAR04AVhzDNlzbB3QOQAXwj9ID6XQe3NOsUHaIN5x4NhgS1s9eGR2IKXwPmo by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 07 Jun 2022 14:48:04 GMT -->

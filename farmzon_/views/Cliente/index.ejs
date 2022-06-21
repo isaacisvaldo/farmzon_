@@ -104,7 +104,7 @@
 											</div>
 											<% if(medicamentos.stockProduto > 0) { %> 
                                             <div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</button>
+												<button onclick="comprar('<%= medicamentos.idProduto%>')" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</button>
 											</div>
 											<% } else{ %> 
 												<div class="add-to-cart">
@@ -133,9 +133,9 @@
 		<!-- /SECTION -->
 
 		<!-- HOT DEAL SECTION -->
-		<div id="hot-deal" class="section">
+		<div id="hot-deal" class="section container-fluid">
 			<!-- container -->
-			<div class="container">
+			<div class="container-fluid">
 				<!-- row -->
 				<div class="row">
 					<div class="col-md-12">
@@ -143,38 +143,91 @@
 							<ul class="hot-deal-countdown">
 								<li>
 									<div>
-										<h3>02</h3>
-										<span>Days</span>
+										<h3>
+											<%=medicamentos.length %> 
+										</h3>
+										<span>Medicamentos</span>
 									</div>
 								</li>
 								<li>
 									<div>
-										<h3>10</h3>
-										<span>Hours</span>
+										<h3>
+											<%=categoria.length %> 
+										</h3>
+										<span>Categorias</span>
 									</div>
 								</li>
 								<li>
 									<div>
-										<h3>34</h3>
-										<span>Mins</span>
-									</div>
-								</li>
-								<li>
-									<div>
-										<h3>60</h3>
-										<span>Secs</span>
+										<h3><%=comprasEfectuada.length %></h3>
+										<span>Compras Efectuadas</span>
 									</div>
 								</li>
 							</ul>
-							<h2 class="text-uppercase">hot deal this week</h2>
-							<p>New Collection Up to 50% OFF</p>
-							<a class="primary-btn cta-btn" href="#">Shop now</a>
+							<h2 class="text-uppercase">ENCONTRE TODOS TIPOS MEDICAMENTO</h2>
+							<p>Pesquise e Encontre</p>
+							<a class="primary-btn cta-btn" href="/Carrinho">Ver Produtos</a>
 						</div>
 					</div>
 				</div>
 				<!-- /row -->
 			</div>
 			<!-- /container -->
+		</div>
+		<div class="col-md-12">
+			<div class="row">
+				<div class="products-tabs">
+					<!-- tab -->
+					<div id="tab1" class="tab-pane active">
+						<div class="products-slick" data-nav="#slick-nav-1">
+							<!-- product -->
+							<% medicamentos.reverse().map(medicamentos =>{ %>
+								  <div class="product">
+								<div class="product-img">
+									<img src="http://localhost:1002/upload/<%= medicamentos.imgProduto %>" alt="">
+									<div class="product-label">
+										<span class="sale"><%= medicamentos.stockProduto%></span>
+										<span class="new">Stock</span>
+									</div>
+								</div>
+								<div class="product-body">
+									<p class="product-category"><%= medicamentos.nomeCategoria%></p>
+									<h3 class="product-name"><a href="#"><%= medicamentos.nomeProduto%></a></h3>
+									<h4 class="product-price"><%= medicamentos.precoProduto%> Kz.</h4>
+									<div class="product-rating">
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+									</div>
+									<div class="product-btns">
+										<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+										<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+										<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+									</div>
+								</div>
+								<% if(medicamentos.stockProduto > 0) { %> 
+								<div class="add-to-cart">
+									<button onclick="comprar('<%= medicamentos.idProduto%>')" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</button>
+								</div>
+								<% } else{ %> 
+									<div class="add-to-cart">
+									<button disabled class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</button>
+								</div>
+								<% } %> 
+								
+							</div>
+							<% 	}) %> 
+							
+							<!-- /product -->
+
+						</div>
+						<div id="slick-nav-1" class="products-slick-nav"></div>
+					</div>
+					<!-- /tab -->
+				</div>
+			</div>
 		</div>
 		<!-- /HOT DEAL SECTION -->
 
@@ -337,6 +390,7 @@
 
 		<!-- NEWSLETTER -->
 		<%- include('partials/footer') %> 
+		<%- include('partials/carrinho') %>
 		<!-- /NEWSLETTER -->
 
 		<!-- FOOTER -->

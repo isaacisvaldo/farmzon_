@@ -54,13 +54,7 @@
 					<div class="col-md-12">
 						<div class="section-title">
 							<h3 class="title">
-								<% categoria.map(e=>{%>
-									<% if(medicamentos.idCategoria==e.idCategoria){ %> 
-										<%= e.nomeCategoria %> 
-
-									<%} %> 
-
-									<%}) %> 
+								Categoria: <%=n %> 
 								 </h3>
 							<div class="section-nav">
 								<ul class="section-tab-nav tab-nav">
@@ -109,7 +103,7 @@
 											</div>
 											<% if(medicamentos.stockProduto > 0) { %> 
                                             <div class="add-to-cart">
-												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</button>
+												<button onclick="comprar('<%= medicamentos.idProduto%>')" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Adicionar ao Carrinho</button>
 											</div>
 											<% } else{ %> 
 												<div class="add-to-cart">
@@ -145,6 +139,7 @@
 
 		<!-- NEWSLETTER -->
 <%- include('partials/footer') %> 
+<%- include('partials/carrinho') %>
 
 	</body>
 
