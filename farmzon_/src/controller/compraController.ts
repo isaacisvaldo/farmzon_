@@ -12,8 +12,18 @@ const CompraController=Router();
 
 //Vendas(Compras)--------------- ADMIN-----------------------------------------------------------
 CompraController.post('/comprarVenda',upload.single('image'),async(req:Request, resp: Response)=>{
-  const {estadocompra,v, mes, dia, ano,enderecoCompra, idProduto, idCliente,debitoCompra, quantidadeCompra, horaCompra}=req.body;  
-  console.log(v);
+  const { enderecoCompra, idProduto,debitoCompra, quantidadeCompra}=req.body;  
+  const estadoCompra=0;
+  const data=new Date();
+  console.log(data);
+  const dia=data.getDay()
+  const ano=data.getFullYear();
+  const horaCompra=data.getHours();
+  const mes=data.getMonth()+1
+  const idCliente=req.session?.user.id;
+  console.log(dia, mes, ano, horaCompra);
+  
+  console.log(idProduto, quantidadeCompra);
 })
 
 

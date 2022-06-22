@@ -204,7 +204,7 @@
                                         <td>
                                             <div class="pro-qty">
                                                 <input onchange="adicionarQuantidade()" class="q" min="1" max="80" type="number" name="quantidadeCompra">
-                                                <input value="<%= m.precoProduto %>" type="hidden" name="v">
+                                                <input value="<%= m.idProduto %>" type="hidden" name="idProduto">
                                             </div>
                                         </td>
                                         <td><span class="total"></span>Kz</td>
@@ -229,7 +229,7 @@
                          <label for="">Compravativo de Pagamento</label>
                         <div class="custom-file">
                            
-                                    <input accept=".pdf" type="file" name="image" multiple class="custom-file-input form-control" id="customFile">
+                                    <input required accept=".pdf" type="file" name="image" multiple class="custom-file-input form-control" id="customFile">
                                     <label class="custom-file-label" for="customFile">Choose file</label>
                                   </div>
                     </div>
