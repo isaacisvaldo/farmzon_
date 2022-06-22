@@ -15,7 +15,7 @@ FarmaceuticoController.get('/Farmaceutico',farmAuth,async(req:Request, resp: Res
   const idUser=req.session?.user.id;
   const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first()
   const f= await knex('farmaceutico').select('*')
-  const comprasTotal=await  knex('compra').sum('debitoCompra', {as:'TransacaoTotal'}).select('idProduto');
+  const comprasTotal=await  knex('compra').where('estadocompra', 1).sum('debitoCompra', {as:'TransacaoTotal'}).select('idProduto');
   const categorias=await  knex('categoria').select('*')
   const clientes=await  knex('cliente').select('*');
   const medicamentos=await  knex('produto').select('*');
@@ -28,6 +28,10 @@ FarmaceuticoController.get('/Farmaceutico',farmAuth,async(req:Request, resp: Res
   .join('cliente', 'compra.idCliente', 'cliente.idCliente')
   .join('produto', 'compra.idProduto', 'produto.idProduto')
   .where('estadocompra',0).select('*')
+
+
+  const totalCompra= await knex('compra').groupBy('mes').count('mes', {as:'totalCompra'}).select('*')
+  const naoVerificado= await knex('compra').where('estadocompra', 0).groupBy('mes').count('mes', {as:'naoVer'}).select('*')
 
   resp.render('Farmaceutico/index', {farmaceutico,f,nv, comprasTotal:comprasTotal[0], clientes, compras, categorias, medicamentos})
 })
