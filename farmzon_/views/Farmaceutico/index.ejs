@@ -421,11 +421,11 @@
       const c='<%=compras.length %>';
       const cc= parseInt(c)
       const nv='<%=nv.length %>';
-      const vv= parseInt(c);
+      const vv= parseInt(nv);
       t=cc+vv
       var radialbarWidgetChart,
   radialbarWidgetOptions = {
-    series: [t-1],
+    series: [t],
     chart: { height: 120, type: "radialBar" },
     theme: { mode: colors.chartTheme },
     plotOptions: {
