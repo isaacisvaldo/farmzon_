@@ -20,7 +20,10 @@ FarmaceuticoController.get('/Farmaceutico',farmAuth,async(req:Request, resp: Res
   const clientes=await  knex('cliente').select('*');
   const medicamentos=await  knex('produto').select('*');
   
-  const compras=await  knex('compra').where('estadocompra',1).select('*')
+  const compras=await  knex('compra')
+  .join('cliente', 'compra.idCliente', 'cliente.idCliente')
+  .join('produto', 'compra.idProduto', 'produto.idProduto')
+  .where('estadocompra',1).select('*')
 
   resp.render('Farmaceutico/index', {farmaceutico, comprasTotal:comprasTotal[0], clientes, compras, categorias, medicamentos})
 })
