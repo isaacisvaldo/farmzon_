@@ -22,12 +22,20 @@
 				<div class="row">
 					<!-- shop -->
 					<div class="col-md-3 col-xs-2">
-						<div class="shop">
+						<div >
 							<div class="shop-img">
-								<img  src="http://localhost:1002/upload/<%= cliente.imgCliente %>" alt="">
+								<img width="200"  src="http://localhost:1002/upload/<%= cliente.imgCliente %>" alt="">
 							</div>
 							
 						</div>
+					</div>
+					<div class="col-md-3 col-xs-2">
+						<h5>Nome: <%= cliente.nomeCliente %> </h5>
+						<h5>Username: <%= cliente.userCliente %> </h5>
+						<h5>Telefone: <%= cliente.tellCliente %> </h5>
+						<h5>Endereço: <%= cliente.enderecoCliente %> </h5>
+						<h5>Compras Efectuadas: <%= compra.length %> </h5>
+						
 					</div>
 				
 					
@@ -105,16 +113,12 @@
                                      <% if(c.estadocompra==1){%>
                                         Efectuada
                                     <%}else{%>
-                                        Não Efectuada
+                                        Não Vefirificada
                                     <% } %> 
                                     </td>
                                     
-                                    <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="text-muted sr-only">Action</span>
-                                      </button>
-                                      <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="/detalhesCompra/<%=c.idCompra %> ">Detalhes</a>
-                                      </div>
+                                    <td>
+										<button class="btn btn-primary">Detalhes</button>
                                     </td>
                                   </tr>
 
