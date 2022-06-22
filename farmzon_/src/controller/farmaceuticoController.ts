@@ -14,7 +14,15 @@ const FarmaceuticoController=Router();
 FarmaceuticoController.get('/Farmaceutico',farmAuth,async(req:Request, resp: Response)=>{
   const idUser=req.session?.user.id;
   const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first()
-  resp.render('Farmaceutico/index', {farmaceutico})
+  
+  const comprasTotal=await  knex('compra').sum('debitoCompra', {as:'TransacaoTotal'}).select('idProduto');
+  const categorias=await  knex('categoria').select('*')
+  const clientes=await  knex('cliente').select('*');
+  const medicamentos=await  knex('produto').select('*');
+  
+  const compras=await  knex('compra').where('estadocompra',1).select('*')
+
+  resp.render('Farmaceutico/index', {farmaceutico, comprasTotal:comprasTotal[0], clientes, compras, categorias, medicamentos})
 })
   FarmaceuticoController.post('/NovoFarmaceutico',upload.single('image'),async (req:Request, resp: Response)=>{
       try {

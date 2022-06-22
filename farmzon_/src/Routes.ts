@@ -49,10 +49,8 @@ Route.get('/',async (req:Request, resp: Response)=>{
     .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
     .select('*');
 
-    const comprasTotal=await  knex('compra').sum('debitoCompra', {as:'TransacaoTotal'}).select('idProduto')
-   console.log(comprasTotal);
    
- resp.render('Site/index', {categoria, comprasTotal,medicamentos3,comprasEfectuada,medicamentos3desc, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+ resp.render('Site/index', {categoria,medicamentos3,comprasEfectuada,medicamentos3desc, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
 
 
 })
