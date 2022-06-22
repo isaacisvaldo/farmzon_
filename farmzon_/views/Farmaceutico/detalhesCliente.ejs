@@ -97,7 +97,7 @@
                             <h3 class="h5 mt-4 mb-1">Contactos</h3>
                           </a>
                           <p class="text-muted">
-                            <%=cliente.emailCliente %>
+                            <%=cliente.emailCliente %> <br>
                             <%=cliente.tellCliente %>  
                           </p>
                         </div> <!-- .col -->
@@ -135,97 +135,65 @@
                 </div> <!-- .col-md-->
               </div> <!-- .row-->
               <h6 class="mb-3">Ultimas Compras Efectuadas</h6>
-              <table class="table table-borderless table-striped">
-                <thead>
-                  <tr role="row">
-                    <th>ID</th>
-                    <th>Nome Cliente</th>
-                    <th>telefone</th>
-                    <th>Email</th>
-                    <th>Quantidade</th>
-                    <th>Estado</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="col">1331</th>
-                    <td>2020-12-26 01:32:21</td>
-                    <td>$16.9</td>
-                    <td>Paypal</td>
-                    <td><span class="dot dot-lg bg-warning mr-2"></span>Due</td>
-                    <td>
-                      <div class="dropdown">
-                        <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="text-muted sr-only">Action</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                          <a class="dropdown-item" href="#">Edit</a>
-                          <a class="dropdown-item" href="#">Remove</a>
-                          <a class="dropdown-item" href="#">Assign</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="col">1156</th>
-                    <td>2020-04-21 00:38:38</td>
-                    <td>$9.9</td>
-                    <td>Paypal</td>
-                    <td><span class="dot dot-lg bg-danger mr-2"></span>False</td>
-                    <td>
-                      <div class="dropdown">
-                        <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="text-muted sr-only">Action</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                          <a class="dropdown-item" href="#">Edit</a>
-                          <a class="dropdown-item" href="#">Remove</a>
-                          <a class="dropdown-item" href="#">Assign</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="col">1038</th>
-                    <td>2019-06-25 19:13:36</td>
-                    <td>$9.9</td>
-                    <td>Credit Card </td>
-                    <td><span class="dot dot-lg bg-success mr-2"></span>Paid</td>
-                    <td>
-                      <div class="dropdown">
-                        <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="text-muted sr-only">Action</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                          <a class="dropdown-item" href="#">Edit</a>
-                          <a class="dropdown-item" href="#">Remove</a>
-                          <a class="dropdown-item" href="#">Assign</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="col">1227</th>
-                    <td>2021-01-22 13:28:00</td>
-                    <td>$9.9</td>
-                    <td>Paypal</td>
-                    <td><span class="dot dot-lg bg-success mr-2"></span>Paid</td>
-                    <td>
-                      <div class="dropdown">
-                        <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="text-muted sr-only">Action</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                          <a class="dropdown-item" href="#">Edit</a>
-                          <a class="dropdown-item" href="#">Remove</a>
-                          <a class="dropdown-item" href="#">Assign</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+               <table class="table datatables" id="dataTable-1">
+
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>#</th>
+                            <th>Cliente</th>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Debito</th>
+                           
+                            <th>Data</th>
+                            
+                            <th>Estado</th>
+        
+                            <th>Accão</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <% compras.reverse().map(c=>{%> 
+                                <tr>
+                                    <td>
+                                      <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input">
+                                        <label class="custom-control-label"></label>
+                                      </div>
+                                    </td>
+                                    <td>Compra nº<%=c.idCompra %> </td>
+                                    <td><%=c.nomeCliente %> </td>
+                                    <td><%=c.nomeProduto %> </td>
+                                    <td><%=c.quantidadeCompra %> Unidades </td>
+                                    <td><%=c.debitoCompra %> Kz </td> 
+                                    
+                                    <td><%=c.datacompra %></td>
+                                    
+                                    <td>
+                                     <% if(c.estadocompra==1){%>
+                                        Efectuada
+                                    <%}else{%>
+                                        Não Efectuada
+                                    <% } %> 
+                                    </td>
+                                    
+                                    <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="text-muted sr-only">Action</span>
+                                      </button>
+                                      <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="/detalhesCompra/<%=c.idCompra %> ">Detalhes</a>
+                                      </div>
+                                    </td>
+                                  </tr>
+
+                            <%  }) %> 
+
+                          
+                                         
+
+                        </tbody>
+                      </table>
             </div> <!-- /.col-12 -->
           </div> <!-- .row -->
         </div> <!-- .container-fluid -->
