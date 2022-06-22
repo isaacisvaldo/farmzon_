@@ -185,6 +185,7 @@
                             <tbody>
                                
                                     <% medicamentos.map(m =>{%> 
+                                       
                                         <tr>
                                         <td class="cart__product__item">
                                             <img height="80" width="80" src="http://localhost:1002/upload/<%= m.imgProduto %> " alt="">
@@ -200,12 +201,12 @@
                                             </div>
                                         </td>
                                         <td><span class="preco"><%= m.precoProduto %></span>Kz</td>
-                                        <td class="cart__quantity">
+                                        <td>
                                             <div class="pro-qty">
-                                                <input onchange="adicionarQuantidade()" class="q" min="1" max="80" type="number" value="580" name="quantidadeCompra">
+                                                <input onchange="adicionarQuantidade()" class="q" min="1" max="80" type="number" name="quantidadeCompra">
                                             </div>
                                         </td>
-                                        <td class="total"></td>
+                                        <td><span class="total"></span>Kz</td>
                                         <td class="cart__close"><span class="icon_close"></span></td>
                                     </tr>
                                         <%  }) %> 
@@ -240,10 +241,11 @@
                 </div>
                 <div class="col-lg-4 offset-lg-2">
                     <div class="cart__total__procced">
-                        <h6>Cart total</h6>
+                        <h6>Pagamento Via comprovativo</h6>
                         <ul>
-                            <li>Subtotal <span>$ 750.0</span></li>
-                            <li>Total <span>$ 750.0</span></li>
+                            <li>Nome Entidade: <span>FarmaZon</span></li>
+                            <li>Numero IBAN: <span>###</span></li>
+                            <li>Total a Pagar: <span id="final"></span>Kz</li>
                         </ul>
                         <a href="#" class="primary-btn">Efectuar Compra</a>
                     </div>
@@ -279,11 +281,23 @@
     <script src="card/js/main.js"></script>
     <script>
         
+        console.log(JSON.parse(localStorage.getItem('c')).map(c=>parseInt(c)));
         const adicionarQuantidade=()=>{
-            const quantidade=document.getElementsByClassName('q'); 
-            console.log(quantidade);
-          
-            
+            const quantidade=document.getElementsByClassName('q');
+            const preco=document.getElementsByClassName('preco');
+            const total=document.getElementsByClassName('total');
+            const final=document.getElementById('final'); 
+            let resultado=0;
+            console.log(quantidade[0].value);
+            for (let index = 0; index < quantidade.length; index++) {
+                //   console.log(quantidade[index].value); 
+                //   console.log(preco[index].innerHTML); 
+              const valorTotal=quantidade[index].value*preco[index].innerHTML;
+              document.getElementsByClassName('total')[index].innerHTML=valorTotal;
+              resultado+=valorTotal;
+                
+            }
+            document.getElementById('final').innerHTML=resultado;
         }
         adicionarQuantidade();
     </script>
