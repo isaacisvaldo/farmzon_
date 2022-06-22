@@ -124,6 +124,8 @@ ClienteController.get('/categoriaprodutoslogado/:id',async (req:Request, resp: R
 resp.render('Cliente/categoria_produtos', {categoria,categoria1, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
 })
 ClienteController.get("/perfil",clienteAuth, async(req:Request, resp:Response) =>{
+
+
   const categoria= await knex('categoria').select('*');
   const categoria3= await knex('categoria').limit(3);
   const medicamentos= await knex('produto')
@@ -137,9 +139,12 @@ ClienteController.get("/perfil",clienteAuth, async(req:Request, resp:Response) =
   .select('*');
   const id=req.session?.user.id;
   const cliente= await knex('cliente').where('idCliente', id).first();
+  const compra=await knex('compra')
+  .join('produto', 'compra.idProduto', 'produto.idProduto')
+  .where('idCliente', id)
   if(cliente){
     console.log(cliente)
-    resp.render('Cliente/perfil',{categoria,categoria3,medicamentos3,medicamentos3desc, medicamentos,cliente,certo:req.flash('certo'),errado:req.flash('errado')})
+    resp.render('Cliente/perfil',{categoria,compra,categoria3,medicamentos3,medicamentos3desc, medicamentos,cliente,certo:req.flash('certo'),errado:req.flash('errado')})
   }else{
     resp.redirect("/404")
   }
@@ -178,14 +183,14 @@ ClienteController.post('/Pesquisarm',async (req:Request, resp: Response)=>{
       
       resp.render('Cliente/produto_1', {categoria,n:'Todas Categorias', medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
   }else{
-    const n= await knex('categoria').where('idCategoria',d).first();
+    const n= await knex('categoria').where('categoria.idCategoria',d).first();
     console.log(n)
       const m= await knex('produto')
       .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
       .where('idCategoria',d)
       .select('*');
       const medicamentos= m.filter(x => x.nomeProduto.toUpperCase().includes(medicamento.toUpperCase()))
-      resp.render('Cliente/produto_1', {categoria,n, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
+      resp.render('Cliente/produto_1', {categoria,n:n.nomeCategoria, medicamentos,certo:req.flash('certo'),errado:req.flash('errado')})
   }
 
 

@@ -1,6 +1,7 @@
 import knex from '../database/conection';
 import multer from 'multer'
 import multerConfig from '../config/multer';
+import compra from '../config/compra';
 import { Response, Request, Router } from  "express";
 // import bCryptjs from 'bcryptjs'
 const upload = multer(multerConfig);
@@ -12,18 +13,35 @@ const CompraController=Router();
 
 //Vendas(Compras)--------------- ADMIN-----------------------------------------------------------
 CompraController.post('/comprarVenda',upload.single('image'),async(req:Request, resp: Response)=>{
-  const { enderecoCompra, idProduto,debitoCompra, quantidadeCompra}=req.body;  
-  const estadoCompra=0;
+  const { idProduto, quantidadeCompra, enderecoCompra}=req.body;  
+  const estadocompra=0;
   const data=new Date();
   console.log(data);
-  const dia=data.getDay()
+  const dia=(""+data).substring(8,10);
   const ano=data.getFullYear();
   const horaCompra=data.getHours();
   const mes=data.getMonth()+1
   const idCliente=req.session?.user.id;
-  console.log(dia, mes, ano, horaCompra);
+  const comprovativoCompra=req.file?.filename
+  let resultado:any=[];
+
+  compra(idProduto, quantidadeCompra, estadocompra, mes, dia, enderecoCompra, ano, idCliente, comprovativoCompra,horaCompra, resultado)
+  .then(c=>{
+    console.log(c);
+    if(c.indexOf('Diminua o Stock')==-1 || c.indexOf("Estoque Insuficiente")==-1){
+      req.flash('certo', 'Compra Efectuada, aguardar Verificação')
+      resp.redirect('/perfil')
+    }else{
+      req.flash('errado', 'Stock Insuficiente ou Produtos indisponivel')
+      resp.redirect('/perfil')
+    }
+    ///perfil
+  })
+
   
-  console.log(idProduto, quantidadeCompra);
+   
+
+  
 })
 
 

@@ -63,30 +63,62 @@
 									<thead>
 									  <tr>
 										<th scope="col">#</th>
+										<th scope="col">Identificador</th>
 										<th scope="col">Produto</th>
 										<th scope="col">Categoria</th>
 										<th scope="col">Data</th>
 										<th scope="col">Preço</th>
 										<th scope="col">Quantidade</th>
+										<th scope="col">Debito</th>
+										<th scope="col">estado</th>
 										<th scope="col">Acção</th>
 									  </tr>
 									</thead>
 									<tbody>
 										
-									  <tr>
-										   
-										   <td> </td>
-										   <td> </td>
-										   <td> </td>
-										   <td> </td>
-										   <td> </td>
-										   <td> </td>
-										   <td> </td>
-										  
-										  
-								   
-										   
-									  </tr>
+									    <% compra.reverse().map(c=>{%> 
+                                <tr>
+                                    <td>
+                                      <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input">
+                                        <label class="custom-control-label"></label>
+                                      </div>
+                                    </td>
+                                    <td>Compra nº<%=c.idCompra %> </td>
+                                    <td><%=c.nomeProduto %> </td>
+                                    <td>
+										<% categoria.map(cc=>{ %>
+											<% if(cc.idCategoria==c.idCategoria){%> 
+												<%=cc.nomeCategoria %> 
+											<%} %> 
+										<%})%> 
+										
+									</td>
+									<td><%=c.datacompra %> </td>
+										<td><%=c.precoProduto %>Kz </td>
+                                    <td><%=c.quantidadeCompra %> Unidades </td>
+                                    <td><%=c.debitoCompra %> Kz </td> 
+                                    
+                               
+                                    
+                                    <td>
+                                     <% if(c.estadocompra==1){%>
+                                        Efectuada
+                                    <%}else{%>
+                                        Não Efectuada
+                                    <% } %> 
+                                    </td>
+                                    
+                                    <td><button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="text-muted sr-only">Action</span>
+                                      </button>
+                                      <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="/detalhesCompra/<%=c.idCompra %> ">Detalhes</a>
+                                      </div>
+                                    </td>
+                                  </tr>
+
+                            <%  }) %> 
 									 
 									</tbody>
 								  </table>
@@ -104,6 +136,72 @@
 		<!-- NEWSLETTER -->
 		<%- include('partials/footer') %> 
 		<!-- /NEWSLETTER -->
+		<script src="/sweetalert/sweetalert2.all.min.js"></script>
+<% if(errado.length>0) {%>
+    <script>
+		 localStorage.clear();
+      var Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 4000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      Toast.fire({
+        icon: 'error',
+        title: '<%=errado %>'
+      })
+    </script>
+  
+    <% }else if(certo.length>0) {%>
+      <script>
+		  localStorage.clear();
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+  
+        Toast.fire({
+          icon: 'success',
+          title: '<%=certo %>'
+        })
+  
+      </script>
+      <% }%>
+
+      <script>
+        function confirmar(id){
+          
+      Swal.fire({
+        title: 'Deseja Eliminar Produto?',
+      icon:'warning',
+        showCancelButton: true,
+        confirmButtonColor:'#3085d6',
+        cancelButtonColor:'#d33',
+        confirmButtonText: 'Confirmar',
+      
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below   */
+        if (result.isConfirmed) {
+      
+         window.location = '/removerMedicamento/'+id;
+        } else if (result.isDenied) {
+          Swal.fire('Erro ao eliminar', '', 'info')
+        }
+      })
+        }
+        </script>
 
 		<!-- FOOTER -->
 	
