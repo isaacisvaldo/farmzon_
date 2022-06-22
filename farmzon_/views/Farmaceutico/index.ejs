@@ -490,28 +490,29 @@ radialbarWidget &&
     </script>
 
     <script>
+
+    let naorealizado="<%= naorealizado %>";
+    let realizado="<%= realizado %>";
+    let marcada="<%= marcada %>";
+    let marcada_=marcada.split(",").map(d=>parseInt(d))
+    let naorealizado_=naorealizado.split(",").map(d=>parseInt(d))
+    let realizado_=realizado.split(",").map(d=>parseInt(d))
+    let meses="<%= meses %>";
+    let meses_=meses.split(",");
       var areachart,
   areaChartOptions = {
     series: [
       {
-        name: "Website",
-        data: [
-          31, 28, 30, 51, 42, 109, 100, 31, 40, 28, 31, 58, 30, 51, 42, 109,
-          100, 116,
-        ],
+        name: "Total de Transação",
+        data:marcada_,
       },
       {
-        name: "Mobile Apps",
-        data: [
-          11, 45, 20, 32, 34, 52, 41, 11, 32, 45, 11, 75, 20, 32, 34, 52, 41,
-          81,
-        ],
+        name: "Compras Realizadas",
+        data: realizado_,
       },
       {
-        name: "Others",
-        data: [
-          5, 25, 9, 14, 14, 32, 21, 5, 12, 25, 5, 55, 9, 14, 14, 32, 21, 65,
-        ],
+        name: "Não Verificadas",
+        data:naorealizado_,
       },
     ],
     chart: {
@@ -526,24 +527,18 @@ radialbarWidget &&
     xaxis: {
       type: "datetime",
       categories: [
-        "01/01/2020 GMT",
-        "01/02/2020 GMT",
-        "01/03/2020 GMT",
-        "01/04/2020 GMT",
-        "01/05/2020 GMT",
-        "01/06/2020 GMT",
-        "01/07/2020 GMT",
-        "01/08/2020 GMT",
-        "01/09/2020 GMT",
-        "01/10/2020 GMT",
-        "01/11/2020 GMT",
-        "01/12/2020 GMT",
-        "01/13/2020 GMT",
-        "01/14/2020 GMT",
-        "01/15/2020 GMT",
-        "01/16/2020 GMT",
-        "01/17/2020 GMT",
-        "01/18/2020 GMT",
+        "01/01/2022 GMT",
+        "02/01/2022 GMT",
+        "03/01/2022 GMT",
+        "04/01/2022 GMT",
+        "05/01/2022 GMT",
+        "06/01/2022 GMT",
+        "07/01/2022 GMT",
+        "08/01/2022 GMT",
+        "09/01/2022 GMT",
+        "10/01/2022 GMT",
+        "11/01/2022 GMT",
+        "12/01/2022 GMT"
       ],
       labels: {
         show: !0,

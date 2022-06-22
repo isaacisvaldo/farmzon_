@@ -31,9 +31,97 @@ FarmaceuticoController.get('/Farmaceutico',farmAuth,async(req:Request, resp: Res
 
 
   const totalCompra= await knex('compra').groupBy('mes').count('mes', {as:'totalCompra'}).select('*')
-  const naoVerificado= await knex('compra').where('estadocompra', 0).groupBy('mes').count('mes', {as:'naoVer'}).select('*')
+  const verificado= await knex('compra').where('estadocompra', 1).groupBy('mes').count('mes', {as:'verificado'}).select('*')
 
-  resp.render('Farmaceutico/index', {farmaceutico,f,nv, comprasTotal:comprasTotal[0], clientes, compras, categorias, medicamentos})
+  const dados=totalCompra.map(e=>{
+    //Compras Realizadas 
+    const real=verificado.map(ed=>(ed.mes==e.mes)?ed.verificado:0)
+    const v=real.map(r=>parseInt(r.toString())).reduce((prev, curr)=>prev+curr, 0)
+    
+    
+   let name;
+   switch (e.mes) {
+       case '1':
+           name="Janeiro"
+           break;
+           case '2':
+               name="Fevereiro"
+               break;
+               case '3':
+                   name="Março"
+                   break;
+                   case '4':
+                       name="Abril"
+                       break;
+                       case '5':
+                           name="Maio"
+                           break;
+                           case '6':
+                               name="Junho"
+                               break;
+                               case '7':
+                                   name="Julho"
+                                   break;
+                                   case '8':
+                                   name="Agosto"
+                                   break;
+                                   case '9':
+                                   name="Setembro"
+                                   break;
+                                   case '10':
+                                   name="Outubro"
+                                   break;
+                                   case '11':
+                                   name="Novembro"
+                                   break;
+                                   case '12':
+                                   name="Dezembro"
+                                   break;
+   
+       default:
+           break;
+   }
+   console.log({mes:name, marcada:e.totalCompra, realizada:v, naoRealizada:e.totalCompra-v});
+   return {mes:name, marcada:e.totalCompra, realizada:v, naoRealizada:e.totalCompra-v}
+  }) 
+const meses= ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro','Outubro','Novembro','Dezembro'];
+const naorealizado=meses.map(i=>{
+    const e=dados.filter(e=>e.mes==i);
+    if(e.length>0){
+        return e[0].naoRealizada
+    }else{
+        return 0
+    }
+    
+})
+const realizado=meses.map(i=>{
+  const e=dados.filter(e=>e.mes==i);
+  if(e.length>0){
+      return e[0].realizada
+  }else{
+      return 0
+  }
+  
+})
+const marcada=meses.map(i=>{
+  const e=dados.filter(e=>e.mes==i);
+  if(e.length>0){
+      return e[0].marcada
+  }else{
+      return 0
+  }
+  
+})
+
+// console.log(marcada);
+// console.log(naorealizado);
+// console.log(realizado);
+// console.log(meses);
+
+
+
+
+  resp.render('Farmaceutico/index', {farmaceutico,f,nv, comprasTotal:comprasTotal[0], clientes, compras, categorias, medicamentos, realizado, marcada, naorealizado, meses})
 })
   FarmaceuticoController.post('/NovoFarmaceutico',upload.single('image'),async (req:Request, resp: Response)=>{
       try {
