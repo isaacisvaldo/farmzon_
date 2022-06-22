@@ -38,18 +38,19 @@
                   <h2 class="h5 page-title"><small class="text-muted text-uppercase">Registro Venda</small><br />#<%= compra.idCompra %> </h2>
                 </div>
                 <div class="col-auto">
-                  <button type="button" class="btn btn-secondary">Comprovativo</button>
-                  <button type="button" class="btn btn-primary">Gerar Relatório</button>
+                  <a href="http://localhost:1002/upload/<%=compra.comprovativoCompra %>" target="_blank" class="btn btn-secondary">Comprovativo</a>
+                  <button type="button" onclick="printContent('comprativo')" class="btn btn-primary">Gerar Relatório</button>
                 </div>
               </div> <!-- .row -->
               <div class="row my-4">
                 <div class="col-md-9">
                   <div class="card shadow mb-4">
                     <div class="card-header">
-                      <strong class="card-title">Detalhes da Venda efectuada pelo MarketPlace de Medicamentos.</strong>
+                      <strong class="card-title">Detalhes da Venda efectuada pelo e-commerce de Medicamentos.</strong>
                       <span class="float-right"><i class="fe fe-flag mr-2"></i><span class="badge badge-pill badge-success text-white">Compra Efectuada</span></span>
                     </div>
-                    <div class="card-body">
+                    <span class="comprativo">
+ <div class="card-body">
                       <dl class="row align-items-center mb-0">
                         <dt class="col-sm-2 mb-3 text-muted">Nome</dt>
                         <dd class="col-sm-4 mb-3">
@@ -82,7 +83,9 @@
                         <dt class="col-sm-2 text-muted">Descrição Produto</dt>
                         <dd class="col-sm-10"> <%=compra.descProduto %> </dd>
                       </dl>
-                    </div> <!-- .card-body -->
+                    </div>
+                    </span>
+                    <!-- .card-body -->
                   </div> <!-- .card -->
                   
                 </div> <!-- .col-md -->
