@@ -166,7 +166,7 @@
     <!-- Offcanvas Menu Begin -->
     <div class="offcanvas-menu-overlay"></div>
    
-
+    <form action="/comprarVenda" method="post" enctype="multipart/form-data">
     <section class="shop-cart spad">
         <div class="container">
             <div class="row">
@@ -204,6 +204,7 @@
                                         <td>
                                             <div class="pro-qty">
                                                 <input onchange="adicionarQuantidade()" class="q" min="1" max="80" type="number" name="quantidadeCompra">
+                                                <input value="<%= m.precoProduto %>" type="hidden" name="v">
                                             </div>
                                         </td>
                                         <td><span class="total"></span>Kz</td>
@@ -225,7 +226,12 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="cart__btn update__btn">
-                        <a href="#"><span class="icon_loading"></span> Upload Comprovativo</a>
+                         <label for="">Compravativo de Pagamento</label>
+                        <div class="custom-file">
+                           
+                                    <input accept=".pdf" type="file" name="image" multiple class="custom-file-input form-control" id="customFile">
+                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                  </div>
                     </div>
                 </div>
             </div>
@@ -233,10 +239,10 @@
                 <div class="col-lg-6">
                     <div class="discount__content">
                       
-                        <form action="#">
-                            <input type="text" placeholder="Sua Morada">
-                            <button class="primary-btn">Endereço</button>
-                        </form>
+                  
+                            <input required name="enderecoCompra" class="form-control p-2" type="text" placeholder="Sua Morada">
+                           
+                       
                     </div>
                 </div>
                 <div class="col-lg-4 offset-lg-2">
@@ -247,12 +253,14 @@
                             <li>Numero IBAN: <span>###</span></li>
                             <li>Total a Pagar: <span id="final"></span>Kz</li>
                         </ul>
-                        <a href="#" class="primary-btn">Efectuar Compra</a>
+                        <button type="submit" class="primary-btn p-4">Efectuar Compra</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    </form>
+
     <!-- Shop Cart Section End -->
 
     <!-- Instagram Begin -->

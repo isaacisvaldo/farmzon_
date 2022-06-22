@@ -11,26 +11,9 @@ import clinteAuth from '../middlewre/cliente'
 const CompraController=Router();
 
 //Vendas(Compras)--------------- ADMIN-----------------------------------------------------------
-CompraController.post('/comprarVenda',async(req:Request, resp: Response)=>{
-  const {estadocompra, mes, dia, ano,enderecoCompra, idProduto, idCliente,debitoCompra, quantidadeCompra, horaCompra}=req.body;  
-  const produto= await knex('produto').where('idProduto', idProduto).first();
-  if(produto.stockProduto>1){
-    const p=produto.stockProduto;
-    const c=produto.stockProduto-quantidadeCompra;
-    
-    if(c<0 || quantidadeCompra>p){
-      resp.json({error:'Não pode Efectuar a Compra, diminua a quantidade, Stock insuficiente: '+produto.stockProduto})
-    }else{     
-      const dd=await knex('produto').where('idProduto', idProduto).update({stockProduto:c});      
-      const aa= await knex('produto').where('idProduto', idProduto).first();
-      const compraEfectuada= await knex('compra')
-      .insert({estadocompra, mes, dia, ano,enderecoCompra, idProduto, idCliente,debitoCompra, quantidadeCompra, horaCompra})
-      const listaCompra= await knex('compra').where('idCompra',compraEfectuada[0]).first();
-      resp.json({ listaCompra, produto:aa})
-    }
-  }else{
-    resp.json({error:'Stock insuficiente: '+produto.stockProduto})
-  }
+CompraController.post('/comprarVenda',upload.single('image'),async(req:Request, resp: Response)=>{
+  const {estadocompra,v, mes, dia, ano,enderecoCompra, idProduto, idCliente,debitoCompra, quantidadeCompra, horaCompra}=req.body;  
+  console.log(v);
 })
 
 
@@ -81,7 +64,29 @@ CompraController.post('/Comprar',farmAuth,async(req:Request, resp: Response)=>{
 }
 })
 
-
+/**
+ * 
+ * 
+ * 
+ * const produto= await knex('produto').where('idProduto', idProduto).first();
+  if(produto.stockProduto>1){
+    const p=produto.stockProduto;
+    const c=produto.stockProduto-quantidadeCompra;
+    
+    if(c<0 || quantidadeCompra>p){
+      resp.json({error:'Não pode Efectuar a Compra, diminua a quantidade, Stock insuficiente: '+produto.stockProduto})
+    }else{     
+      const dd=await knex('produto').where('idProduto', idProduto).update({stockProduto:c});      
+      const aa= await knex('produto').where('idProduto', idProduto).first();
+      const compraEfectuada= await knex('compra')
+      .insert({estadocompra, mes, dia, ano,enderecoCompra, idProduto, idCliente,debitoCompra, quantidadeCompra, horaCompra})
+      const listaCompra= await knex('compra').where('idCompra',compraEfectuada[0]).first();
+      resp.json({ listaCompra, produto:aa})
+    }
+  }else{
+    resp.json({error:'Stock insuficiente: '+produto.stockProduto})
+  }
+ */
 
 
 
