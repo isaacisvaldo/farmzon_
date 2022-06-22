@@ -44,7 +44,6 @@ CompraController.post('/comprarVenda',upload.single('image'),async(req:Request, 
   
 })
 
-
 CompraController.get('/listarCompras',farmAuth, async (req:Request, resp: Response)=>{
   try {
     const idUser=req.session?.user.id;
@@ -74,36 +73,6 @@ CompraController.get('/detalhesCompra/:idCompra',farmAuth, async (req:Request, r
     .where('idCompra',idCompra )
     .first();
     const categoria=await knex('categoria').where('idCategoria',compra.idCategoria).first()
-//Clientes Autenticados
-CompraController.post('/Comprar',farmAuth,async(req:Request, resp: Response)=>{
-  
- 
-})
-
-CompraController.get('/eliminarComprar/:idCompra',farmAuth, async (req:Request, resp: Response)=>{
-  try {
-    const idUser=req.session?.user.id;
-    const {idCompra}=req.params
-    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first();
-
-    const categoria= await knex('categoria').select('*');
-    const compras = await knex('compra').where('idCompra', idCompra).del();
-
-    if(compras){
-      // console.log(categoria)
-      req.flash('certo', 'Dados do Registro da Compra eliminada')
-      resp.redirect('/listarCompras')
-    }else{
-      resp.render("error/page-404")
-  }    
-} catch (error) {
-  console.log(error);
-  resp.render("error/page-404")
-}
-}
-)
-
-
     if(compra){
       resp.render('Farmaceutico/detalhesCompra',{farmaceutico,compra,categoria,certo:req.flash('certo'),errado:req.flash('errado')})
     }else{
@@ -121,6 +90,47 @@ CompraController.get('/validarCompra/:idCompra',async(req:Request, resp: Respons
   req.flash('certo', 'Comprovativo Verificado');
   resp.redirect('/detalhesCompra/'+idCompra)
 })
+CompraController.get('/eliminarComprar/:idCompra',farmAuth, async (req:Request, resp: Response)=>{
+  try {
+    const idUser=req.session?.user.id;
+    const {idCompra}=req.params
+    const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first();
+
+    const categoria= await knex('categoria').select('*');
+    console.log(idCompra);
+    
+    const compras = await knex('compra').where('idCompra', idCompra).del();
+
+    if(compras){
+      // console.log(categoria)
+      req.flash('certo', 'Registro da Compra eliminada')
+      resp.redirect('/listarCompras')
+    }else{
+      resp.render("error/page-404")
+  }    
+} catch (error) {
+  console.log(error);
+  resp.render("error/page-404")
+}
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * 
