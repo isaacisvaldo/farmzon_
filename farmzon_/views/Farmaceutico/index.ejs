@@ -59,8 +59,8 @@
                         <span class="fe fe-arrow-up text-success fe-12"></span>
                       </div>
                       <div class="col-6 col-lg-2 text-center py-4">
-                        <p class="mb-1 small text-muted">Compras Efectuadas</p>
-                        <span class="h3"><%=compras.length %></span><br />
+                        <p class="mb-1 small text-muted">Farmaceuticos</p>
+                        <span class="h3"><%=f.length %></span><br />
                         <span class="small text-muted">-2%</span>
                         <span class="fe fe-arrow-down text-danger fe-12"></span>
                       </div>
@@ -77,9 +77,9 @@
                     <div class="card-body mb-n3">
                       <div class="row items-align-baseline h-100">
                         <div class="col-md-6 my-3">
-                          <p class="mb-0"><strong class="mb-0 text-uppercase text-muted">Earning</strong></p>
-                          <h3>$2,562</h3>
-                          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                          <p class="mb-0"><strong class="mb-0 text-uppercase text-muted">Compras Efectuadas</strong></p>
+                          <h3><%=((compras.length+nv.length)/100) %>%</h3>
+                          <p class="text-muted">Compras verificadas apartir do comprovativo de pagamento.</p>
                         </div>
                         <div class="col-md-6 my-4 text-center">
                           <div lass="chart-box mx-4">
@@ -87,14 +87,14 @@
                           </div>
                         </div>
                         <div class="col-md-6 border-top py-3">
-                          <p class="mb-1"><strong class="text-muted">Cost</strong></p>
-                          <h4 class="mb-0">108</h4>
-                          <p class="small text-muted mb-0"><span>37.7% Last week</span></p>
+                          <p class="mb-1"><strong class="text-muted">Verificadas</strong></p>
+                          <h4 class="mb-0"><%=compras.length %> </h4>
+                          <p class="small text-muted mb-0"><span>ultimas Act</span></p>
                         </div> <!-- .col -->
                         <div class="col-md-6 border-top py-3">
-                          <p class="mb-1"><strong class="text-muted">Revenue</strong></p>
-                          <h4 class="mb-0">1168</h4>
-                          <p class="small text-muted mb-0"><span>-18.9% Last week</span></p>
+                          <p class="mb-1"><strong class="text-muted">Não Verificadas</strong></p>
+                          <h4 class="mb-0"><%=nv.length %></h4>
+                          <p class="small text-muted mb-0"><span>ultimas Act</span></p>
                         </div> <!-- .col -->
                       </div>
                     </div> <!-- .card-body -->
@@ -165,129 +165,7 @@
             </div> <!-- .col-12 -->
           </div> <!-- .row -->
         </div> <!-- .container-fluid -->
-        <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="list-group list-group-flush my-n3">
-                  <div class="list-group-item bg-transparent">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <span class="fe fe-box fe-24"></span>
-                      </div>
-                      <div class="col">
-                        <small><strong>Package has uploaded successfull</strong></small>
-                        <div class="my-0 text-muted small">Package is zipped and uploaded</div>
-                        <small class="badge badge-pill badge-light text-muted">1m ago</small>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="list-group-item bg-transparent">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <span class="fe fe-download fe-24"></span>
-                      </div>
-                      <div class="col">
-                        <small><strong>Widgets are updated successfull</strong></small>
-                        <div class="my-0 text-muted small">Just create new layout Index, form, table</div>
-                        <small class="badge badge-pill badge-light text-muted">2m ago</small>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="list-group-item bg-transparent">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <span class="fe fe-inbox fe-24"></span>
-                      </div>
-                      <div class="col">
-                        <small><strong>Notifications have been sent</strong></small>
-                        <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
-                        <small class="badge badge-pill badge-light text-muted">30m ago</small>
-                      </div>
-                    </div> <!-- / .row -->
-                  </div>
-                  <div class="list-group-item bg-transparent">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <span class="fe fe-link fe-24"></span>
-                      </div>
-                      <div class="col">
-                        <small><strong>Link was attached to menu</strong></small>
-                        <div class="my-0 text-muted small">New layout has been attached to the menu</div>
-                        <small class="badge badge-pill badge-light text-muted">1h ago</small>
-                      </div>
-                    </div>
-                  </div> <!-- / .row -->
-                </div> <!-- / .list-group -->
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear All</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body px-5">
-                <div class="row align-items-center">
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-success justify-content-center">
-                      <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Control area</p>
-                  </div>
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-activity fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Activity</p>
-                  </div>
-                </div>
-                <div class="row align-items-center">
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-droplet fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Droplet</p>
-                  </div>
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Upload</p>
-                  </div>
-                </div>
-                <div class="row align-items-center">
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-users fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Users</p>
-                  </div>
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-settings fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Settings</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
       </main> <!-- main -->
     </div> <!-- .wrapper -->
     <script src="DashBoard/js/jquery.min.js"></script>
@@ -313,7 +191,7 @@
     <script src="DashBoard/js/gauge.min.js"></script>
     <script src="DashBoard/js/jquery.sparkline.min.js"></script>
     <script src="DashBoard/js/apexcharts.min.js"></script>
-    <script src="DashBoard/js/apexcharts.custom.js"></script>
+    <!-- <script src="DashBoard/js/apexcharts.custom.js"></script> -->
     <script src='DashBoard/js/jquery.mask.min.js'></script>
     <script src='DashBoard/js/select2.min.js'></script>
     <script src='DashBoard/js/jquery.steps.min.js'></script>
@@ -537,6 +415,220 @@
       }
       gtag('js', new Date());
       gtag('config', 'UA-56159088-1');
+    </script>
+
+    <script>
+      const c='<%=compras.length %>';
+      const cc= parseInt(c)
+      const nv='<%=nv.length %>';
+      const vv= parseInt(c);
+      t=cc+vv
+      var radialbarWidgetChart,
+  radialbarWidgetOptions = {
+    series: [t-1],
+    chart: { height: 120, type: "radialBar" },
+    theme: { mode: colors.chartTheme },
+    plotOptions: {
+      radialBar: {
+        hollow: { size: "70%" },
+        track: { background: colors.borderColor },
+        dataLabels: {
+          show: !0,
+          name: {
+            fontSize: "0.875rem",
+            fontWeight: 400,
+            offsetY: -10,
+            show: !1,
+            color: colors.mutedColor,
+            fontFamily: base.defaultFontFamily,
+          },
+          value: {
+            formatter: function (e) {
+              return parseInt(e);
+            },
+            fontSize: "1.53125rem",
+            fontWeight: 700,
+            fontFamily: base.defaultFontFamily,
+            offsetY: 10,
+            show: !0,
+            color: colors.headingColor,
+          },
+          total: {
+            show: !1,
+            fontSize: "0.875rem",
+            fontWeight: 400,
+            offsetY: -10,
+            label: "Percent",
+            color: colors.mutedColor,
+            fontFamily: base.defaultFontFamily,
+          },
+        },
+      },
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "light",
+        type: "diagonal2",
+        shadeIntensity: 0.2,
+        gradientFromColors: [extend.primaryColorLighter],
+        gradientToColors: [base.primaryColor],
+        inverseColors: !0,
+        opacityFrom: 1,
+        opacityTo: 1,
+        stops: [20, 100],
+      },
+    },
+    stroke: { lineCap: "round" },
+  },
+  radialbarWidget = document.querySelector("#radialbarWidget");
+radialbarWidget &&
+  (radialbarWidgetChart = new ApexCharts(
+    radialbarWidget,
+    radialbarWidgetOptions
+  )).render();
+    </script>
+
+    <script>
+      var areachart,
+  areaChartOptions = {
+    series: [
+      {
+        name: "Website",
+        data: [
+          31, 28, 30, 51, 42, 109, 100, 31, 40, 28, 31, 58, 30, 51, 42, 109,
+          100, 116,
+        ],
+      },
+      {
+        name: "Mobile Apps",
+        data: [
+          11, 45, 20, 32, 34, 52, 41, 11, 32, 45, 11, 75, 20, 32, 34, 52, 41,
+          81,
+        ],
+      },
+      {
+        name: "Others",
+        data: [
+          5, 25, 9, 14, 14, 32, 21, 5, 12, 25, 5, 55, 9, 14, 14, 32, 21, 65,
+        ],
+      },
+    ],
+    chart: {
+      type: "area",
+      height: 350,
+      background: "transparent",
+      stacked: !0,
+      toolbar: { show: !1 },
+      zoom: { enabled: !1 },
+    },
+    theme: { mode: colors.chartTheme },
+    xaxis: {
+      type: "datetime",
+      categories: [
+        "01/01/2020 GMT",
+        "01/02/2020 GMT",
+        "01/03/2020 GMT",
+        "01/04/2020 GMT",
+        "01/05/2020 GMT",
+        "01/06/2020 GMT",
+        "01/07/2020 GMT",
+        "01/08/2020 GMT",
+        "01/09/2020 GMT",
+        "01/10/2020 GMT",
+        "01/11/2020 GMT",
+        "01/12/2020 GMT",
+        "01/13/2020 GMT",
+        "01/14/2020 GMT",
+        "01/15/2020 GMT",
+        "01/16/2020 GMT",
+        "01/17/2020 GMT",
+        "01/18/2020 GMT",
+      ],
+      labels: {
+        show: !0,
+        trim: !1,
+        minHeight: void 0,
+        maxHeight: 120,
+        style: {
+          colors: colors.mutedColor,
+          cssClass: "text-muted",
+          fontFamily: base.defaultFontFamily,
+        },
+      },
+      axisBorder: { show: !1 },
+      tooltip: { enabled: !1, offsetX: 0 },
+    },
+    yaxis: {
+      labels: {
+        show: !0,
+        trim: !1,
+        offsetX: -10,
+        minHeight: void 0,
+        maxHeight: 120,
+        style: {
+          colors: colors.mutedColor,
+          cssClass: "text-muted",
+          fontFamily: base.defaultFontFamily,
+        },
+      },
+    },
+    markers: {
+      size: 0,
+      strokeColors: "#fff",
+      strokeWidth: 0,
+      strokeOpacity: 0.9,
+      strokeDashArray: 0,
+      fillOpacity: 1,
+      discrete: [],
+      shape: "circle",
+      radius: 2,
+      offsetX: 0,
+      offsetY: 0,
+      onClick: void 0,
+      onDblClick: void 0,
+      showNullDataPoints: !0,
+      hover: { size: void 0, sizeOffset: 3 },
+    },
+    colors: chartColors,
+    dataLabels: { enabled: !1 },
+    stroke: { curve: "smooth", lineCap: "round", width: 0 },
+    fill: { type: "solid" },
+    legend: {
+      show: !1,
+      position: "bottom",
+      fontFamily: base.defaultFontFamily,
+      fontWeight: 400,
+      labels: { colors: colors.mutedColor, useSeriesColors: !1 },
+      markers: {
+        width: 10,
+        height: 10,
+        strokeWidth: 0,
+        strokeColor: "#fff",
+        radius: 6,
+      },
+      itemMargin: { horizontal: 10, vertical: 0 },
+      onItemClick: { toggleDataSeries: !0 },
+      onItemHover: { highlightDataSeries: !0 },
+    },
+    grid: {
+      show: !0,
+      borderColor: colors.borderColor,
+      strokeDashArray: 0,
+      position: "back",
+      xaxis: { lines: { show: !1 } },
+      yaxis: { lines: { show: !0 } },
+      row: { colors: void 0, opacity: 0.5 },
+      column: { colors: void 0, opacity: 0.5 },
+      padding: { top: 0, right: 0, bottom: 0, left: 0 },
+    },
+    tooltip: {
+      style: { fontSize: "12px", fontFamily: base.defaultFontFamily },
+    },
+  },
+  areachartCtn = document.querySelector("#areaChart");
+areachartCtn &&
+  (areachart = new ApexCharts(areachartCtn, areaChartOptions)).render();
     </script>
   </body>
 </html>
