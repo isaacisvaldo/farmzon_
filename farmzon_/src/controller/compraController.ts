@@ -66,7 +66,7 @@ CompraController.get('/listarCompras',farmAuth, async (req:Request, resp: Respon
 CompraController.get('/detalhesCompra/:idCompra',farmAuth, async (req:Request, resp: Response)=>{
   try {
     const idUser=req.session?.user.id;
-    let {idCompra, stockProduto}=req.params
+    let {idCompra}=req.params
     const farmaceutico= await knex('farmaceutico').where('idFarmaceutico', idUser).first()
     const compra= await knex('compra')
     .join('cliente', 'compra.idCliente', 'cliente.idCliente')
@@ -90,6 +90,13 @@ CompraController.post('/Comprar',farmAuth,async(req:Request, resp: Response)=>{
   console.log(error);
   resp.render("error/page-404")
 }
+})
+
+CompraController.get('/validarCompra/:idCompra',async(req:Request, resp: Response)=>{
+  const { idCompra }=req.params;  
+  const compra=await knex('compra').where('idCompra',idCompra).update({estadocompra:1})
+  req.flash('certo', 'Comprovativo Verificado');
+  resp.redirect('/detalhesCompra/'+idCompra)
 })
 
 /**
