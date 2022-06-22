@@ -21,14 +21,14 @@
     rel="stylesheet">
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="card/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="card/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="card/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="card/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="card/css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="card/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="card/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="card/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/card/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/card/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/card/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/card/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/card/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/card/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/card/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/card/css/style.css" type="text/css">
 
      <!-- Bootstrap -->
      <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css"/>
@@ -207,7 +207,7 @@
                                             </div>
                                         </td>
                                         <td><span class="total"></span>Kz</td>
-                                        <td class="cart__close"><span class="icon_close"></span></td>
+                                        <td class="cart__close"><span onclick="eliminar('<%=m.idProduto%>')" class="icon_close"></span></td>
                                     </tr>
                                         <%  }) %> 
                                    
@@ -220,22 +220,22 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="cart__btn">
-                        <a href="#">Continue Shopping</a>
+                        <a href="#">Adicionar Mais</a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="cart__btn update__btn">
-                        <a href="#"><span class="icon_loading"></span> Update cart</a>
+                        <a href="#"><span class="icon_loading"></span> Upload Comprovativo</a>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="discount__content">
-                        <h6>Discount codes</h6>
+                      
                         <form action="#">
-                            <input type="text" placeholder="Enter your coupon code">
-                            <button type="submit" class="primary-btn">Apply</button>
+                            <input type="text" placeholder="Sua Morada">
+                            <button class="primary-btn">Endereço</button>
                         </form>
                     </div>
                 </div>
@@ -269,19 +269,19 @@
     <%- include('partials/footer') %> 
     <%- include('partials/carrinho') %>
     <!-- Js Plugins -->
-    <script src="card/js/jquery-3.3.1.min.js"></script>
-    <script src="card/js/bootstrap.min.js"></script>
-    <script src="card/js/jquery.magnific-popup.min.js"></script>
-    <script src="card/js/jquery-ui.min.js"></script>
-    <script src="card/js/mixitup.min.js"></script>
-    <script src="card/js/jquery.countdown.min.js"></script>
-    <script src="card/js/jquery.slicknav.js"></script>
-    <script src="card/js/owl.carousel.min.js"></script>
-    <script src="card/js/jquery.nicescroll.min.js"></script>
-    <script src="card/js/main.js"></script>
+    <script src="/card/js/jquery-3.3.1.min.js"></script>
+    <script src="/card/js/bootstrap.min.js"></script>
+    <script src="/card/js/jquery.magnific-popup.min.js"></script>
+    <script src="/card/js/jquery-ui.min.js"></script>
+    <script src="/card/js/mixitup.min.js"></script>
+    <script src="/card/js/jquery.countdown.min.js"></script>
+    <script src="/card/js/jquery.slicknav.js"></script>
+    <script src="/card/js/owl.carousel.min.js"></script>
+    <script src="/card/js/jquery.nicescroll.min.js"></script>
+    <script src="/card/js/main.js"></script>
     <script>
         
-        console.log(JSON.parse(localStorage.getItem('c')).map(c=>parseInt(c)));
+        // console.log(JSON.parse(localStorage.getItem('c')).map(c=>parseInt(c)));
         const adicionarQuantidade=()=>{
             const quantidade=document.getElementsByClassName('q');
             const preco=document.getElementsByClassName('preco');
@@ -300,6 +300,12 @@
             document.getElementById('final').innerHTML=resultado;
         }
         adicionarQuantidade();
+
+        const eliminar=(id)=>{
+            localStorage.setItem('c',JSON.stringify(JSON.parse(localStorage.getItem('c')).map(c=>c).filter(dd=>dd!==id)));
+            const f=JSON.parse(localStorage.getItem('c')).map(c=>parseInt(c))
+            window.location='/Carrinho/'+f
+        }
     </script>
 </body>
 

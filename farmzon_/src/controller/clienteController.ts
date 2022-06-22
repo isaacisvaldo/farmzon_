@@ -27,7 +27,7 @@ ClienteController.post('/Novocliente',async(req:Request, resp: Response)=>{
           req.flash('errado', "nao cadastrado 1");
           resp.redirect('/cadastarCliente')
         // resp.redirect("/cadastrarCliente")
- 
+
  
        } else if (verificaEspaco === true) {
           req.flash('errado', "nao cadastrado 2");
@@ -150,6 +150,18 @@ ClienteController.get("/Carrinho",clienteAuth, async(req:Request, resp:Response)
   const medicamentos= await knex('produto')
   .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
   .select('*');
+ resp.render('Cliente/shop-cart',{categoria,medicamentos})
+})
+ClienteController.get("/Carrinho/:ids",clienteAuth, async(req:Request, resp:Response) =>{
+  const categoria= await knex('categoria').select('*');
+  const {ids}=req.params;
+  const idsProdutos=ids.split(',').map(c=>parseInt(c))
+  console.log(idsProdutos);
+  
+  const medicamentos= await knex('produto')
+  .join('categoria', 'produto.idCategoria', 'categoria.idCategoria')
+  .whereIn('idProduto',idsProdutos );
+  
  resp.render('Cliente/shop-cart',{categoria,medicamentos})
 })
 ClienteController.post('/Pesquisarm',async (req:Request, resp: Response)=>{

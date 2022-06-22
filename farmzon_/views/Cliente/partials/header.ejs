@@ -38,7 +38,7 @@
                 <div class="col-md-3 clearfix">
                     <div class="header-ctn">
                         <div>
-                            <a href="/Carrinho">
+                            <a onclick="enviarProdutos()">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Carrinho</span>
                                 <div id="Quantidade" class="qty"></div>
@@ -108,3 +108,9 @@
     </div>
     <!-- /MAIN HEADER -->
 </header>
+<script>
+    const enviarProdutos=()=>{
+        const v=JSON.parse(localStorage.getItem('c')).map(c=>parseInt(c))
+        window.location="/Carrinho/"+v
+    }
+</script>
